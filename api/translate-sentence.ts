@@ -180,20 +180,26 @@ Rules:
 - For complex sentences: break into main clauses, keep essential meaning
 - Combine related words if needed to keep words array under 15 items
 - grammarNotes: max 2 notes, keep explanations under 50 words each
-- ATOMIC GRAMMAR BREAKDOWN: Break down ALL compound patterns and conjugated verbs into smallest meaningful units
-  - For CONJUGATED VERBS like 持っています (have/am holding):
-    * 持つ (motsu) - dictionary form verb - "to hold/have"
-    * て (te) - conjunctive particle - "connects to auxiliary"
-    * います (imasu) - polite present progressive - "am/is (doing)"
-  - For patterns like になる:
-    * に (ni) - particle - "direction/target"
-    * なる (naru) - verb - "to become"
-  - For patterns like ことがある:
-    * こと (koto) - nominalizer - "makes verb into noun"
-    * が (ga) - particle - "subject marker"
-    * ある (aru) - verb - "to exist/occur"
-  - ALWAYS show verb stems, conjugation suffixes (て, た, ない, ます), and auxiliaries separately
-  - Include dictionary form in explanation (e.g., "持つ (dictionary form)")
-  - This helps N5 learners understand verb conjugations and grammar construction piece by piece
+- ATOMIC GRAMMAR BREAKDOWN: Break down EVERY compound pattern, word, and verb into smallest meaningful components
+
+  COMPOUND WORDS - Break down completely:
+  - この手のこと → この (this) + 手 (hand/type) + の (possessive) + こと (thing/matter)
+  - 取りすぎた → 取る (toru - to take, dictionary form) + すぎ (sugi - too much) + た (ta - past tense)
+  - 行きたくない → 行く (iku - to go, dictionary form) + たい (tai - want to) + く (ku - adverbial) + ない (nai - negative)
+
+  CONJUGATED VERBS - Show EVERY component:
+  - 持っています → 持つ (motsu - dictionary form, "to hold") + て (te - conjunctive) + い (i - stem) + ます (masu - polite present)
+  - 食べられた → 食べる (taberu - dictionary form) + られ (rare - passive/potential) + た (ta - past tense)
+
+  GRAMMAR PATTERNS - Separate each part:
+  - になる → に (ni - particle, direction) + なる (naru - verb, "to become")
+  - ことがある → こと (koto - nominalizer) + が (ga - particle) + ある (aru - verb)
+
+  RULES:
+  - Break down EVERY compound word into its components (この手, 取りすぎる, etc.)
+  - Show dictionary form for EVERY verb component
+  - Separate ALL verb suffixes (ます, た, ない, て, すぎる, たい, etc.)
+  - This is for N5 learners - they need to see how EVERYTHING is built piece by piece
+
 - MUST be valid JSON - no trailing commas, escape quotes properly`;
 }
