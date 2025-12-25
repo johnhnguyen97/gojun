@@ -27,3 +27,4 @@ npm-debug.log*
 supabase.exe
 supabase_windows_amd64.tar.gz
 supabase/.temp/
+.env*.local
