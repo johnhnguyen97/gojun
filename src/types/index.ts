@@ -4,6 +4,7 @@ export interface JapaneseWord {
   reading: string;       // hiragana
   romaji: string;
   partOfSpeech: string;
+  role?: 'subject' | 'verb' | 'verb-stem' | 'auxiliary' | 'object' | 'adjective' | 'adverb' | 'particle' | 'other';
   isTransitive?: boolean;
   particle?: string;           // suggested particle (を, が, に, etc.)
   particleMeaning?: string;    // what the particle means (e.g., "object marker", "at/in/on")
