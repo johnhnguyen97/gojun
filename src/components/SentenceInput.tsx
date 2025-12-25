@@ -41,7 +41,7 @@ export function SentenceInput({ onSubmit, isLoading }: SentenceInputProps) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter a sentence or paste a paragraph...&#10;&#10;Example: I'm hungry. It's very tiring to talk to people. I hate everything."
+          placeholder="Enter a sentence or paste a paragraph (up to 6 sentences)..."
           rows={4}
           className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors resize-y"
           disabled={isLoading}
@@ -49,7 +49,7 @@ export function SentenceInput({ onSubmit, isLoading }: SentenceInputProps) {
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-500">
             {sentenceCount > 0 && `${sentenceCount} sentence${sentenceCount > 1 ? 's' : ''} detected`}
-            {sentenceCount > 1 && ' • Will practice one at a time'}
+            {sentenceCount > 6 && ' • Only first 6 will be loaded'}
           </span>
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-400">Ctrl+Enter to submit</span>
