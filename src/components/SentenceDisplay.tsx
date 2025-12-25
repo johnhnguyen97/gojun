@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { WordSlot, JapaneseWord } from '../types';
+import { FavoriteButton } from './FavoriteButton';
 
 // Tooltip component for hover info
 function Tooltip({ word }: { word: JapaneseWord }) {
@@ -292,6 +293,15 @@ export function SentenceDisplay({
                       : 'border-blue-300 cursor-grab active:cursor-grabbing'
                   }`}
                 >
+                  {/* Favorite Button */}
+                  {!isUsed && (
+                    <FavoriteButton
+                      word={slot.japaneseWord.japanese}
+                      reading={slot.japaneseWord.reading}
+                      english={slot.japaneseWord.english}
+                      isFavorited={false}
+                    />
+                  )}
                   {/* Japanese word */}
                   <span className={`font-bold ${
                     isParticle ? 'text-3xl text-purple-700'

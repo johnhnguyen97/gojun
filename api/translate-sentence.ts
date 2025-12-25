@@ -180,9 +180,20 @@ Rules:
 - For complex sentences: break into main clauses, keep essential meaning
 - Combine related words if needed to keep words array under 15 items
 - grammarNotes: max 2 notes, keep explanations under 50 words each
-- ATOMIC GRAMMAR BREAKDOWN: For compound grammar patterns (になる, ことがある, ている, etc.), include atomicBreakdown array showing each atomic component
-  - Break down patterns like になることがある into: に (particle), なる (verb), こと (nominalizer), が (particle), ある (verb)
-  - Each component should have: component (Japanese text), type (particle/verb/nominalizer/auxiliary/adjective), meaning (English function)
-  - This helps N5 learners understand how grammar builds up piece by piece
+- ATOMIC GRAMMAR BREAKDOWN: Break down ALL compound patterns and conjugated verbs into smallest meaningful units
+  - For CONJUGATED VERBS like 持っています (have/am holding):
+    * 持つ (motsu) - dictionary form verb - "to hold/have"
+    * て (te) - conjunctive particle - "connects to auxiliary"
+    * います (imasu) - polite present progressive - "am/is (doing)"
+  - For patterns like になる:
+    * に (ni) - particle - "direction/target"
+    * なる (naru) - verb - "to become"
+  - For patterns like ことがある:
+    * こと (koto) - nominalizer - "makes verb into noun"
+    * が (ga) - particle - "subject marker"
+    * ある (aru) - verb - "to exist/occur"
+  - ALWAYS show verb stems, conjugation suffixes (て, た, ない, ます), and auxiliaries separately
+  - Include dictionary form in explanation (e.g., "持つ (dictionary form)")
+  - This helps N5 learners understand verb conjugations and grammar construction piece by piece
 - MUST be valid JSON - no trailing commas, escape quotes properly`;
 }

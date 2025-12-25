@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { KanaChart } from './KanaChart';
+import { FavoritesViewer } from './FavoritesViewer';
 
 export function ToolboxButton() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isKanaChartOpen, setIsKanaChartOpen] = useState(false);
+  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
 
   const handleKanaChartClick = () => {
     setIsKanaChartOpen(true);
+    setIsMenuOpen(false);
+  };
+
+  const handleFavoritesClick = () => {
+    setIsFavoritesOpen(true);
     setIsMenuOpen(false);
   };
 
@@ -19,10 +26,17 @@ export function ToolboxButton() {
           <div className="absolute bottom-14 right-0 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden mb-2">
             <button
               onClick={handleKanaChartClick}
-              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left"
+              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left border-b border-gray-200"
             >
               <span className="text-xl">あア</span>
               <span className="text-sm font-medium text-gray-700">Kana Chart</span>
+            </button>
+            <button
+              onClick={handleFavoritesClick}
+              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left"
+            >
+              <span className="text-xl">★</span>
+              <span className="text-sm font-medium text-gray-700">Favorites</span>
             </button>
           </div>
         )}
@@ -57,6 +71,12 @@ export function ToolboxButton() {
       <KanaChart
         isOpen={isKanaChartOpen}
         onClose={() => setIsKanaChartOpen(false)}
+      />
+
+      {/* Favorites Viewer */}
+      <FavoritesViewer
+        isOpen={isFavoritesOpen}
+        onClose={() => setIsFavoritesOpen(false)}
       />
     </>
   );
