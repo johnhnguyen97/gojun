@@ -28,6 +28,82 @@ function decrypt(data: { encrypted: string; iv: string; authTag: string; salt: s
   return decrypted;
 }
 
+interface GrammarAtom {
+  component: string;
+  type: string;
+  meaning?: string;
+}
+
+interface GrammarNote {
+  atomicBreakdown?: GrammarAtom[];
+}
+
+interface TranslationResult {
+  grammarNotes?: GrammarNote[];
+  _validationWarnings?: string[];
+}
+
+// Known patterns that should ALWAYS be broken down
+const COMPOUND_PATTERNS = [
+  'ています', 'てます', 'ました', 'ません', 'ませんでした',
+  'たい', 'たくない', 'たかった',
+  'すぎる', 'すぎた', 'すぎない',
+  'やすい', 'にくい',
+  'られる', 'られた', 'させる'
+];
+
+function validateAtomicBreakdown(result: TranslationResult): string[] {
+  const errors: string[] = [];
+
+  if (!result.grammarNotes || result.grammarNotes.length === 0) {
+    return errors;
+  }
+
+  result.grammarNotes.forEach((note, noteIndex) => {
+    if (!note.atomicBreakdown || note.atomicBreakdown.length === 0) {
+      return;
+    }
+
+    const breakdown = note.atomicBreakdown;
+
+    // Check 1: Must have required fields
+    breakdown.forEach((atom, atomIndex) => {
+      if (!atom.component || !atom.type) {
+        errors.push(`Note ${noteIndex}, atom ${atomIndex}: Missing required fields (component or type)`);
+      }
+    });
+
+    // Check 2: Detect if components are still grouped (contain multiple morphemes)
+    breakdown.forEach((atom, atomIndex) => {
+      const comp = atom.component;
+
+      // Check for known compound patterns that weren't broken down
+      COMPOUND_PATTERNS.forEach(pattern => {
+        if (comp.includes(pattern) && comp !== pattern) {
+          errors.push(`Note ${noteIndex}, atom ${atomIndex}: "${comp}" appears to contain compound pattern "${pattern}" - should be broken into separate components`);
+        }
+      });
+
+      // Check if component has multiple hiragana particles stuck together
+      if (/[をがはにのでと]{2,}/.test(comp)) {
+        errors.push(`Note ${noteIndex}, atom ${atomIndex}: "${comp}" appears to contain multiple particles - should be separated`);
+      }
+
+      // Warn if component is suspiciously long (likely not atomic)
+      if (comp.length > 5 && atom.type.includes('verb')) {
+        errors.push(`Note ${noteIndex}, atom ${atomIndex}: Verb "${comp}" is ${comp.length} characters - verify it's fully broken down`);
+      }
+    });
+
+    // Check 3: If only 1 component, it's probably not broken down enough
+    if (breakdown.length === 1 && breakdown[0].component.length > 3) {
+      errors.push(`Note ${noteIndex}: Only 1 component "${breakdown[0].component}" - compound words should have multiple components`);
+    }
+  });
+
+  return errors;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -158,6 +234,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Failed to parse AI response as JSON' });
     }
 
+    // Validate atomic breakdown structure
+    const validationErrors = validateAtomicBreakdown(translationResult);
+    if (validationErrors.length > 0) {
+      console.warn('Atomic breakdown validation warnings:', validationErrors);
+      // Add validation warnings to response for debugging
+      translationResult._validationWarnings = validationErrors;
+    }
+
     return res.status(200).json(translationResult);
 
   } catch (error) {
@@ -180,26 +264,45 @@ Rules:
 - For complex sentences: break into main clauses, keep essential meaning
 - Combine related words if needed to keep words array under 15 items
 - grammarNotes: max 2 notes, keep explanations under 50 words each
-- ATOMIC GRAMMAR BREAKDOWN: Break down EVERY compound pattern, word, and verb into smallest meaningful components
+- ATOMIC GRAMMAR BREAKDOWN: CRITICAL - Create a SEPARATE atomicBreakdown entry for EACH grammar pattern/verb/compound word
 
-  COMPOUND WORDS - Break down completely:
-  - この手のこと → この (this) + 手 (hand/type) + の (possessive) + こと (thing/matter)
-  - 取りすぎた → 取る (toru - to take, dictionary form) + すぎ (sugi - too much) + た (ta - past tense)
-  - 行きたくない → 行く (iku - to go, dictionary form) + たい (tai - want to) + く (ku - adverbial) + ない (nai - negative)
+  DO NOT group things together! Each component must be a SEPARATE array item:
 
-  CONJUGATED VERBS - Show EVERY component:
-  - 持っています → 持つ (motsu - dictionary form, "to hold") + て (te - conjunctive) + い (i - stem) + ます (masu - polite present)
-  - 食べられた → 食べる (taberu - dictionary form) + られ (rare - passive/potential) + た (ta - past tense)
+  WRONG: [{"component":"この手のこと","type":"phrase","meaning":"this kind of thing"}]
+  CORRECT: [
+    {"component":"この","type":"demonstrative","meaning":"this"},
+    {"component":"手","type":"noun","meaning":"hand/type/kind"},
+    {"component":"の","type":"particle","meaning":"possessive particle"},
+    {"component":"こと","type":"noun","meaning":"thing/matter"}
+  ]
 
-  GRAMMAR PATTERNS - Separate each part:
-  - になる → に (ni - particle, direction) + なる (naru - verb, "to become")
-  - ことがある → こと (koto - nominalizer) + が (ga - particle) + ある (aru - verb)
+  WRONG: [{"component":"取りすぎた","type":"verb","meaning":"took too much"}]
+  CORRECT: [
+    {"component":"取る","type":"verb (dictionary form)","meaning":"to take"},
+    {"component":"すぎ","type":"auxiliary verb","meaning":"too much/excessively"},
+    {"component":"た","type":"auxiliary verb (past tense)","meaning":"past tense marker"}
+  ]
 
-  RULES:
-  - Break down EVERY compound word into its components (この手, 取りすぎる, etc.)
-  - Show dictionary form for EVERY verb component
-  - Separate ALL verb suffixes (ます, た, ない, て, すぎる, たい, etc.)
-  - This is for N5 learners - they need to see how EVERYTHING is built piece by piece
+  WRONG: [{"component":"持っています","type":"verb","meaning":"have/am holding"}]
+  CORRECT: [
+    {"component":"持つ","type":"verb (dictionary form)","meaning":"to hold/have"},
+    {"component":"て","type":"conjunctive particle","meaning":"te-form connector"},
+    {"component":"います","type":"auxiliary verb","meaning":"present progressive (polite)"}
+  ]
+
+  MANDATORY RULES - DO NOT SKIP:
+  1. NEVER combine multiple morphemes into one component entry
+  2. ALWAYS show dictionary form first, then each suffix/particle separately
+  3. EVERY particle (に、を、が、の、て、etc.) = separate entry
+  4. EVERY verb suffix (た、ます、ない、たい、すぎる) = separate entry
+  5. Label each component's grammatical type clearly
+  6. This breakdown is the MOST IMPORTANT part for N5 learners
+
+  ⚠️ VALIDATION - Your response will be automatically validated:
+  - Components containing ています, すぎた, たい, etc. must be separated
+  - Single-component breakdowns for words >3 chars will trigger warnings
+  - Verbs >5 chars will be flagged for verification
+  - Missing component/type fields will be rejected
 
 - MUST be valid JSON - no trailing commas, escape quotes properly`;
 }
