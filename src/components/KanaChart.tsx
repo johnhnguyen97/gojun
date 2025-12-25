@@ -44,22 +44,22 @@ export function KanaChart({ isOpen, onClose }: KanaChartProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+        className="fixed inset-0 bg-black bg-opacity-40 z-40"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+        <div className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[95vh] overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
-            <h2 className="text-xl font-bold text-gray-800">Kana Chart</h2>
+          <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 border-b border-gray-200">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800">Kana Chart</h2>
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-full hover:bg-gray-200"
+              className="p-1.5 text-gray-400 hover:text-gray-600 active:bg-gray-100 rounded-full"
               aria-label="Close"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -69,60 +69,50 @@ export function KanaChart({ isOpen, onClose }: KanaChartProps) {
           <div className="flex border-b border-gray-200">
             <button
               onClick={() => setActiveTab('hiragana')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`flex-1 px-3 py-2 text-xs sm:text-sm font-medium ${
                 activeTab === 'hiragana'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 active:bg-gray-50'
               }`}
             >
-              Hiragana (ひらがな)
+              ひらがな
             </button>
             <button
               onClick={() => setActiveTab('katakana')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`flex-1 px-3 py-2 text-xs sm:text-sm font-medium ${
                 activeTab === 'katakana'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 active:bg-gray-50'
               }`}
             >
-              Katakana (カタカナ)
+              カタカナ
             </button>
           </div>
 
           {/* Chart Content */}
-          <div className="p-4 overflow-y-auto max-h-[calc(90vh-140px)]">
-            <div className="grid grid-cols-5 gap-2">
+          <div className="p-3 sm:p-4 overflow-y-auto max-h-[calc(95vh-100px)]">
+            <div className="grid grid-cols-5 gap-1 sm:gap-1.5">
               {currentChart.map((item, index) => (
                 <div
                   key={index}
-                  className={`aspect-square flex flex-col items-center justify-center rounded-lg transition-all ${
+                  className={`aspect-square flex flex-col items-center justify-center rounded ${
                     item.kana
-                      ? 'bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 hover:shadow-md hover:scale-105 cursor-pointer'
-                      : 'bg-transparent'
+                      ? 'bg-gray-50 border border-gray-200 active:bg-gray-100'
+                      : ''
                   }`}
                 >
                   {item.kana && (
                     <>
-                      <span className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
+                      <span className="text-xl sm:text-2xl font-semibold text-gray-900">
                         {item.kana}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-[10px] sm:text-xs text-gray-500 mt-0.5">
                         {item.romaji}
                       </span>
                     </>
                   )}
                 </div>
               ))}
-            </div>
-
-            {/* Additional Info */}
-            <div className="mt-6 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-              <p className="text-xs text-gray-700">
-                <strong>Tip:</strong> {activeTab === 'hiragana' ? 'Hiragana' : 'Katakana'} is used for{' '}
-                {activeTab === 'hiragana'
-                  ? 'native Japanese words, grammatical elements, and verb/adjective endings.'
-                  : 'foreign words, loanwords, onomatopoeia, and emphasis.'}
-              </p>
             </div>
           </div>
         </div>
