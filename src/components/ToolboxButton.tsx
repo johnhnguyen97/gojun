@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { KanaChart } from './KanaChart';
 import { FavoritesViewer } from './FavoritesViewer';
+import { createNotionProjectPage } from '../services/notionApi';
 
 export function ToolboxButton() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isKanaChartOpen, setIsKanaChartOpen] = useState(false);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
+  const [isCreatingNotion, setIsCreatingNotion] = useState(false);
 
   const handleKanaChartClick = () => {
     setIsKanaChartOpen(true);
@@ -15,6 +17,23 @@ export function ToolboxButton() {
   const handleFavoritesClick = () => {
     setIsFavoritesOpen(true);
     setIsMenuOpen(false);
+  };
+
+  const handleNotionClick = async () => {
+    setIsMenuOpen(false);
+    setIsCreatingNotion(true);
+
+    try {
+      const result = await createNotionProjectPage();
+      alert(`✅ Notion page created!\n\nOpen: ${result.url}`);
+      // Open the Notion page in a new tab
+      window.open(result.url, '_blank');
+    } catch (error) {
+      console.error('Failed to create Notion page:', error);
+      alert('❌ Failed to create Notion page. Make sure NOTION_API_KEY is configured in your environment variables.');
+    } finally {
+      setIsCreatingNotion(false);
+    }
   };
 
   return (
@@ -33,10 +52,20 @@ export function ToolboxButton() {
             </button>
             <button
               onClick={handleFavoritesClick}
-              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left"
+              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left border-b border-gray-200"
             >
               <span className="text-xl">★</span>
               <span className="text-sm font-medium text-gray-700">Favorites</span>
+            </button>
+            <button
+              onClick={handleNotionClick}
+              disabled={isCreatingNotion}
+              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left disabled:opacity-50"
+            >
+              <span className="text-xl">📝</span>
+              <span className="text-sm font-medium text-gray-700">
+                {isCreatingNotion ? 'Creating...' : 'Notion Page'}
+              </span>
             </button>
           </div>
         )}
