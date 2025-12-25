@@ -22,3 +22,8 @@ Thumbs.db
 npm-debug.log*
 
 .vercel
+
+# Supabase CLI
+supabase.exe
+supabase_windows_amd64.tar.gz
+supabase/.temp/
