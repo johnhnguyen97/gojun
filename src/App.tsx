@@ -5,6 +5,7 @@ import { Settings } from './components/Settings';
 import { SentenceInput } from './components/SentenceInput';
 import { SentenceDisplay } from './components/SentenceDisplay';
 import { GrammarSidebar } from './components/GrammarSidebar';
+import { ToolboxButton } from './components/ToolboxButton';
 import { parseEnglishSentence, describeSentenceStructure } from './services/englishParser';
 import { translateSentence } from './services/japaneseApi';
 import type { WordSlot, SentenceStructure, GrammarNote } from './types';
@@ -438,6 +439,9 @@ function AppContent() {
           </div>
         )}
       </div>
+
+      {/* Floating Toolbox Button */}
+      <ToolboxButton />
 
       {showSettings && <Settings onClose={() => setShowSettings(false)} />}
     </div>

@@ -141,6 +141,35 @@ export function GrammarSidebar({
                         )}
                       </div>
                       <p className="text-sm text-gray-700">{note.explanation}</p>
+
+                      {/* Atomic breakdown */}
+                      {note.atomicBreakdown && note.atomicBreakdown.length > 0 && (
+                        <div className="mt-3 p-2 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200">
+                          <h4 className="text-xs font-semibold text-purple-700 mb-2">
+                            🔬 Atomic Breakdown
+                          </h4>
+                          <div className="space-y-1.5">
+                            {note.atomicBreakdown.map((atom, atomIndex) => (
+                              <div key={atomIndex} className="flex items-start gap-2 text-xs">
+                                <div className="flex items-center gap-1.5 min-w-fit">
+                                  <span className="font-bold text-purple-900 bg-white px-2 py-0.5 rounded border border-purple-300">
+                                    {atom.component}
+                                  </span>
+                                  <span className="text-purple-600 font-medium px-1.5 py-0.5 bg-purple-100 rounded">
+                                    {atom.type}
+                                  </span>
+                                </div>
+                                {atom.meaning && (
+                                  <span className="text-gray-700 italic flex-1">
+                                    {atom.meaning}
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       {note.example && (
                         <div className="mt-2 p-2 bg-gray-50 rounded text-sm">
                           <p className="text-gray-800 font-medium">{note.example}</p>

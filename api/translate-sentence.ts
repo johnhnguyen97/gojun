@@ -172,7 +172,7 @@ function buildTranslationPrompt(sentence: string, parsedWords: unknown[]): strin
 
 "${sentence}"
 
-{"fullTranslation":"full sentence","wordOrderDisplay":"A → B → Verb","words":[{"english":"meaning","japanese":"日本語","reading":"ひらがな","romaji":"romaji","partOfSpeech":"noun","role":"subject","particleMeaning":""}],"grammarNotes":[{"title":"Point","explanation":"Brief"}]}
+{"fullTranslation":"full sentence","wordOrderDisplay":"A → B → Verb","words":[{"english":"meaning","japanese":"日本語","reading":"ひらがな","romaji":"romaji","partOfSpeech":"noun","role":"subject","particleMeaning":""}],"grammarNotes":[{"title":"Point","titleJapanese":"ポイント","explanation":"Brief","atomicBreakdown":[{"component":"に","type":"particle","meaning":"direction/target"},{"component":"なる","type":"verb","meaning":"to become"}]}]}
 
 Rules:
 - NATURAL Japanese (drop obvious pronouns like 私)
@@ -180,5 +180,9 @@ Rules:
 - For complex sentences: break into main clauses, keep essential meaning
 - Combine related words if needed to keep words array under 15 items
 - grammarNotes: max 2 notes, keep explanations under 50 words each
+- ATOMIC GRAMMAR BREAKDOWN: For compound grammar patterns (になる, ことがある, ている, etc.), include atomicBreakdown array showing each atomic component
+  - Break down patterns like になることがある into: に (particle), なる (verb), こと (nominalizer), が (particle), ある (verb)
+  - Each component should have: component (Japanese text), type (particle/verb/nominalizer/auxiliary/adjective), meaning (English function)
+  - This helps N5 learners understand how grammar builds up piece by piece
 - MUST be valid JSON - no trailing commas, escape quotes properly`;
 }

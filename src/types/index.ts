@@ -11,12 +11,20 @@ export interface JapaneseWord {
   particleExplanation?: string; // detailed explanation
 }
 
+export interface GrammarAtom {
+  component: string;      // The Japanese component (に, なる, こと, etc.)
+  type: string;          // particle, verb, nominalizer, auxiliary, adjective, etc.
+  meaning?: string;      // English meaning or function
+  explanation?: string;  // Brief explanation of grammatical role
+}
+
 export interface GrammarNote {
   title: string;
   titleJapanese?: string;
   explanation: string;
   example?: string;
   exampleTranslation?: string;
+  atomicBreakdown?: GrammarAtom[];  // Atomic components for compound grammar patterns
 }
 
 export interface ParsedWord {
