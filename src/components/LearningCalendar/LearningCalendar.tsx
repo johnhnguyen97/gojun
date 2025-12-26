@@ -254,10 +254,30 @@ export function LearningCalendar({ onClose }: LearningCalendarProps) {
                         {dailyData.kanjiOfTheDay.kanji}
                       </div>
                       {dailyData.kanjiOfTheDay.strokeCount && (
-                        <div className="text-xs text-gray-400 dark:text-gray-500">
+                        <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">
                           {dailyData.kanjiOfTheDay.strokeCount} strokes
                         </div>
                       )}
+
+                      {/* Readings */}
+                      <div className="space-y-1 mb-3">
+                        {dailyData.kanjiOfTheDay.onyomi && dailyData.kanjiOfTheDay.onyomi.length > 0 && (
+                          <div className="text-sm">
+                            <span className="text-purple-500 dark:text-purple-400 font-medium">音: </span>
+                            <span className="text-gray-600 dark:text-gray-300">
+                              {dailyData.kanjiOfTheDay.onyomi.join('、')}
+                            </span>
+                          </div>
+                        )}
+                        {dailyData.kanjiOfTheDay.kunyomi && dailyData.kanjiOfTheDay.kunyomi.length > 0 && (
+                          <div className="text-sm">
+                            <span className="text-purple-500 dark:text-purple-400 font-medium">訓: </span>
+                            <span className="text-gray-600 dark:text-gray-300">
+                              {dailyData.kanjiOfTheDay.kunyomi.join('、')}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="text-center text-lg text-gray-700 dark:text-gray-300 mb-4">
                       "{dailyData.kanjiOfTheDay.meaning}"

@@ -43,6 +43,42 @@ async function fetchWordFromJisho(searchTerm: string) {
   } catch { return null; }
 }
 
+async function fetchKanjiData(kanji: string) {
+  try {
+    // Use kanjiapi.dev for kanji data
+    const response = await fetch(`https://kanjiapi.dev/v1/kanji/${encodeURIComponent(kanji)}`);
+    if (!response.ok) return null;
+    const data = await response.json();
+    return {
+      kanji: data.kanji,
+      onyomi: data.on_readings || [],
+      kunyomi: data.kun_readings || [],
+      meaning: data.meanings ? data.meanings.slice(0, 3).join(', ') : 'kanji',
+      strokeCount: data.stroke_count || null,
+      grade: data.grade || null,
+      jlpt: data.jlpt || null
+    };
+  } catch {
+    // Fallback: try Jisho API for kanji
+    try {
+      const response = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(kanji)}%23kanji`);
+      if (!response.ok) return null;
+      const data = await response.json();
+      if (!data.data || data.data.length === 0) return null;
+      const entry = data.data[0];
+      return {
+        kanji: kanji,
+        onyomi: [],
+        kunyomi: [],
+        meaning: entry.senses?.[0]?.english_definitions?.slice(0, 3).join(', ') || 'kanji',
+        strokeCount: null,
+        grade: null,
+        jlpt: null
+      };
+    } catch { return null; }
+  }
+}
+
 async function fetchHolidays(year: number) {
   try {
     const response = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/JP`);
@@ -151,7 +187,10 @@ async function handleDaily(req: VercelRequest, res: VercelResponse, supabase: an
   const kanjiIndex = hashCode(dateString + jlptLevel + 'kanji') % wordTerms.length;
 
   const wordData = await fetchWordFromJisho(wordTerms[wordIndex]);
+
+  // Get a kanji character from the selected word
   const kanjiChar = wordTerms[kanjiIndex].match(/[\u4e00-\u9faf]/)?.[0] || '日';
+  const kanjiData = await fetchKanjiData(kanjiChar);
 
   const holidays = await fetchHolidays(today.getFullYear());
   const todaysHolidays = holidays.filter((h: { date: string }) => h.date === dateString);
@@ -169,7 +208,15 @@ async function handleDaily(req: VercelRequest, res: VercelResponse, supabase: an
       jlptLevel,
       isLearned: learnedWords.has(wordData.word)
     } : null,
-    kanjiOfTheDay: {
+    kanjiOfTheDay: kanjiData ? {
+      kanji: kanjiData.kanji,
+      onyomi: kanjiData.onyomi,
+      kunyomi: kanjiData.kunyomi,
+      meaning: kanjiData.meaning,
+      strokeCount: kanjiData.strokeCount,
+      jlptLevel,
+      isLearned: learnedKanji.has(kanjiData.kanji)
+    } : {
       kanji: kanjiChar,
       onyomi: [],
       kunyomi: [],
