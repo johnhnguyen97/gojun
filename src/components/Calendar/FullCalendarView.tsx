@@ -6,6 +6,9 @@ import interactionPlugin from '@fullcalendar/interaction';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import type { EventInput, DatesSetArg, EventClickArg } from '@fullcalendar/core';
 import { useAuth } from '../../contexts/AuthContext';
+
+// Stable reference for locales array to prevent re-renders
+const CALENDAR_LOCALES = [jaLocale];
 import { CalendarHeader } from './CalendarHeader';
 import { CalendarDetailPopover } from './CalendarDetailPopover';
 import type { JLPTLevel, JapaneseHoliday, WordOfTheDay, KanjiOfTheDay } from '../../types/calendar';
@@ -64,7 +67,7 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
         if (data.jlptLevel) setJlptLevel(data.jlptLevel);
       })
       .catch(console.error);
-  }, [session?.access_token, jlptLevel]);
+  }, [session?.access_token]);
 
   // Fetch calendar data for a date range
   const fetchCalendarData = useCallback(async (start: Date, end: Date, level?: JLPTLevel) => {
@@ -279,8 +282,8 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
                   hour12: false
                 }}
                 firstDay={0}
-                locale={jaLocale}
-                dayHeaderFormat={{ weekday: 'short' }}
+                locales={CALENDAR_LOCALES}
+                locale="ja"
               />
             </div>
           </div>
