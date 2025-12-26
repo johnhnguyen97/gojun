@@ -286,13 +286,13 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
                         key={fav.id}
                         className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 hover:shadow-lg hover:border-indigo-200 transition-all group"
                       >
-                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${catStyle.color} text-white font-bold flex items-center justify-center text-sm shrink-0`}>
-                          {catStyle.icon}
-                        </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline gap-2 flex-wrap">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-xl font-bold text-gray-900">{fav.word}</span>
                             <span className="text-sm text-gray-500">{fav.reading}</span>
+                            <span className={`px-2 py-0.5 text-xs font-medium rounded-full bg-gradient-to-r ${catStyle.color} text-white`}>
+                              {catStyle.label}
+                            </span>
                           </div>
                           <div className="text-sm text-gray-600 mt-1">{fav.english}</div>
                         </div>
