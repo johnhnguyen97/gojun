@@ -312,7 +312,7 @@ export function Settings({ onClose }: SettingsProps) {
                     <button
                       onClick={() => hasApiKey && handleAiProviderChange('claude')}
                       disabled={!hasApiKey}
-                      className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      className={`p-4 rounded-xl border-2 text-left transition-all relative ${
                         aiProvider === 'claude' && hasApiKey
                           ? 'border-purple-500 bg-purple-50'
                           : hasApiKey
@@ -320,6 +320,14 @@ export function Settings({ onClose }: SettingsProps) {
                           : 'border-gray-100 bg-gray-50 opacity-60 cursor-not-allowed'
                       }`}
                     >
+                      {/* Key saved indicator */}
+                      {hasApiKey && (
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-md">
+                          <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                          </svg>
+                        </div>
+                      )}
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-2xl">🧠</span>
                         {aiProvider === 'claude' && hasApiKey && (
@@ -332,7 +340,9 @@ export function Settings({ onClose }: SettingsProps) {
                       </div>
                       <p className="font-semibold text-gray-900">Claude</p>
                       <p className="text-xs text-gray-500">Sonnet 4</p>
-                      <p className="text-xs text-purple-600 mt-1">{hasApiKey ? 'Your API key' : 'Requires key'}</p>
+                      <p className={`text-xs mt-1 ${hasApiKey ? 'text-green-600' : 'text-gray-400'}`}>
+                        {hasApiKey ? '✓ Key saved' : 'Requires key'}
+                      </p>
                     </button>
                   </div>
 
@@ -561,7 +571,11 @@ export function Settings({ onClose }: SettingsProps) {
                 <div className="mt-4 space-y-2 text-sm text-gray-600">
                   <div className="flex justify-between p-2">
                     <span>Version</span>
-                    <span className="text-gray-900">1.0.0</span>
+                    <span className="text-gray-900 font-mono">{__GIT_COMMIT__}</span>
+                  </div>
+                  <div className="flex justify-between p-2">
+                    <span>Last updated</span>
+                    <span className="text-gray-900">{__GIT_DATE__}</span>
                   </div>
                   <div className="flex justify-between p-2">
                     <span>Made with</span>
