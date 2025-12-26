@@ -1,11 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getFavorites, deleteFavorite, type Favorite } from '../services/favoritesApi';
+import { WORD_CATEGORIES } from './FavoriteButton';
 
 interface FavoritesViewerProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+// Get category styling
+const getCategoryStyle = (categoryId: string) => {
+  const cat = WORD_CATEGORIES.find(c => c.id === categoryId);
+  return cat || { id: categoryId, label: categoryId.charAt(0).toUpperCase() + categoryId.slice(1), icon: '?', color: 'from-gray-500 to-gray-600' };
+};
+
+// Category order for sorting
+const CATEGORY_ORDER = WORD_CATEGORIES.map(c => c.id as string);
 
 export function FavoritesViewer({ isOpen, onClose }: FavoritesViewerProps) {
   const { session } = useAuth();
@@ -59,7 +69,16 @@ export function FavoritesViewer({ isOpen, onClose }: FavoritesViewerProps) {
 
   if (!isOpen) return null;
 
-  const categories = Object.keys(grouped).sort();
+  // Sort categories by the order defined in WORD_CATEGORIES
+  const categories = Object.keys(grouped).sort((a, b) => {
+    const aIdx = CATEGORY_ORDER.indexOf(a);
+    const bIdx = CATEGORY_ORDER.indexOf(b);
+    if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+    if (aIdx === -1) return 1;
+    if (bIdx === -1) return -1;
+    return aIdx - bIdx;
+  });
+
   const displayFavorites = selectedCategory === 'all'
     ? favorites
     : grouped[selectedCategory] || [];
@@ -103,7 +122,7 @@ export function FavoritesViewer({ isOpen, onClose }: FavoritesViewerProps) {
             </button>
           </div>
 
-          {/* Category Filter */}
+          {/* Category Filter Pills */}
           {categories.length > 0 && (
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
               <button
@@ -116,19 +135,27 @@ export function FavoritesViewer({ isOpen, onClose }: FavoritesViewerProps) {
               >
                 All ({favorites.length})
               </button>
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 text-sm font-semibold rounded-xl whitespace-nowrap transition-all ${
-                    selectedCategory === cat
-                      ? 'bg-white text-amber-600 shadow-lg'
-                      : 'bg-white/20 text-white hover:bg-white/30'
-                  }`}
-                >
-                  {cat.charAt(0).toUpperCase() + cat.slice(1)} ({grouped[cat]?.length || 0})
-                </button>
-              ))}
+              {categories.map(cat => {
+                const style = getCategoryStyle(cat);
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-4 py-2 text-sm font-semibold rounded-xl whitespace-nowrap transition-all flex items-center gap-2 ${
+                      selectedCategory === cat
+                        ? 'bg-white text-amber-600 shadow-lg'
+                        : 'bg-white/20 text-white hover:bg-white/30'
+                    }`}
+                  >
+                    <span className={`w-5 h-5 rounded text-xs font-bold flex items-center justify-center ${
+                      selectedCategory === cat ? `bg-gradient-to-br ${style.color} text-white` : 'bg-white/30'
+                    }`}>
+                      {style.icon}
+                    </span>
+                    {style.label} ({grouped[cat]?.length || 0})
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -163,34 +190,42 @@ export function FavoritesViewer({ isOpen, onClose }: FavoritesViewerProps) {
             </div>
           ) : (
             <div className="space-y-2 stagger-children">
-              {displayFavorites.map((fav) => (
-                <div
-                  key={fav.id}
-                  className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 hover:shadow-lg hover:border-amber-200 transition-all group"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-xl font-bold text-gray-900">{fav.word}</span>
-                      <span className="text-sm text-gray-500">{fav.reading}</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">{fav.english}</div>
-                    <div className="mt-2">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
-                        {fav.category}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleDelete(fav.word)}
-                    className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
-                    title="Remove favorite"
+              {displayFavorites.map((fav) => {
+                const catStyle = getCategoryStyle(fav.category);
+                return (
+                  <div
+                    key={fav.id}
+                    className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 hover:shadow-lg hover:border-amber-200 transition-all group"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
-                </div>
-              ))}
+                    {/* Category Icon */}
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${catStyle.color} text-white font-bold flex items-center justify-center text-sm shrink-0`}>
+                      {catStyle.icon}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        <span className="text-xl font-bold text-gray-900">{fav.word}</span>
+                        <span className="text-sm text-gray-500">{fav.reading}</span>
+                      </div>
+                      <div className="text-sm text-gray-600 mt-1">{fav.english}</div>
+                      <div className="mt-2">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${catStyle.color} text-white`}>
+                          {catStyle.label}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(fav.word)}
+                      className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                      title="Remove favorite"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
