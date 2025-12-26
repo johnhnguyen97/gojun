@@ -260,10 +260,10 @@ export function Settings({ onClose }: SettingsProps) {
             <div className="px-6 py-4">
               <button
                 onClick={() => toggleSection('ai')}
-                className="w-full flex items-center justify-between"
+                className="w-full flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
@@ -280,17 +280,19 @@ export function Settings({ onClose }: SettingsProps) {
                 </svg>
               </button>
 
-              {expandedSection === 'ai' && (
-                <div className="mt-4 space-y-3">
+              <div className={`overflow-hidden transition-all duration-300 ease-out ${
+                expandedSection === 'ai' ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="space-y-3">
                   {/* Provider Cards */}
                   <div className="grid grid-cols-2 gap-3">
                     {/* Groq Card */}
                     <button
                       onClick={() => handleAiProviderChange('groq')}
-                      className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      className={`p-4 rounded-xl border-2 text-left transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
                         aiProvider === 'groq'
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-green-500 bg-green-50 shadow-md shadow-green-100'
+                          : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
@@ -312,11 +314,11 @@ export function Settings({ onClose }: SettingsProps) {
                     <button
                       onClick={() => hasApiKey && handleAiProviderChange('claude')}
                       disabled={!hasApiKey}
-                      className={`p-4 rounded-xl border-2 text-left transition-all relative ${
+                      className={`p-4 rounded-xl border-2 text-left transition-all duration-200 relative ${
                         aiProvider === 'claude' && hasApiKey
-                          ? 'border-purple-500 bg-purple-50'
+                          ? 'border-purple-500 bg-purple-50 shadow-md shadow-purple-100 hover:scale-[1.02] active:scale-[0.98]'
                           : hasApiKey
-                          ? 'border-gray-200 hover:border-gray-300'
+                          ? 'border-gray-200 hover:border-gray-300 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                           : 'border-gray-100 bg-gray-50 opacity-60 cursor-not-allowed'
                       }`}
                     >
@@ -408,17 +410,17 @@ export function Settings({ onClose }: SettingsProps) {
                     </a>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Account Section */}
             <div className="px-6 py-4">
               <button
                 onClick={() => toggleSection('account')}
-                className="w-full flex items-center justify-between"
+                className="w-full flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
@@ -433,8 +435,10 @@ export function Settings({ onClose }: SettingsProps) {
                 </svg>
               </button>
 
-              {expandedSection === 'account' && (
-                <div className="mt-4 space-y-3">
+              <div className={`overflow-hidden transition-all duration-300 ease-out ${
+                expandedSection === 'account' ? 'max-h-[300px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="space-y-3">
                   {/* Google Account */}
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                     <div className="flex items-center gap-3">
@@ -481,17 +485,17 @@ export function Settings({ onClose }: SettingsProps) {
                     </svg>
                   </button>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Data & Sync Section */}
             <div className="px-6 py-4">
               <button
                 onClick={() => toggleSection('sync')}
-                className="w-full flex items-center justify-between"
+                className="w-full flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
                     </svg>
@@ -508,8 +512,10 @@ export function Settings({ onClose }: SettingsProps) {
                 </svg>
               </button>
 
-              {expandedSection === 'sync' && (
-                <div className="mt-4 space-y-3">
+              <div className={`overflow-hidden transition-all duration-300 ease-out ${
+                expandedSection === 'sync' ? 'max-h-[300px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="space-y-3">
                   {/* Google Keep */}
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                     <div className="flex items-center gap-3">
@@ -542,17 +548,17 @@ export function Settings({ onClose }: SettingsProps) {
                     Export your notes from the Notes panel using the export button.
                   </p>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* About Section */}
             <div className="px-6 py-4">
               <button
                 onClick={() => toggleSection('about')}
-                className="w-full flex items-center justify-between"
+                className="w-full flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                     <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -567,8 +573,10 @@ export function Settings({ onClose }: SettingsProps) {
                 </svg>
               </button>
 
-              {expandedSection === 'about' && (
-                <div className="mt-4 space-y-2 text-sm text-gray-600">
+              <div className={`overflow-hidden transition-all duration-300 ease-out ${
+                expandedSection === 'about' ? 'max-h-[300px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="space-y-2 text-sm text-gray-600">
                   <div className="flex justify-between p-2">
                     <span>Version</span>
                     <span className="text-gray-900 font-mono">{__GIT_COMMIT__}</span>
@@ -585,7 +593,7 @@ export function Settings({ onClose }: SettingsProps) {
                     語順 (Gojun) - Learn Japanese word order by rearranging sentences.
                   </p>
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
