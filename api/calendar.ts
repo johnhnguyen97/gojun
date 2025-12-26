@@ -240,12 +240,41 @@ async function handleDaily(req: VercelRequest, res: VercelResponse, supabase: an
   });
 }
 
-// Handle date range queries for full calendar view
+// In-memory cache for API responses (short-lived for serverless)
+const wordCache = new Map<string, { data: unknown; timestamp: number }>();
+const kanjiCache = new Map<string, { data: unknown; timestamp: number }>();
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+function getCachedWord(term: string) {
+  const cached = wordCache.get(term);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+  return null;
+}
+
+function setCachedWord(term: string, data: unknown) {
+  wordCache.set(term, { data, timestamp: Date.now() });
+}
+
+function getCachedKanji(char: string) {
+  const cached = kanjiCache.get(char);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+  return null;
+}
+
+function setCachedKanji(char: string, data: unknown) {
+  kanjiCache.set(char, { data, timestamp: Date.now() });
+}
+
+// Handle date range queries for full calendar view - OPTIMIZED
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleRange(req: VercelRequest, res: VercelResponse, supabase: any, userId: string) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { start, end } = req.query;
+  const { start, end, jlpt } = req.query;
   if (!start || !end || typeof start !== 'string' || typeof end !== 'string') {
     return res.status(400).json({ error: 'Missing start or end date parameters' });
   }
@@ -257,14 +286,18 @@ async function handleRange(req: VercelRequest, res: VercelResponse, supabase: an
     return res.status(400).json({ error: 'Invalid date format' });
   }
 
-  // Get user settings
-  const { data: settings } = await supabase
-    .from('user_calendar_settings')
-    .select('jlpt_level')
-    .eq('user_id', userId)
-    .single();
+  // Use JLPT level from query param or fall back to user settings
+  let jlptLevel = typeof jlpt === 'string' && ['N5', 'N4', 'N3', 'N2', 'N1'].includes(jlpt) ? jlpt : null;
 
-  const jlptLevel = settings?.jlpt_level || 'N5';
+  if (!jlptLevel) {
+    const { data: settings } = await supabase
+      .from('user_calendar_settings')
+      .select('jlpt_level')
+      .eq('user_id', userId)
+      .single();
+    jlptLevel = settings?.jlpt_level || 'N5';
+  }
+
   const wordTerms = JLPT_SEARCH_TERMS[jlptLevel] || JLPT_SEARCH_TERMS.N5;
 
   // Get learned items for this user
@@ -276,27 +309,75 @@ async function handleRange(req: VercelRequest, res: VercelResponse, supabase: an
   const learnedWords = new Set(learnedItems?.filter((i: { item_type: string }) => i.item_type === 'word').map((i: { item_key: string }) => i.item_key) || []);
   const learnedKanji = new Set(learnedItems?.filter((i: { item_type: string }) => i.item_type === 'kanji').map((i: { item_key: string }) => i.item_key) || []);
 
-  // Generate words and kanji for each day in the range
-  const words: Array<{ date: string; word: unknown }> = [];
-  const kanji: Array<{ date: string; kanji: unknown }> = [];
-
+  // Collect all unique words and kanji needed
   const currentDate = new Date(startDate);
   const endTime = endDate.getTime();
-
-  // Limit to 45 days to prevent too many API calls
   const maxDays = 45;
-  let dayCount = 0;
 
+  const dateWordMap = new Map<string, { wordTerm: string; kanjiChar: string }>();
+  const uniqueWords = new Set<string>();
+  const uniqueKanji = new Set<string>();
+
+  let dayCount = 0;
   while (currentDate.getTime() <= endTime && dayCount < maxDays) {
     const dateString = currentDate.toISOString().split('T')[0];
-
-    // Get word for this day using the hash function
     const wordIndex = hashCode(dateString + jlptLevel + 'word') % wordTerms.length;
     const kanjiIndex = hashCode(dateString + jlptLevel + 'kanji') % wordTerms.length;
 
-    const searchTerm = wordTerms[wordIndex];
-    const wordData = await fetchWordFromJisho(searchTerm);
+    const wordTerm = wordTerms[wordIndex];
+    const kanjiChar = wordTerms[kanjiIndex].match(/[\u4e00-\u9faf]/)?.[0] || '日';
 
+    dateWordMap.set(dateString, { wordTerm, kanjiChar });
+    uniqueWords.add(wordTerm);
+    uniqueKanji.add(kanjiChar);
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayCount++;
+  }
+
+  // Fetch all unique words and kanji in parallel (with caching)
+  const wordFetchPromises = Array.from(uniqueWords).map(async (term) => {
+    const cached = getCachedWord(term);
+    if (cached) return { term, data: cached };
+    const data = await fetchWordFromJisho(term);
+    if (data) setCachedWord(term, data);
+    return { term, data };
+  });
+
+  const kanjiFetchPromises = Array.from(uniqueKanji).map(async (char) => {
+    const cached = getCachedKanji(char);
+    if (cached) return { char, data: cached };
+    const data = await fetchKanjiData(char);
+    if (data) setCachedKanji(char, data);
+    return { char, data };
+  });
+
+  // Fetch holidays in parallel too
+  const startYear = startDate.getFullYear();
+  const endYear = endDate.getFullYear();
+  const holidayYears = [];
+  for (let year = startYear; year <= endYear; year++) {
+    holidayYears.push(year);
+  }
+  const holidayPromises = holidayYears.map(year => fetchHolidays(year));
+
+  // Wait for all fetches in parallel
+  const [wordResults, kanjiResults, ...holidayResults] = await Promise.all([
+    Promise.all(wordFetchPromises),
+    Promise.all(kanjiFetchPromises),
+    ...holidayPromises
+  ]);
+
+  // Build lookup maps
+  const wordDataMap = new Map(wordResults.map(r => [r.term, r.data]));
+  const kanjiDataMap = new Map(kanjiResults.map(r => [r.char, r.data]));
+
+  // Generate calendar data from maps
+  const words: Array<{ date: string; word: unknown }> = [];
+  const kanji: Array<{ date: string; kanji: unknown }> = [];
+
+  for (const [dateString, { wordTerm, kanjiChar }] of dateWordMap) {
+    const wordData = wordDataMap.get(wordTerm) as { word: string; reading: string; meaning: string; partOfSpeech: string } | null;
     if (wordData) {
       words.push({
         date: dateString,
@@ -311,10 +392,7 @@ async function handleRange(req: VercelRequest, res: VercelResponse, supabase: an
       });
     }
 
-    // Get kanji for this day
-    const kanjiChar = wordTerms[kanjiIndex].match(/[\u4e00-\u9faf]/)?.[0] || '日';
-    const kanjiData = await fetchKanjiData(kanjiChar);
-
+    const kanjiData = kanjiDataMap.get(kanjiChar) as { kanji: string; onyomi: string[]; kunyomi: string[]; meaning: string; strokeCount: number | null } | null;
     kanji.push({
       date: dateString,
       kanji: kanjiData ? {
@@ -334,27 +412,16 @@ async function handleRange(req: VercelRequest, res: VercelResponse, supabase: an
         isLearned: learnedKanji.has(kanjiChar)
       }
     });
-
-    currentDate.setDate(currentDate.getDate() + 1);
-    dayCount++;
   }
 
-  // Get holidays for the year(s) in the range
-  const startYear = startDate.getFullYear();
-  const endYear = endDate.getFullYear();
+  // Combine and filter holidays
   let allHolidays: Array<{ date: string; localName: string; name: string }> = [];
-
-  for (let year = startYear; year <= endYear; year++) {
-    const yearHolidays = await fetchHolidays(year);
-    allHolidays = allHolidays.concat(yearHolidays);
+  for (const yearHolidays of holidayResults) {
+    allHolidays = allHolidays.concat(yearHolidays as Array<{ date: string; localName: string; name: string }>);
   }
 
-  // Filter holidays to the date range
   const holidays = allHolidays
-    .filter((h: { date: string }) => {
-      const hDate = h.date;
-      return hDate >= start && hDate <= end;
-    })
+    .filter((h: { date: string }) => h.date >= start && h.date <= end)
     .map((h: { date: string; localName: string; name: string }) => {
       const cultural = holidayCulturalInfo[h.name] || {};
       return {

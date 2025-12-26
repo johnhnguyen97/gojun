@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import type { EventInput, DatesSetArg, EventClickArg } from '@fullcalendar/core';
 import { useAuth } from '../../contexts/AuthContext';
 import { CalendarHeader } from './CalendarHeader';
+import { CalendarDetailPopover } from './CalendarDetailPopover';
 import type { JLPTLevel, JapaneseHoliday, WordOfTheDay, KanjiOfTheDay } from '../../types/calendar';
 
 // Types for calendar range data
@@ -39,6 +40,13 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
   const [_rangeData, setRangeData] = useState<CalendarRangeData | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Popover state
+  const [popoverData, setPopoverData] = useState<{
+    type: 'wotd' | 'kotd' | 'holiday';
+    data: WordOfTheDay | KanjiOfTheDay | JapaneseHoliday;
+    position: { x: number; y: number };
+  } | null>(null);
+
   // Animation on mount
   useEffect(() => {
     requestAnimationFrame(() => setIsVisible(true));
@@ -56,10 +64,10 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
         if (data.jlptLevel) setJlptLevel(data.jlptLevel);
       })
       .catch(console.error);
-  }, [session?.access_token]);
+  }, [session?.access_token, jlptLevel]);
 
   // Fetch calendar data for a date range
-  const fetchCalendarData = useCallback(async (start: Date, end: Date) => {
+  const fetchCalendarData = useCallback(async (start: Date, end: Date, level?: JLPTLevel) => {
     if (!session?.access_token) return;
 
     setLoading(true);
@@ -68,9 +76,10 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
     try {
       const startStr = start.toISOString().split('T')[0];
       const endStr = end.toISOString().split('T')[0];
+      const jlpt = level || jlptLevel;
 
       const response = await fetch(
-        `/api/calendar?action=range&start=${startStr}&end=${endStr}`,
+        `/api/calendar?action=range&start=${startStr}&end=${endStr}&jlpt=${jlpt}`,
         { headers: { Authorization: `Bearer ${session.access_token}` } }
       );
 
@@ -143,10 +152,22 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
     }
   }, [session?.access_token]);
 
+  // Track current date range for refetching when JLPT changes
+  const [currentDateRange, setCurrentDateRange] = useState<{ start: Date; end: Date } | null>(null);
+
   // Handle date range changes
   const handleDatesSet = useCallback((arg: DatesSetArg) => {
+    setCurrentDateRange({ start: arg.start, end: arg.end });
     fetchCalendarData(arg.start, arg.end);
   }, [fetchCalendarData]);
+
+  // Handle JLPT level change - refetch data
+  const handleJlptChange = useCallback((level: JLPTLevel) => {
+    setJlptLevel(level);
+    if (currentDateRange) {
+      fetchCalendarData(currentDateRange.start, currentDateRange.end, level);
+    }
+  }, [currentDateRange, fetchCalendarData]);
 
   // Handle view change
   const handleViewChange = (view: CalendarViewType) => {
@@ -165,9 +186,20 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
 
   // Handle event click
   const handleEventClick = (arg: EventClickArg) => {
-    const { type, data } = arg.event.extendedProps as { type: string; data: unknown };
-    console.log('Event clicked:', type, data);
-    // TODO: Open detail modal based on event type
+    const { type, data } = arg.event.extendedProps as { type: string; data: WordOfTheDay | KanjiOfTheDay | JapaneseHoliday };
+
+    // Get click position from the event element
+    const rect = arg.el.getBoundingClientRect();
+    const position = {
+      x: rect.right + 10,
+      y: rect.top
+    };
+
+    setPopoverData({
+      type: type as 'wotd' | 'kotd' | 'holiday',
+      data,
+      position
+    });
   };
 
   // Close with animation
@@ -216,7 +248,7 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
             currentView={currentView}
             jlptLevel={jlptLevel}
             onViewChange={handleViewChange}
-            onJlptChange={setJlptLevel}
+            onJlptChange={handleJlptChange}
             onClose={handleClose}
           />
 
@@ -292,6 +324,16 @@ export function FullCalendarView({ onClose }: FullCalendarViewProps) {
           )}
         </div>
       </div>
+
+      {/* Detail Popover */}
+      {popoverData && (
+        <CalendarDetailPopover
+          type={popoverData.type}
+          data={popoverData.data}
+          position={popoverData.position}
+          onClose={() => setPopoverData(null)}
+        />
+      )}
 
       {/* Custom Calendar Styles */}
       <style>{`
