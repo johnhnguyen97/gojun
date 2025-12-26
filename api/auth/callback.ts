@@ -18,7 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/auth/callback';
+  const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/api/auth/callback';
 
   if (!clientId || !clientSecret) {
     return res.redirect('/?keep_error=OAuth not configured');
