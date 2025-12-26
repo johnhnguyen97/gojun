@@ -104,7 +104,7 @@ export function WordNoteButton({ word, reading, english }: WordNoteButtonProps) 
       {isOpen && (
         <div
           ref={popupRef}
-          className="absolute z-50 w-56 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden animate-[scaleIn_0.15s_ease-out]"
+          className="absolute z-[100] w-56 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden animate-[scaleIn_0.15s_ease-out]"
           style={{ bottom: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)' }}
           onClick={(e) => e.stopPropagation()}
         >
