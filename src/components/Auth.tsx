@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Logo } from './Logo';
 
 export function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -83,16 +84,9 @@ export function Auth() {
       <div className="max-w-md w-full relative z-10">
         {/* Auth Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-gray-200/50 p-8 border border-white/50">
-          {/* Logo - Two Cards */}
+          {/* Logo */}
           <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30 -rotate-6 hover:rotate-0 transition-transform duration-300">
-                <span className="text-white text-xl font-bold">語</span>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-600/30 rotate-6 hover:rotate-0 transition-transform duration-300">
-                <span className="text-white text-xl font-bold">順</span>
-              </div>
-            </div>
+            <Logo size="lg" />
           </div>
 
           <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">

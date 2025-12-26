@@ -6,6 +6,7 @@ import { SentenceInput } from './components/SentenceInput';
 import { SentenceDisplay } from './components/SentenceDisplay';
 import { GrammarSidebar } from './components/GrammarSidebar';
 import { ToolboxButton } from './components/ToolboxButton';
+import { Logo } from './components/Logo';
 import { parseEnglishSentence, describeSentenceStructure } from './services/englishParser';
 import { translateSentence } from './services/japaneseApi';
 import { handleKeepCallback } from './services/keepApi';
@@ -315,11 +316,10 @@ function AppContent() {
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <header className={`text-center relative mb-6 ${gameActive ? 'mb-4' : 'mb-8'}`}>
-              <h1 className={`font-bold text-gray-800 mb-2 transition-all duration-300 ${gameActive ? 'text-2xl' : 'text-4xl'}`}>
-                <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">語順</span>
-                {' '}
-                <span className={`text-gray-500 ${gameActive ? 'text-lg' : 'text-2xl'}`}>(Gojun)</span>
-              </h1>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <Logo size={gameActive ? 'sm' : 'md'} />
+                <span className={`text-gray-500 font-medium ${gameActive ? 'text-lg' : 'text-2xl'}`}>(Gojun)</span>
+              </div>
               {!gameActive && (
                 <p className="text-gray-600">
                   Learn Japanese word order by rearranging English sentences
