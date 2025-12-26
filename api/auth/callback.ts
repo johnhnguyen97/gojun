@@ -1,110 +1,96 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GPSOAuth } from 'gpsoauth-js';
+import { createClient } from '@supabase/supabase-js';
 
-// Google OAuth token endpoint
-const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/auth/callback';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { code, error } = req.query;
+  const { code, state, error } = req.query;
 
   // Handle OAuth errors
   if (error) {
-    return res.redirect(`/?keep_error=${encodeURIComponent(error as string)}`);
+    console.error('Google OAuth error:', error);
+    return res.redirect(`/?google_error=${encodeURIComponent(error as string)}`);
   }
 
-  if (!code || typeof code !== 'string') {
-    return res.redirect('/?keep_error=No authorization code received');
+  if (!code) {
+    return res.redirect('/?google_error=no_code');
   }
 
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/api/auth/callback';
+  const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!clientId || !clientSecret) {
-    return res.redirect('/?keep_error=OAuth not configured');
+  if (!supabaseUrl || !supabaseServiceKey) {
+    console.error('Missing Supabase configuration');
+    return res.redirect('/?google_error=server_config');
   }
+
+  const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: { autoRefreshToken: false, persistSession: false }
+  });
 
   try {
-    // Step 1: Exchange authorization code for OAuth tokens
-    const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
+    // Exchange code for tokens
+    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        code,
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: redirectUri,
+        client_id: GOOGLE_CLIENT_ID!,
+        client_secret: GOOGLE_CLIENT_SECRET!,
+        code: code as string,
         grant_type: 'authorization_code',
+        redirect_uri: GOOGLE_REDIRECT_URI!,
       }),
     });
 
+    if (!tokenResponse.ok) {
+      const err = await tokenResponse.text();
+      console.error('Token exchange failed:', err);
+      return res.redirect('/?google_error=token_exchange_failed');
+    }
+
     const tokens = await tokenResponse.json();
 
-    if (tokens.error) {
-      console.error('Token exchange error:', tokens);
-      return res.redirect(`/?keep_error=${encodeURIComponent(tokens.error_description || tokens.error)}`);
-    }
-
-    // Step 2: Get user info
-    const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+    // Get user info from Google
+    const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: `Bearer ${tokens.access_token}` },
     });
-    const userInfo = await userResponse.json();
-    const email = userInfo.email;
 
-    // Step 3: Exchange OAuth token for master token using gpsoauth
-    console.log('Exchanging OAuth token for master token...');
-    const masterTokenResult = await GPSOAuth.exchangeToken(email, tokens.access_token);
+    const userInfo = await userInfoResponse.json();
 
-    if (masterTokenResult.error) {
-      console.error('Master token exchange error:', masterTokenResult.error);
-      // Fall back to just OAuth token (won't work for Keep API but at least user is connected)
-      const tokenData = JSON.stringify({
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        expires_in: tokens.expires_in,
-        email: email,
-        master_token: null,
-        keep_auth: null,
-      });
-      return res.redirect(`/?keep_connected=true&keep_warning=master_token_failed#keep_tokens=${encodeURIComponent(tokenData)}`);
+    // Get Supabase user from state (JWT token)
+    if (!state) {
+      return res.redirect('/?google_error=no_state');
     }
 
-    // Step 4: Use master token to get Keep-specific auth token
-    console.log('Getting Keep auth token...');
-    const keepAuthResult = await GPSOAuth.performOAuth(email, masterTokenResult.masterToken!, {
-      service: 'oauth2:https://www.googleapis.com/auth/memento',
-      app: 'com.google.android.keep',
-      clientSig: '38918a453d07199354f8b19af05ec6562ced5788',
-    });
-
-    if (keepAuthResult.error) {
-      console.error('Keep auth error:', keepAuthResult.error);
-      // Return with master token but no Keep auth
-      const tokenData = JSON.stringify({
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        expires_in: tokens.expires_in,
-        email: email,
-        master_token: masterTokenResult.masterToken,
-        keep_auth: null,
-      });
-      return res.redirect(`/?keep_connected=true&keep_warning=keep_auth_failed#keep_tokens=${encodeURIComponent(tokenData)}`);
+    const { data: { user }, error: authError } = await supabase.auth.getUser(state as string);
+    if (authError || !user) {
+      console.error('Invalid session:', authError);
+      return res.redirect('/?google_error=invalid_session');
     }
 
-    // Success! We have full Keep access
-    const tokenData = JSON.stringify({
-      access_token: tokens.access_token,
-      refresh_token: tokens.refresh_token,
-      expires_in: tokens.expires_in,
-      email: email,
-      master_token: masterTokenResult.masterToken,
-      keep_auth: keepAuthResult.auth,
-    });
+    // Store tokens in database
+    const { error: dbError } = await supabase
+      .from('user_google_tokens')
+      .upsert({
+        user_id: user.id,
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token,
+        expires_at: new Date(Date.now() + tokens.expires_in * 1000).toISOString(),
+        google_email: userInfo.email,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id' });
 
-    return res.redirect(`/?keep_connected=true#keep_tokens=${encodeURIComponent(tokenData)}`);
+    if (dbError) {
+      console.error('Failed to store tokens:', dbError);
+      return res.redirect('/?google_error=storage_failed');
+    }
+
+    // Redirect back to app with success
+    return res.redirect('/?google_connected=true');
   } catch (err) {
-    console.error('OAuth callback error:', err);
-    return res.redirect(`/?keep_error=${encodeURIComponent('Authentication failed: ' + (err instanceof Error ? err.message : 'Unknown error'))}`);
+    console.error('Google callback error:', err);
+    return res.redirect('/?google_error=unknown');
   }
 }

@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/api/google-auth?action=callback';
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || 'https://gojun.vercel.app/auth/callback';
 
 // Scopes for Calendar and Tasks
 const SCOPES = [

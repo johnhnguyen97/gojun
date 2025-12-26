@@ -13,6 +13,12 @@ CREATE TABLE IF NOT EXISTS user_google_tokens (
 -- Row Level Security
 ALTER TABLE user_google_tokens ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own Google tokens" ON user_google_tokens;
+DROP POLICY IF EXISTS "Users can insert own Google tokens" ON user_google_tokens;
+DROP POLICY IF EXISTS "Users can update own Google tokens" ON user_google_tokens;
+DROP POLICY IF EXISTS "Users can delete own Google tokens" ON user_google_tokens;
+
 -- Policies
 CREATE POLICY "Users can view own Google tokens"
   ON user_google_tokens FOR SELECT

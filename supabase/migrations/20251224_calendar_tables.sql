@@ -36,6 +36,14 @@ CREATE TABLE IF NOT EXISTS user_calendar_settings (
 ALTER TABLE user_learned_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_calendar_settings ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own learned items" ON user_learned_items;
+DROP POLICY IF EXISTS "Users can insert own learned items" ON user_learned_items;
+DROP POLICY IF EXISTS "Users can delete own learned items" ON user_learned_items;
+DROP POLICY IF EXISTS "Users can view own calendar settings" ON user_calendar_settings;
+DROP POLICY IF EXISTS "Users can insert own calendar settings" ON user_calendar_settings;
+DROP POLICY IF EXISTS "Users can update own calendar settings" ON user_calendar_settings;
+
 -- Policies for user_learned_items
 CREATE POLICY "Users can view own learned items"
   ON user_learned_items FOR SELECT
