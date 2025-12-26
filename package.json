@@ -33,6 +33,7 @@
     "globals": "^16.5.0",
     "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^5.4.449",
+    "supabase": "^2.70.5",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
