@@ -166,12 +166,6 @@ function AppContent() {
   }, [session]);
 
   const handleTextSubmit = useCallback(async (text: string) => {
-    if (!hasApiKey) {
-      setGlobalError('Please add your Anthropic API key in Settings');
-      setShowSettings(true);
-      return;
-    }
-
     const sentenceTexts = splitIntoSentences(text).slice(0, 6);
     setIsLoadingAll(true);
     setGlobalError(null);
@@ -202,7 +196,7 @@ function AppContent() {
     })));
 
     setIsLoadingAll(false);
-  }, [hasApiKey, loadSentence]);
+  }, [loadSentence]);
 
   const handleSlotClick = useCallback((sentenceIndex: number, slotId: string) => {
     setActiveSentenceIndex(sentenceIndex);
@@ -337,14 +331,7 @@ function AppContent() {
                 </svg>
               </button>
 
-              {!hasApiKey && !gameActive && (
-                <div className="mt-4 p-3 bg-amber-100 border border-amber-300 rounded-lg text-amber-800 text-sm">
-                  <button onClick={() => setShowSettings(true)} className="font-medium underline hover:no-underline">
-                    Add your Anthropic API key
-                  </button>
-                  {' '}to start translating sentences.
-                </div>
-              )}
+
             </header>
 
             {globalError && (

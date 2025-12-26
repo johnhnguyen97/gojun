@@ -417,67 +417,92 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Sentence is required' });
     }
 
-    // Get user's encrypted API key
-    const { data: keyData, error: keyError } = await supabaseAdmin
+    // Get user's encrypted API key (optional - will fall back to Groq if not set)
+    const { data: keyData } = await supabaseAdmin
       .from('user_api_keys')
       .select('encrypted_key, iv, auth_tag, salt')
       .eq('user_id', user.id)
       .single();
 
-    if (keyError || !keyData) {
-      return res.status(400).json({ error: 'No API key configured. Please add your Anthropic API key in Settings.' });
-    }
-
-    // Decrypt the API key
-    let apiKey: string;
-    try {
-      apiKey = decrypt({
-        encrypted: keyData.encrypted_key,
-        iv: keyData.iv,
-        authTag: keyData.auth_tag,
-        salt: keyData.salt,
-      });
-    } catch (decryptError) {
-      console.error('Decrypt error:', decryptError);
-      return res.status(500).json({ error: 'Failed to decrypt API key' });
-    }
-
-    // Build the prompt for Claude
+    // Build the prompt
     const prompt = buildTranslationPrompt(sentence, parsedWords);
 
-    // Call Anthropic API with user's key
-    const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        messages: [
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-      }),
-    });
+    let content: string;
 
-    if (!anthropicResponse.ok) {
-      const errorData = await anthropicResponse.json().catch(() => ({}));
-      console.error('Anthropic API error:', anthropicResponse.status, errorData);
-
-      if (anthropicResponse.status === 401) {
-        return res.status(400).json({ error: 'Invalid API key. Please update your API key in Settings.' });
+    // Try user's Anthropic key first, fall back to Groq
+    if (keyData?.encrypted_key) {
+      // User has their own Anthropic key - use Claude
+      let apiKey: string;
+      try {
+        apiKey = decrypt({
+          encrypted: keyData.encrypted_key,
+          iv: keyData.iv,
+          authTag: keyData.auth_tag,
+          salt: keyData.salt,
+        });
+      } catch (decryptError) {
+        console.error('Decrypt error:', decryptError);
+        return res.status(500).json({ error: 'Failed to decrypt API key' });
       }
 
-      return res.status(500).json({ error: 'Failed to get translation from AI: ' + (errorData.error?.message || anthropicResponse.status) });
-    }
+      const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
 
-    const data = await anthropicResponse.json();
-    const content = data.content[0]?.text;
+      if (!anthropicResponse.ok) {
+        const errorData = await anthropicResponse.json().catch(() => ({}));
+        console.error('Anthropic API error:', anthropicResponse.status, errorData);
+
+        if (anthropicResponse.status === 401) {
+          return res.status(400).json({ error: 'Invalid API key. Please update your API key in Settings.' });
+        }
+
+        return res.status(500).json({ error: 'Failed to get translation from AI: ' + (errorData.error?.message || anthropicResponse.status) });
+      }
+
+      const data = await anthropicResponse.json();
+      content = data.content[0]?.text;
+    } else {
+      // No user key - use Groq (free fallback)
+      const groqKey = process.env.GROQ_API_KEY;
+      if (!groqKey) {
+        return res.status(400).json({
+          error: 'No API key configured. Please add your Anthropic API key in Settings, or contact the admin to enable the free tier.'
+        });
+      }
+
+      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          max_tokens: 2000,
+          messages: [{ role: 'user', content: prompt }],
+        }),
+      });
+
+      if (!groqResponse.ok) {
+        const errorData = await groqResponse.json().catch(() => ({}));
+        console.error('Groq API error:', groqResponse.status, errorData);
+        return res.status(500).json({ error: 'Failed to get translation from AI: ' + (errorData.error?.message || groqResponse.status) });
+      }
+
+      const data = await groqResponse.json();
+      content = data.choices?.[0]?.message?.content;
+    }
 
     if (!content) {
       return res.status(500).json({ error: 'No response from AI' });

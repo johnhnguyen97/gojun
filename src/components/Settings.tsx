@@ -320,15 +320,30 @@ export function Settings({ onClose }: SettingsProps) {
               {hasApiKey ? (
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 animate-pulse">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  Connected
+                  Claude (Your Key)
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
-                  <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
-                  Not Set
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                  Free Tier
                 </span>
               )}
             </div>
+
+            {/* Free tier info */}
+            {!hasApiKey && (
+              <div className="flex items-start gap-3 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-lg">🆓</span>
+                </div>
+                <div className="text-sm">
+                  <p className="font-semibold text-blue-800">Free Tier Active</p>
+                  <p className="text-blue-600 mt-0.5">
+                    You're using the free AI (Llama 3). Add your own Anthropic key for Claude quality.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Messages */}
             {error && (
