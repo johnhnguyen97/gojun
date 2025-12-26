@@ -18,7 +18,7 @@ export async function saveFavorite(
   token: string,
   category?: string
 ): Promise<Favorite> {
-  const response = await fetch(`${API_BASE}/save-favorite`, {
+  const response = await fetch(`${API_BASE}/favorites`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export async function saveFavorite(
 }
 
 export async function getFavorites(token: string): Promise<{ favorites: Favorite[]; grouped: Record<string, Favorite[]> }> {
-  const response = await fetch(`${API_BASE}/get-favorites`, {
+  const response = await fetch(`${API_BASE}/favorites`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -53,7 +53,7 @@ export async function getFavorites(token: string): Promise<{ favorites: Favorite
 }
 
 export async function deleteFavorite(word: string, token: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/delete-favorite`, {
+  const response = await fetch(`${API_BASE}/favorites`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

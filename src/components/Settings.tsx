@@ -37,7 +37,7 @@ export function Settings({ onClose }: SettingsProps) {
     }
 
     try {
-      const response = await fetch('/api/save-api-key', {
+      const response = await fetch('/api/api-key', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export function Settings({ onClose }: SettingsProps) {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/delete-api-key', {
+      const response = await fetch('/api/api-key', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${session?.access_token}`,

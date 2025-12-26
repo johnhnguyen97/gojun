@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const response = await fetch('/api/check-api-key', {
+      const response = await fetch('/api/api-key', {
         headers: {
           'Authorization': `Bearer ${session.access_token}`,
         },

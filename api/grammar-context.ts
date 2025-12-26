@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 interface GrammarTopic {
   id: string;
@@ -17,7 +17,8 @@ interface GrammarTopic {
 // Cache for topics
 let topicsCache: GrammarTopic[] | null = null;
 
-async function getTopics(supabase: ReturnType<typeof createClient>): Promise<GrammarTopic[]> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function getTopics(supabase: SupabaseClient<any, any, any>): Promise<GrammarTopic[]> {
   if (topicsCache) return topicsCache;
 
   const { data, error } = await supabase
