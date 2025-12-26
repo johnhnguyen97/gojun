@@ -165,7 +165,152 @@ function forceAtomicSplit(result: TranslationResult): void {
         wasSplit = true;
       }
 
-      // Split: もう → keep as is (already atomic)
+      // Split: できない/できません → でき + ない/ません (potential + negative)
+      if (!wasSplit && /できない$/.test(comp)) {
+        const base = comp.replace(/できない$/, '');
+        if (base) {
+          newBreakdown.push({ component: base, type: 'noun/verb stem', meaning: atom.meaning || 'base' });
+        }
+        newBreakdown.push({ component: 'でき', type: 'potential stem', meaning: 'can do / be able to' });
+        newBreakdown.push({ component: 'ない', type: 'negative auxiliary', meaning: 'not / negation' });
+        wasSplit = true;
+      }
+
+      // Split: Noun+する verbs → Noun + する (suru-verbs)
+      if (!wasSplit && /する$/.test(comp) && comp.length > 2 && comp !== 'する') {
+        const base = comp.replace(/する$/, '');
+        newBreakdown.push({ component: base, type: 'verbal noun', meaning: atom.meaning || 'action noun' });
+        newBreakdown.push({ component: 'する', type: 'verb (dictionary)', meaning: 'to do' });
+        wasSplit = true;
+      }
+
+      // Split: Noun+した → Noun + し + た (past suru-verb)
+      if (!wasSplit && /した$/.test(comp) && comp.length > 2 && comp !== 'した') {
+        const base = comp.replace(/した$/, '');
+        newBreakdown.push({ component: base, type: 'verbal noun', meaning: atom.meaning || 'action noun' });
+        newBreakdown.push({ component: 'し', type: 'verb stem', meaning: 'do (stem)' });
+        newBreakdown.push({ component: 'た', type: 'past auxiliary', meaning: 'past tense' });
+        wasSplit = true;
+      }
+
+      // Split: ました → まし + た
+      if (!wasSplit && /ました$/.test(comp) && comp.length > 3) {
+        const base = comp.replace(/ました$/, '');
+        newBreakdown.push({ component: base, type: 'verb stem', meaning: atom.meaning || 'verb stem' });
+        newBreakdown.push({ component: 'まし', type: 'polite suffix', meaning: 'polite marker' });
+        newBreakdown.push({ component: 'た', type: 'past auxiliary', meaning: 'past tense' });
+        wasSplit = true;
+      }
+
+      // Split: ています/ていた → て + い + ます/た
+      if (!wasSplit && /ています$/.test(comp) && comp !== 'ています') {
+        const base = comp.replace(/ています$/, '');
+        newBreakdown.push({ component: base, type: 'verb stem', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'い', type: 'auxiliary stem', meaning: 'exist/be' });
+        newBreakdown.push({ component: 'ます', type: 'polite suffix', meaning: 'polite present' });
+        wasSplit = true;
+      }
+
+      // Split: いただく patterns → いただ + く
+      if (!wasSplit && /いただく$/.test(comp) && comp.length > 4) {
+        const base = comp.replace(/いただく$/, '');
+        newBreakdown.push({ component: base, type: 'te-form', meaning: atom.meaning || 'action' });
+        newBreakdown.push({ component: 'いただく', type: 'humble auxiliary', meaning: 'receive (humble)' });
+        wasSplit = true;
+      }
+
+      // Split: ている → て + いる
+      if (!wasSplit && /ている$/.test(comp) && comp !== 'ている') {
+        const base = comp.replace(/ている$/, '');
+        newBreakdown.push({ component: base, type: 'verb stem', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'いる', type: 'auxiliary', meaning: 'progressive/state' });
+        wasSplit = true;
+      }
+
+      // Split: ていた → て + い + た
+      if (!wasSplit && /ていた$/.test(comp) && comp !== 'ていた') {
+        const base = comp.replace(/ていた$/, '');
+        newBreakdown.push({ component: base, type: 'verb stem', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'い', type: 'auxiliary stem', meaning: 'exist/be' });
+        newBreakdown.push({ component: 'た', type: 'past auxiliary', meaning: 'past tense' });
+        wasSplit = true;
+      }
+
+      // Split: 複雑だった → 複雑 + だった (na-adj/noun + past copula)
+      if (!wasSplit && /だった$/.test(comp) && comp !== 'だった' && comp.length > 3) {
+        const base = comp.replace(/だった$/, '');
+        newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
+        newBreakdown.push({ component: 'だった', type: 'copula (past)', meaning: 'was (past tense of だ)' });
+        wasSplit = true;
+      }
+
+      // Split: 複雑だ → 複雑 + だ (na-adj/noun + copula)
+      if (!wasSplit && /だ$/.test(comp) && comp !== 'だ' && comp.length > 2) {
+        const base = comp.replace(/だ$/, '');
+        newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
+        newBreakdown.push({ component: 'だ', type: 'copula', meaning: 'is/am/are' });
+        wasSplit = true;
+      }
+
+      // Split: 過ごしていない → 過ごす + て + い + ない (progressive negative)
+      if (!wasSplit && /ていない$/.test(comp) && comp !== 'ていない') {
+        const base = comp.replace(/ていない$/, '');
+        const dictForm = guessDictionaryForm(base, 'i');
+        newBreakdown.push({ component: dictForm, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'い', type: 'auxiliary stem', meaning: 'exist/be' });
+        newBreakdown.push({ component: 'ない', type: 'negative auxiliary', meaning: 'not' });
+        wasSplit = true;
+      }
+
+      // Split: 過ごしてない → verb + て + ない (casual progressive negative)
+      if (!wasSplit && /てない$/.test(comp) && comp !== 'てない') {
+        const base = comp.replace(/てない$/, '');
+        const dictForm = guessDictionaryForm(base, 'i');
+        newBreakdown.push({ component: dictForm, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'ない', type: 'negative auxiliary', meaning: 'not (casual)' });
+        wasSplit = true;
+      }
+
+      // Split: ただでさえ → ただ + で + さえ (compound adverb)
+      if (!wasSplit && comp === 'ただでさえ') {
+        newBreakdown.push({ component: 'ただ', type: 'adverb', meaning: 'just/only/ordinary' });
+        newBreakdown.push({ component: 'で', type: 'particle', meaning: 'at/by' });
+        newBreakdown.push({ component: 'さえ', type: 'particle', meaning: 'even' });
+        wasSplit = true;
+      }
+
+      // Split: 静かでした → 静か + でした (na-adj/noun + polite past copula)
+      if (!wasSplit && /でした$/.test(comp) && comp !== 'でした' && comp.length > 3) {
+        const base = comp.replace(/でした$/, '');
+        newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
+        newBreakdown.push({ component: 'でした', type: 'copula (polite past)', meaning: 'was (polite)' });
+        wasSplit = true;
+      }
+
+      // Split: 簡単ではない → 簡単 + では + ない (negative copula)
+      if (!wasSplit && /ではない$/.test(comp) && comp !== 'ではない') {
+        const base = comp.replace(/ではない$/, '');
+        newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
+        newBreakdown.push({ component: 'では', type: 'copula + topic', meaning: 'topic marker' });
+        newBreakdown.push({ component: 'ない', type: 'negative', meaning: 'not' });
+        wasSplit = true;
+      }
+
+      // Split: 簡単じゃない → 簡単 + じゃ + ない (casual negative copula)
+      if (!wasSplit && /じゃない$/.test(comp) && comp !== 'じゃない') {
+        const base = comp.replace(/じゃない$/, '');
+        newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
+        newBreakdown.push({ component: 'じゃ', type: 'copula (casual)', meaning: 'contraction of では' });
+        newBreakdown.push({ component: 'ない', type: 'negative', meaning: 'not' });
+        wasSplit = true;
+      }
+
+      // Keep as is if no split needed
       if (!wasSplit) {
         newBreakdown.push(atom);
       }
@@ -373,8 +518,72 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 }
 
+// Grammar reference data (loaded once)
+const GRAMMAR_RULES = {
+  particles: {
+    'は': { name: 'Topic Marker', usage: 'Marks the topic of sentence. Read as "wa".' },
+    'が': { name: 'Subject Marker', usage: 'Identifies subject, emphasizes new info.' },
+    'を': { name: 'Object Marker', usage: 'Marks direct object. Read as "o".' },
+    'に': { name: 'Target/Location/Time', usage: 'Direction, time, indirect object.' },
+    'で': { name: 'Context Marker', usage: 'Location of action, means, reason.' },
+    'へ': { name: 'Direction', usage: 'Direction of movement. Read as "e".' },
+    'と': { name: 'And/With/Quote', usage: 'Exhaustive listing, companion, quotation.' },
+    'も': { name: 'Also/Too', usage: 'Replaces は/が to mean "also".' },
+    'の': { name: 'Possessive/Nominalizer', usage: 'Possession or turns verbs to nouns.' },
+    'か': { name: 'Question', usage: 'Question marker or "or".' },
+    'ね': { name: 'Confirmation', usage: 'Seeks agreement, like "right?"' },
+    'よ': { name: 'Emphasis', usage: 'Emphasizes info listener may not know.' },
+  },
+  verbForms: {
+    'ます': { name: 'Polite Form', formation: 'Verb stem + ます' },
+    'ません': { name: 'Polite Negative', formation: 'Verb stem + ません' },
+    'ました': { name: 'Polite Past', formation: 'Verb stem + ました' },
+    'て': { name: 'Te-form', formation: 'Various rules by verb type' },
+    'た': { name: 'Plain Past', formation: 'Same changes as te-form, て→た' },
+    'ない': { name: 'Plain Negative', formation: 'u→a + ない (u-verb), drop る + ない (ru-verb)' },
+    'たい': { name: 'Want to', formation: 'Verb stem + たい' },
+    'ている': { name: 'Progressive/State', formation: 'Te-form + いる' },
+    'られる': { name: 'Potential/Passive', formation: 'Ru-verb: られる, U-verb: える' },
+    'させる': { name: 'Causative', formation: 'Ru-verb: させる, U-verb: a + せる' },
+  },
+  patterns: {
+    'から': { name: 'Because', usage: 'Clause + から = reason' },
+    'ので': { name: 'Because (softer)', usage: 'More polite than から' },
+    'のに': { name: 'Despite', usage: 'Although, even though' },
+    'たら': { name: 'Conditional', usage: 'Ta-form + ら = if/when' },
+    'ば': { name: 'Conditional', usage: 'Hypothetical if' },
+    'なければならない': { name: 'Must', usage: 'Negative stem + なければならない' },
+    'すぎる': { name: 'Too much', usage: 'Verb stem/adj stem + すぎる' },
+  }
+};
+
+function buildGrammarReference(): string {
+  let ref = '\n\n=== GRAMMAR REFERENCE (Follow these rules for breakdown) ===\n\n';
+
+  ref += '【PARTICLES - Always separate, never combine with words】\n';
+  for (const [p, info] of Object.entries(GRAMMAR_RULES.particles)) {
+    ref += `  ${p} = ${info.name}: ${info.usage}\n`;
+  }
+
+  ref += '\n【VERB FORMS - Break into dictionary form + suffix】\n';
+  for (const [form, info] of Object.entries(GRAMMAR_RULES.verbForms)) {
+    ref += `  ${form} = ${info.name}: ${info.formation}\n`;
+  }
+
+  ref += '\n【GRAMMAR PATTERNS - Identify and explain】\n';
+  for (const [pat, info] of Object.entries(GRAMMAR_RULES.patterns)) {
+    ref += `  ${pat} = ${info.name}: ${info.usage}\n`;
+  }
+
+  ref += '\n=== END REFERENCE ===\n';
+  return ref;
+}
+
 function buildTranslationPrompt(sentence: string, parsedWords: unknown[]): string {
+  const grammarRef = buildGrammarReference();
+
   return `Translate to Japanese with word breakdown. Return ONLY valid JSON.
+${grammarRef}
 
 "${sentence}"
 

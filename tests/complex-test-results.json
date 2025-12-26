@@ -1,0 +1,3229 @@
+[
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I would like to schedule a meeting with you next week if you have time.",
+      "category": "Business",
+      "description": "Formal request with conditional"
+    },
+    "result": {
+      "fullTranslation": "来週、お時間がありましたら、お打ち合わせをさせていただきたいのですが。",
+      "wordOrderDisplay": "来週 → お時間がありましたら → お打ち合わせを → させていただきたい → のですが",
+      "words": [
+        {
+          "english": "next week",
+          "japanese": "来週",
+          "reading": "らいしゅう",
+          "romaji": "raishuu",
+          "partOfSpeech": "noun",
+          "role": "time expression",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "honorable",
+          "japanese": "お",
+          "reading": "お",
+          "romaji": "o",
+          "partOfSpeech": "prefix",
+          "role": "honorific prefix",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "time",
+          "japanese": "時間",
+          "reading": "じかん",
+          "romaji": "jikan",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "subject marker",
+          "japanese": "が",
+          "reading": "が",
+          "romaji": "ga",
+          "partOfSpeech": "particle",
+          "role": "subject marker",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "exist",
+          "japanese": "ある",
+          "reading": "ある",
+          "romaji": "aru",
+          "partOfSpeech": "verb",
+          "role": "existence verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "polite past",
+          "japanese": "まし",
+          "reading": "まし",
+          "romaji": "mashi",
+          "partOfSpeech": "auxiliary",
+          "role": "polite auxiliary",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "conditional",
+          "japanese": "たら",
+          "reading": "たら",
+          "romaji": "tara",
+          "partOfSpeech": "auxiliary",
+          "role": "conditional marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "honorable",
+          "japanese": "お",
+          "reading": "お",
+          "romaji": "o",
+          "partOfSpeech": "prefix",
+          "role": "honorific prefix",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "meeting/consultation",
+          "japanese": "打ち合わせ",
+          "reading": "うちあわせ",
+          "romaji": "uchiawase",
+          "partOfSpeech": "verbal noun",
+          "role": "object",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "object marker",
+          "japanese": "を",
+          "reading": "を",
+          "romaji": "wo",
+          "partOfSpeech": "particle",
+          "role": "object marker",
+          "particle": "を",
+          "particleMeaning": "object marker"
+        },
+        {
+          "english": "make/let",
+          "japanese": "させ",
+          "reading": "させ",
+          "romaji": "sase",
+          "partOfSpeech": "auxiliary",
+          "role": "causative suffix",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "て",
+          "reading": "て",
+          "romaji": "te",
+          "partOfSpeech": "auxiliary",
+          "role": "conjunctive form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "receive (humble)",
+          "japanese": "いただく",
+          "reading": "いただく",
+          "romaji": "itadaku",
+          "partOfSpeech": "verb",
+          "role": "humble auxiliary",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "want to",
+          "japanese": "たい",
+          "reading": "たい",
+          "romaji": "tai",
+          "partOfSpeech": "auxiliary",
+          "role": "desiderative suffix",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "nominalizer",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "nominalizer",
+          "particle": "の",
+          "particleMeaning": "nominalizer"
+        },
+        {
+          "english": "is/am/are",
+          "japanese": "です",
+          "reading": "です",
+          "romaji": "desu",
+          "partOfSpeech": "auxiliary",
+          "role": "polite copula",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "but/however",
+          "japanese": "が",
+          "reading": "が",
+          "romaji": "ga",
+          "partOfSpeech": "particle",
+          "role": "contrasting conjunction",
+          "particle": "が",
+          "particleMeaning": "but/however"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Conditional with ましたら",
+          "titleJapanese": "ましたら条件文",
+          "explanation": "ありましたら is a polite conditional form meaning 'if you have'. It combines the polite form ます with the conditional たら",
+          "atomicBreakdown": [
+            {
+              "component": "ある",
+              "type": "verb (dictionary)",
+              "meaning": "to exist/have"
+            },
+            {
+              "component": "まし",
+              "type": "polite auxiliary",
+              "meaning": "polite form"
+            },
+            {
+              "component": "たら",
+              "type": "conditional suffix",
+              "meaning": "if/when"
+            }
+          ]
+        },
+        {
+          "title": "Humble Request Pattern させていただく",
+          "titleJapanese": "させていただく敬語",
+          "explanation": "させていただく is a humble pattern meaning 'allow me to do'. It combines causative させ, te-form て, and humble いただく",
+          "atomicBreakdown": [
+            {
+              "component": "させ",
+              "type": "causative suffix",
+              "meaning": "make/let do"
+            },
+            {
+              "component": "て",
+              "type": "te-form",
+              "meaning": "conjunctive"
+            },
+            {
+              "component": "いただく",
+              "type": "humble auxiliary",
+              "meaning": "receive (humble)"
+            }
+          ]
+        },
+        {
+          "title": "Desire Expression たい",
+          "titleJapanese": "たい願望表現",
+          "explanation": "たい expresses the speaker's desire or wish to do something",
+          "atomicBreakdown": [
+            {
+              "component": "たい",
+              "type": "desiderative suffix",
+              "meaning": "want to"
+            }
+          ]
+        },
+        {
+          "title": "Soft Request Ending のですが",
+          "titleJapanese": "のですが柔らかい依頼",
+          "explanation": "のですが is used to make soft requests or statements. の nominalizes the preceding clause, です is polite copula, が shows contrast/hesitation",
+          "atomicBreakdown": [
+            {
+              "component": "の",
+              "type": "nominalizer",
+              "meaning": "nominalizing particle"
+            },
+            {
+              "component": "です",
+              "type": "polite copula",
+              "meaning": "is (polite)"
+            },
+            {
+              "component": "が",
+              "type": "conjunction",
+              "meaning": "but/however"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 10,
+      "goodBreakdowns": 10,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "We sincerely apologize for any inconvenience this may have caused.",
+      "category": "Business",
+      "description": "Formal apology with causative"
+    },
+    "result": {
+      "fullTranslation": "この度は、ご迷惑をおかけして誠に申し訳ございませんでした。",
+      "wordOrderDisplay": "この度は → ご迷惑を → おかけして → 誠に → 申し訳ございませんでした",
+      "words": [
+        {
+          "english": "this time",
+          "japanese": "この度",
+          "reading": "このたび",
+          "romaji": "kono tabi",
+          "partOfSpeech": "temporal noun",
+          "role": "temporal reference",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "(topic marker)",
+          "japanese": "は",
+          "reading": "は",
+          "romaji": "wa",
+          "partOfSpeech": "particle",
+          "role": "topic marker",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "honorific prefix",
+          "japanese": "ご",
+          "reading": "ご",
+          "romaji": "go",
+          "partOfSpeech": "honorific prefix",
+          "role": "honorific marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "trouble/inconvenience",
+          "japanese": "迷惑",
+          "reading": "めいわく",
+          "romaji": "meiwaku",
+          "partOfSpeech": "noun",
+          "role": "object",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "(object marker)",
+          "japanese": "を",
+          "reading": "を",
+          "romaji": "wo",
+          "partOfSpeech": "particle",
+          "role": "object marker",
+          "particle": "を",
+          "particleMeaning": "object marker"
+        },
+        {
+          "english": "honorific prefix",
+          "japanese": "お",
+          "reading": "お",
+          "romaji": "o",
+          "partOfSpeech": "honorific prefix",
+          "role": "honorific marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "cause/give",
+          "japanese": "かけ",
+          "reading": "かけ",
+          "romaji": "kake",
+          "partOfSpeech": "verb stem",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "conjunctive form",
+          "japanese": "して",
+          "reading": "して",
+          "romaji": "shite",
+          "partOfSpeech": "te-form",
+          "role": "conjunctive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "sincerely/truly",
+          "japanese": "誠に",
+          "reading": "まことに",
+          "romaji": "makoto ni",
+          "partOfSpeech": "adverb",
+          "role": "manner/degree",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "excuse/apology",
+          "japanese": "申し訳",
+          "reading": "もうしわけ",
+          "romaji": "moushiwake",
+          "partOfSpeech": "noun",
+          "role": "subject of politeness",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "very polite copula",
+          "japanese": "ございません",
+          "reading": "ございません",
+          "romaji": "gozaimasen",
+          "partOfSpeech": "polite auxiliary",
+          "role": "negative polite form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past tense",
+          "japanese": "でした",
+          "reading": "でした",
+          "romaji": "deshita",
+          "partOfSpeech": "past copula",
+          "role": "past politeness",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Honorific Prefixes",
+          "titleJapanese": "尊敬の接頭辞",
+          "explanation": "ご and お are added before nouns and verbs to show respect to the listener or third parties",
+          "atomicBreakdown": [
+            {
+              "component": "ご",
+              "type": "honorific prefix",
+              "meaning": "respectful prefix for sino-japanese words"
+            },
+            {
+              "component": "お",
+              "type": "honorific prefix",
+              "meaning": "respectful prefix for native japanese words"
+            }
+          ]
+        },
+        {
+          "title": "Te-form Connection",
+          "titleJapanese": "て形接続",
+          "explanation": "The te-form して connects the action of causing trouble to the apology",
+          "atomicBreakdown": [
+            {
+              "component": "し",
+              "type": "verb stem",
+              "meaning": "do (stem)"
+            },
+            {
+              "component": "て",
+              "type": "te-form suffix",
+              "meaning": "conjunctive form"
+            }
+          ]
+        },
+        {
+          "title": "Ultra-polite Apology Form",
+          "titleJapanese": "最高敬語謝罪形",
+          "explanation": "申し訳ございませんでした is the most formal way to apologize in Japanese",
+          "atomicBreakdown": [
+            {
+              "component": "申し訳",
+              "type": "humble noun",
+              "meaning": "excuse/apology"
+            },
+            {
+              "component": "ございません",
+              "type": "super-polite negative",
+              "meaning": "there is not (ultra-polite)"
+            },
+            {
+              "component": "でした",
+              "type": "past copula",
+              "meaning": "was (polite past)"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 7,
+      "goodBreakdowns": 6,
+      "atomicRatio": 0.8571428571428571,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "Could you please send me the report by the end of the day?",
+      "category": "Business",
+      "description": "Polite request with deadline"
+    },
+    "result": {
+      "fullTranslation": "今日の終わりまでにレポートを送っていただけませんか。",
+      "wordOrderDisplay": "Today's end → by → report → (object) → send → receiving (humble) → could you not (polite question)",
+      "words": [
+        {
+          "english": "today",
+          "japanese": "今日",
+          "reading": "きょう",
+          "romaji": "kyou",
+          "partOfSpeech": "noun",
+          "role": "time reference",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "possessive",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "possessive marker",
+          "particle": "の",
+          "particleMeaning": "possessive/of"
+        },
+        {
+          "english": "end",
+          "japanese": "終わり",
+          "reading": "おわり",
+          "romaji": "owari",
+          "partOfSpeech": "noun",
+          "role": "time limit",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "by/until",
+          "japanese": "まで",
+          "reading": "まで",
+          "romaji": "made",
+          "partOfSpeech": "particle",
+          "role": "time limit marker",
+          "particle": "まで",
+          "particleMeaning": "until/by"
+        },
+        {
+          "english": "by/at",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "time/target marker",
+          "particle": "に",
+          "particleMeaning": "at/by/to"
+        },
+        {
+          "english": "report",
+          "japanese": "レポート",
+          "reading": "レポート",
+          "romaji": "repooto",
+          "partOfSpeech": "noun",
+          "role": "direct object",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "object marker",
+          "japanese": "を",
+          "reading": "を",
+          "romaji": "wo",
+          "partOfSpeech": "particle",
+          "role": "direct object marker",
+          "particle": "を",
+          "particleMeaning": "direct object"
+        },
+        {
+          "english": "send",
+          "japanese": "送る",
+          "reading": "おくる",
+          "romaji": "okuru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "って",
+          "reading": "って",
+          "romaji": "tte",
+          "partOfSpeech": "conjunctive form",
+          "role": "connecting form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "receive (humble)",
+          "japanese": "いただく",
+          "reading": "いただく",
+          "romaji": "itadaku",
+          "partOfSpeech": "auxiliary verb",
+          "role": "humble receiving",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "potential",
+          "japanese": "ける",
+          "reading": "ける",
+          "romaji": "keru",
+          "partOfSpeech": "potential suffix",
+          "role": "ability/possibility",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "negative",
+          "japanese": "ませ",
+          "reading": "ませ",
+          "romaji": "mase",
+          "partOfSpeech": "negative polite",
+          "role": "polite negation",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "negative ending",
+          "japanese": "ん",
+          "reading": "ん",
+          "romaji": "n",
+          "partOfSpeech": "negative ending",
+          "role": "negation completion",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "question",
+          "japanese": "か",
+          "reading": "か",
+          "romaji": "ka",
+          "partOfSpeech": "particle",
+          "role": "question marker",
+          "particle": "か",
+          "particleMeaning": "question"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Te-form + itadaku (Humble Request)",
+          "titleJapanese": "〜ていただく（謙譲語）",
+          "explanation": "Polite way to request someone to do something for you, using humble language",
+          "atomicBreakdown": [
+            {
+              "component": "送って",
+              "type": "te-form verb",
+              "meaning": "send (connecting form)"
+            },
+            {
+              "component": "いただく",
+              "type": "humble auxiliary",
+              "meaning": "receive (humble)"
+            }
+          ]
+        },
+        {
+          "title": "Potential Form + Negative Question",
+          "titleJapanese": "可能形＋否定疑問",
+          "explanation": "Could you...? pattern using potential form in negative question for politeness",
+          "atomicBreakdown": [
+            {
+              "component": "いただける",
+              "type": "potential form",
+              "meaning": "can receive"
+            },
+            {
+              "component": "ません",
+              "type": "polite negative",
+              "meaning": "not (polite)"
+            },
+            {
+              "component": "か",
+              "type": "question particle",
+              "meaning": "question marker"
+            }
+          ]
+        },
+        {
+          "title": "Time Expression with made ni",
+          "titleJapanese": "〜までに",
+          "explanation": "By a certain time/deadline - combines time limit (made) with target (ni)",
+          "atomicBreakdown": [
+            {
+              "component": "今日の終わり",
+              "type": "time noun phrase",
+              "meaning": "end of today"
+            },
+            {
+              "component": "まで",
+              "type": "limit particle",
+              "meaning": "until/up to"
+            },
+            {
+              "component": "に",
+              "type": "target particle",
+              "meaning": "by/at"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 8,
+      "goodBreakdowns": 6,
+      "atomicRatio": 0.75,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I have been working at this company for five years.",
+      "category": "Business",
+      "description": "Duration with progressive state"
+    },
+    "result": {
+      "fullTranslation": "私はこの会社で五年間働いています。",
+      "wordOrderDisplay": "私は → この会社で → 五年間 → 働いています",
+      "words": [
+        {
+          "english": "I",
+          "japanese": "私",
+          "reading": "わたし",
+          "romaji": "watashi",
+          "partOfSpeech": "pronoun",
+          "role": "topic",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "this",
+          "japanese": "この",
+          "reading": "この",
+          "romaji": "kono",
+          "partOfSpeech": "determiner",
+          "role": "modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "company",
+          "japanese": "会社",
+          "reading": "かいしゃ",
+          "romaji": "kaisha",
+          "partOfSpeech": "noun",
+          "role": "location",
+          "particle": "で",
+          "particleMeaning": "context/means marker"
+        },
+        {
+          "english": "five",
+          "japanese": "五",
+          "reading": "ご",
+          "romaji": "go",
+          "partOfSpeech": "number",
+          "role": "quantity",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "years",
+          "japanese": "年間",
+          "reading": "ねんかん",
+          "romaji": "nenkan",
+          "partOfSpeech": "time counter",
+          "role": "duration",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "work",
+          "japanese": "働く",
+          "reading": "はたらく",
+          "romaji": "hataraku",
+          "partOfSpeech": "verb stem",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "い",
+          "reading": "い",
+          "romaji": "i",
+          "partOfSpeech": "te-form marker",
+          "role": "conjunctive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "continuous state",
+          "japanese": "ます",
+          "reading": "ます",
+          "romaji": "masu",
+          "partOfSpeech": "polite auxiliary",
+          "role": "politeness/continuous",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Present Progressive with ています",
+          "titleJapanese": "ています形",
+          "explanation": "Indicates an ongoing action or state. Here it shows continuous employment over five years.",
+          "atomicBreakdown": [
+            {
+              "component": "働い",
+              "type": "te-form of verb",
+              "meaning": "working (conjunctive form)"
+            },
+            {
+              "component": "ます",
+              "type": "polite auxiliary",
+              "meaning": "polite present/continuous"
+            }
+          ]
+        },
+        {
+          "title": "Duration Expression with 年間",
+          "titleJapanese": "期間表現",
+          "explanation": "五年間 expresses duration of time. 間 added to time units indicates 'for a period of'.",
+          "atomicBreakdown": [
+            {
+              "component": "五",
+              "type": "number",
+              "meaning": "five"
+            },
+            {
+              "component": "年",
+              "type": "time unit",
+              "meaning": "year"
+            },
+            {
+              "component": "間",
+              "type": "duration suffix",
+              "meaning": "for a period of"
+            }
+          ]
+        },
+        {
+          "title": "Location/Context Particle で",
+          "titleJapanese": "場所の助詞で",
+          "explanation": "で marks the location or context where an action takes place.",
+          "atomicBreakdown": [
+            {
+              "component": "会社",
+              "type": "noun",
+              "meaning": "company"
+            },
+            {
+              "component": "で",
+              "type": "particle",
+              "meaning": "at/in (location of action)"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 7,
+      "goodBreakdowns": 7,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I wonder if she still thinks about me sometimes.",
+      "category": "Emotion",
+      "description": "Inner monologue with uncertainty"
+    },
+    "result": {
+      "fullTranslation": "彼女はときどき私のことを今でも考えているのかな。",
+      "wordOrderDisplay": "彼女は → ときどき → 私のことを → 今でも → 考えている → のかな",
+      "words": [
+        {
+          "english": "she",
+          "japanese": "彼女",
+          "reading": "かのじょ",
+          "romaji": "kanojo",
+          "partOfSpeech": "pronoun",
+          "role": "topic",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "sometimes",
+          "japanese": "ときどき",
+          "reading": "ときどき",
+          "romaji": "tokidoki",
+          "partOfSpeech": "adverb",
+          "role": "time frequency",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "I",
+          "japanese": "私",
+          "reading": "わたし",
+          "romaji": "watashi",
+          "partOfSpeech": "pronoun",
+          "role": "possessed",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "possessive",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "possessive marker",
+          "particle": "の",
+          "particleMeaning": "possessive"
+        },
+        {
+          "english": "thing/matter",
+          "japanese": "こと",
+          "reading": "こと",
+          "romaji": "koto",
+          "partOfSpeech": "noun",
+          "role": "nominalizer",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "about",
+          "japanese": "を",
+          "reading": "を",
+          "romaji": "wo",
+          "partOfSpeech": "particle",
+          "role": "object marker",
+          "particle": "を",
+          "particleMeaning": "object marker"
+        },
+        {
+          "english": "now",
+          "japanese": "今",
+          "reading": "いま",
+          "romaji": "ima",
+          "partOfSpeech": "adverb",
+          "role": "time",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "even/still",
+          "japanese": "でも",
+          "reading": "でも",
+          "romaji": "demo",
+          "partOfSpeech": "particle",
+          "role": "emphasis",
+          "particle": "でも",
+          "particleMeaning": "even/still"
+        },
+        {
+          "english": "think",
+          "japanese": "考える",
+          "reading": "かんがえる",
+          "romaji": "kangaeru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main action",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "progressive",
+          "japanese": "ている",
+          "reading": "ている",
+          "romaji": "teiru",
+          "partOfSpeech": "auxiliary",
+          "role": "progressive state",
+          "particle": null,
+          "particleMeaning": null
+        },
+        {
+          "english": "nominalizer",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "nominalizer",
+          "particle": "の",
+          "particleMeaning": "nominalizer"
+        },
+        {
+          "english": "question",
+          "japanese": "か",
+          "reading": "か",
+          "romaji": "ka",
+          "partOfSpeech": "particle",
+          "role": "question marker",
+          "particle": "か",
+          "particleMeaning": "question marker"
+        },
+        {
+          "english": "wonder",
+          "japanese": "な",
+          "reading": "な",
+          "romaji": "na",
+          "partOfSpeech": "sentence-final particle",
+          "role": "wonder/uncertainty",
+          "particle": "な",
+          "particleMeaning": "wonder/uncertainty"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Progressive State ている",
+          "titleJapanese": "進行・状態のている",
+          "explanation": "て-form + いる expresses ongoing action or current state",
+          "atomicBreakdown": [
+            {
+              "component": "て",
+              "type": "conjunctive form",
+              "meaning": "connective"
+            },
+            {
+              "component": "いる",
+              "type": "auxiliary verb",
+              "meaning": "exist/be (animate)"
+            }
+          ]
+        },
+        {
+          "title": "Wondering のかな",
+          "titleJapanese": "疑問・推量のかな",
+          "explanation": "の + か + な creates a soft wondering tone about uncertain situations",
+          "atomicBreakdown": [
+            {
+              "component": "の",
+              "type": "nominalizing particle",
+              "meaning": "nominalizer"
+            },
+            {
+              "component": "か",
+              "type": "question particle",
+              "meaning": "question marker"
+            },
+            {
+              "component": "な",
+              "type": "sentence-final particle",
+              "meaning": "wonder/uncertainty"
+            }
+          ]
+        },
+        {
+          "title": "Object Marking with こと",
+          "titleJapanese": "ことの目的語化",
+          "explanation": "私のこと creates 'about me' or 'things concerning me' as an object",
+          "atomicBreakdown": [
+            {
+              "component": "私",
+              "type": "pronoun",
+              "meaning": "I/me"
+            },
+            {
+              "component": "の",
+              "type": "possessive particle",
+              "meaning": "possessive"
+            },
+            {
+              "component": "こと",
+              "type": "formal noun",
+              "meaning": "thing/matter"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 8,
+      "goodBreakdowns": 8,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I can't help but feel that something is wrong.",
+      "category": "Emotion",
+      "description": "Uncontrollable feeling expression"
+    },
+    "result": {
+      "fullTranslation": "何かがおかしいと感じずにはいられない。",
+      "wordOrderDisplay": "何か → が → おかしい → と → 感じ → ず → に → は → いられない",
+      "words": [
+        {
+          "english": "something",
+          "japanese": "何か",
+          "reading": "なにか",
+          "romaji": "nanika",
+          "partOfSpeech": "pronoun",
+          "role": "subject",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "subject marker",
+          "japanese": "が",
+          "reading": "が",
+          "romaji": "ga",
+          "partOfSpeech": "particle",
+          "role": "subject particle",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "wrong/strange",
+          "japanese": "おかしい",
+          "reading": "おかしい",
+          "romaji": "okashii",
+          "partOfSpeech": "i-adjective",
+          "role": "predicate",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "quotative/that",
+          "japanese": "と",
+          "reading": "と",
+          "romaji": "to",
+          "partOfSpeech": "particle",
+          "role": "quotative particle",
+          "particle": "と",
+          "particleMeaning": "quotative marker"
+        },
+        {
+          "english": "feel",
+          "japanese": "感じ",
+          "reading": "かんじ",
+          "romaji": "kanji",
+          "partOfSpeech": "verb stem",
+          "role": "main verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "not (archaic)",
+          "japanese": "ず",
+          "reading": "ず",
+          "romaji": "zu",
+          "partOfSpeech": "negative auxiliary",
+          "role": "negative form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "at/in/to",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "target particle",
+          "particle": "に",
+          "particleMeaning": "target/location marker"
+        },
+        {
+          "english": "topic marker",
+          "japanese": "は",
+          "reading": "は",
+          "romaji": "wa",
+          "partOfSpeech": "particle",
+          "role": "topic particle",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "cannot be",
+          "japanese": "いら",
+          "reading": "いら",
+          "romaji": "ira",
+          "partOfSpeech": "verb stem",
+          "role": "auxiliary verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "potential suffix",
+          "japanese": "れ",
+          "reading": "れ",
+          "romaji": "re",
+          "partOfSpeech": "potential suffix",
+          "role": "potential form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "negative",
+          "japanese": "ない",
+          "reading": "ない",
+          "romaji": "nai",
+          "partOfSpeech": "negative auxiliary",
+          "role": "negative ending",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Double Negative Expression",
+          "titleJapanese": "二重否定表現",
+          "explanation": "〜ずにはいられない expresses inability to help doing something, literally 'cannot be without doing'",
+          "atomicBreakdown": [
+            {
+              "component": "ず",
+              "type": "negative auxiliary (archaic)",
+              "meaning": "not"
+            },
+            {
+              "component": "に",
+              "type": "particle",
+              "meaning": "in/at"
+            },
+            {
+              "component": "は",
+              "type": "topic particle",
+              "meaning": "topic marker"
+            },
+            {
+              "component": "いら",
+              "type": "verb stem",
+              "meaning": "to be/exist"
+            },
+            {
+              "component": "れ",
+              "type": "potential suffix",
+              "meaning": "can/able to"
+            },
+            {
+              "component": "ない",
+              "type": "negative auxiliary",
+              "meaning": "not"
+            }
+          ]
+        },
+        {
+          "title": "Quotative Clause",
+          "titleJapanese": "引用節",
+          "explanation": "The clause 何かがおかしい is marked with と to show it's the content of what is felt",
+          "atomicBreakdown": [
+            {
+              "component": "何かがおかしい",
+              "type": "clause",
+              "meaning": "something is wrong"
+            },
+            {
+              "component": "と",
+              "type": "quotative particle",
+              "meaning": "that/quotative marker"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 8,
+      "goodBreakdowns": 7,
+      "atomicRatio": 0.875,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "If only I had told her how I really felt back then.",
+      "category": "Emotion",
+      "description": "Regret about the past"
+    },
+    "result": {
+      "fullTranslation": "あの時、彼女に本当の気持ちを伝えていればよかったのに。",
+      "wordOrderDisplay": "あの時 → 彼女に → 本当の気持ちを → 伝えていれば → よかったのに",
+      "words": [
+        {
+          "english": "that",
+          "japanese": "あの",
+          "reading": "あの",
+          "romaji": "ano",
+          "partOfSpeech": "demonstrative adjective",
+          "role": "modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "time",
+          "japanese": "時",
+          "reading": "とき",
+          "romaji": "toki",
+          "partOfSpeech": "noun",
+          "role": "temporal reference",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "her",
+          "japanese": "彼女",
+          "reading": "かのじょ",
+          "romaji": "kanojo",
+          "partOfSpeech": "pronoun",
+          "role": "indirect object",
+          "particle": "に",
+          "particleMeaning": "target/direction"
+        },
+        {
+          "english": "real",
+          "japanese": "本当",
+          "reading": "ほんとう",
+          "romaji": "hontou",
+          "partOfSpeech": "noun/na-adjective",
+          "role": "modifier",
+          "particle": "の",
+          "particleMeaning": "possessive/attributive"
+        },
+        {
+          "english": "feelings",
+          "japanese": "気持ち",
+          "reading": "きもち",
+          "romaji": "kimochi",
+          "partOfSpeech": "noun",
+          "role": "direct object",
+          "particle": "を",
+          "particleMeaning": "direct object marker"
+        },
+        {
+          "english": "tell",
+          "japanese": "伝える",
+          "reading": "つたえる",
+          "romaji": "tsutaeru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "て",
+          "reading": "て",
+          "romaji": "te",
+          "partOfSpeech": "conjunctive",
+          "role": "verb connector",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "was",
+          "japanese": "い",
+          "reading": "い",
+          "romaji": "i",
+          "partOfSpeech": "auxiliary verb stem",
+          "role": "past progressive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "if",
+          "japanese": "れば",
+          "reading": "れば",
+          "romaji": "reba",
+          "partOfSpeech": "conditional suffix",
+          "role": "conditional marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "good",
+          "japanese": "よい",
+          "reading": "よい",
+          "romaji": "yoi",
+          "partOfSpeech": "i-adjective stem",
+          "role": "predicate",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "was",
+          "japanese": "かった",
+          "reading": "かった",
+          "romaji": "katta",
+          "partOfSpeech": "past tense suffix",
+          "role": "past form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "despite",
+          "japanese": "のに",
+          "reading": "のに",
+          "romaji": "noni",
+          "partOfSpeech": "conjunction",
+          "role": "contrast/regret marker",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Conditional Past Regret Pattern",
+          "titleJapanese": "〜ていればよかったのに",
+          "explanation": "Expresses regret about something that didn't happen in the past. Pattern: verb te-form + いれば + よかった + のに",
+          "atomicBreakdown": [
+            {
+              "component": "て",
+              "type": "te-form",
+              "meaning": "conjunctive form"
+            },
+            {
+              "component": "いれば",
+              "type": "conditional of いる",
+              "meaning": "if there was/were"
+            },
+            {
+              "component": "よかった",
+              "type": "past form of よい",
+              "meaning": "was good"
+            },
+            {
+              "component": "のに",
+              "type": "conjunction",
+              "meaning": "despite/even though (regret)"
+            }
+          ]
+        },
+        {
+          "title": "ば Conditional",
+          "titleJapanese": "ば条件形",
+          "explanation": "Creates conditional 'if' statements. For i-adjectives, replace い with ければ",
+          "atomicBreakdown": [
+            {
+              "component": "れば",
+              "type": "conditional suffix",
+              "meaning": "if (attached to verb/adjective stem)"
+            }
+          ]
+        },
+        {
+          "title": "のに Conjunction",
+          "titleJapanese": "のに接続助詞",
+          "explanation": "Expresses contrast, disappointment, or regret meaning 'despite' or 'even though'",
+          "atomicBreakdown": [
+            {
+              "component": "のに",
+              "type": "conjunction particle",
+              "meaning": "despite/although/if only"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 6,
+      "goodBreakdowns": 5,
+      "atomicRatio": 0.8333333333333334,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I'm so happy that I could cry.",
+      "category": "Emotion",
+      "description": "Extreme emotion expression"
+    },
+    "result": {
+      "fullTranslation": "泣けるほど嬉しい。",
+      "wordOrderDisplay": "泣ける → ほど → 嬉しい",
+      "words": [
+        {
+          "english": "cry",
+          "japanese": "泣く",
+          "reading": "なく",
+          "romaji": "naku",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "base verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "can",
+          "japanese": "える",
+          "reading": "える",
+          "romaji": "eru",
+          "partOfSpeech": "potential suffix",
+          "role": "potential form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "to the extent that",
+          "japanese": "ほど",
+          "reading": "ほど",
+          "romaji": "hodo",
+          "partOfSpeech": "particle",
+          "role": "degree marker",
+          "particle": "ほど",
+          "particleMeaning": "to the extent that/so much that"
+        },
+        {
+          "english": "happy",
+          "japanese": "嬉しい",
+          "reading": "うれしい",
+          "romaji": "ureshii",
+          "partOfSpeech": "i-adjective",
+          "role": "predicate",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Potential Form",
+          "titleJapanese": "可能形",
+          "explanation": "る-verbs change to える form to express ability or possibility",
+          "atomicBreakdown": [
+            {
+              "component": "泣く",
+              "type": "verb (dictionary)",
+              "meaning": "to cry"
+            },
+            {
+              "component": "える",
+              "type": "potential suffix",
+              "meaning": "can/able to"
+            }
+          ]
+        },
+        {
+          "title": "Degree Expression with ほど",
+          "titleJapanese": "程度表現",
+          "explanation": "X ほど Y means 'so Y that X' or 'Y to the extent that X'",
+          "atomicBreakdown": [
+            {
+              "component": "泣ける",
+              "type": "potential verb",
+              "meaning": "can cry"
+            },
+            {
+              "component": "ほど",
+              "type": "degree particle",
+              "meaning": "to the extent that"
+            },
+            {
+              "component": "嬉しい",
+              "type": "i-adjective",
+              "meaning": "happy"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 5,
+      "goodBreakdowns": 5,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "No matter how hard I try, I just can't forget what happened.",
+      "category": "Emotion",
+      "description": "Frustration with inability"
+    },
+    "result": {
+      "fullTranslation": "どんなに頑張っても、あの時起こったことを忘れることができない。",
+      "wordOrderDisplay": "どんなに頑張っても → あの時起こったことを → 忘れることが → できない",
+      "words": [
+        {
+          "english": "no matter how",
+          "japanese": "どんなに",
+          "reading": "どんなに",
+          "romaji": "donna ni",
+          "partOfSpeech": "adverb",
+          "role": "degree modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "try hard",
+          "japanese": "頑張る",
+          "reading": "がんばる",
+          "romaji": "ganbaru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "even if",
+          "japanese": "ても",
+          "reading": "ても",
+          "romaji": "te mo",
+          "partOfSpeech": "conditional particle",
+          "role": "concessive",
+          "particle": "ても",
+          "particleMeaning": "even if/although"
+        },
+        {
+          "english": "that",
+          "japanese": "あの",
+          "reading": "あの",
+          "romaji": "ano",
+          "partOfSpeech": "demonstrative",
+          "role": "determiner",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "time",
+          "japanese": "時",
+          "reading": "とき",
+          "romaji": "toki",
+          "partOfSpeech": "noun",
+          "role": "time reference",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "happened",
+          "japanese": "起こる",
+          "reading": "おこる",
+          "romaji": "okoru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "relative clause predicate",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past tense",
+          "japanese": "った",
+          "reading": "った",
+          "romaji": "tta",
+          "partOfSpeech": "past suffix",
+          "role": "tense marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "thing/event",
+          "japanese": "こと",
+          "reading": "こと",
+          "romaji": "koto",
+          "partOfSpeech": "formal noun",
+          "role": "nominalizer",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "object",
+          "japanese": "を",
+          "reading": "を",
+          "romaji": "wo",
+          "partOfSpeech": "particle",
+          "role": "object marker",
+          "particle": "を",
+          "particleMeaning": "direct object"
+        },
+        {
+          "english": "forget",
+          "japanese": "忘れる",
+          "reading": "わすれる",
+          "romaji": "wasureru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "doing/action",
+          "japanese": "こと",
+          "reading": "こと",
+          "romaji": "koto",
+          "partOfSpeech": "formal noun",
+          "role": "nominalizer",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "subject",
+          "japanese": "が",
+          "reading": "が",
+          "romaji": "ga",
+          "partOfSpeech": "particle",
+          "role": "subject marker",
+          "particle": "が",
+          "particleMeaning": "subject/nominative"
+        },
+        {
+          "english": "can do",
+          "japanese": "でき",
+          "reading": "でき",
+          "romaji": "deki",
+          "partOfSpeech": "potential stem",
+          "role": "ability indicator",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "not",
+          "japanese": "ない",
+          "reading": "ない",
+          "romaji": "nai",
+          "partOfSpeech": "negative auxiliary",
+          "role": "negation",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "どんなに〜ても",
+          "titleJapanese": "どんなに〜ても",
+          "explanation": "Express 'no matter how much/how hard' by combining degree adverb どんなに with ても conditional",
+          "atomicBreakdown": [
+            {
+              "component": "どんなに",
+              "type": "degree adverb",
+              "meaning": "how much/to what extent"
+            },
+            {
+              "component": "〜",
+              "type": "verb/adjective",
+              "meaning": "action or state"
+            },
+            {
+              "component": "ても",
+              "type": "concessive conditional",
+              "meaning": "even if/no matter"
+            }
+          ]
+        },
+        {
+          "title": "〜ことができない",
+          "titleJapanese": "〜ことができない",
+          "explanation": "Standard potential expression meaning 'cannot do' using nominalizer こと + できない",
+          "atomicBreakdown": [
+            {
+              "component": "〜",
+              "type": "verb (dictionary)",
+              "meaning": "action"
+            },
+            {
+              "component": "こと",
+              "type": "formal noun",
+              "meaning": "nominalizes verb"
+            },
+            {
+              "component": "が",
+              "type": "subject particle",
+              "meaning": "marks nominalized verb as subject"
+            },
+            {
+              "component": "でき",
+              "type": "potential stem",
+              "meaning": "can do/able"
+            },
+            {
+              "component": "ない",
+              "type": "negative auxiliary",
+              "meaning": "not/negation"
+            }
+          ]
+        },
+        {
+          "title": "Past tense in relative clauses",
+          "titleJapanese": "連体修飾の過去形",
+          "explanation": "Past tense verb modifying a noun (起こったこと = thing that happened)",
+          "atomicBreakdown": [
+            {
+              "component": "起こる",
+              "type": "verb (dictionary)",
+              "meaning": "to occur/happen"
+            },
+            {
+              "component": "った",
+              "type": "past tense suffix",
+              "meaning": "past action"
+            },
+            {
+              "component": "こと",
+              "type": "formal noun",
+              "meaning": "thing/matter/event"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 11,
+      "goodBreakdowns": 10,
+      "atomicRatio": 0.9090909090909091,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "By the time I got to the station, the train had already left.",
+      "category": "Everyday",
+      "description": "Past perfect with time expression"
+    },
+    "result": {
+      "fullTranslation": "私が駅に着いた時には、電車はもう出発していました。",
+      "wordOrderDisplay": "私が → 駅に → 着いた時には → 電車は → もう → 出発していました",
+      "words": [
+        {
+          "english": "I",
+          "japanese": "私",
+          "reading": "わたし",
+          "romaji": "watashi",
+          "partOfSpeech": "pronoun",
+          "role": "subject",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "station",
+          "japanese": "駅",
+          "reading": "えき",
+          "romaji": "eki",
+          "partOfSpeech": "noun",
+          "role": "destination",
+          "particle": "に",
+          "particleMeaning": "target/destination marker"
+        },
+        {
+          "english": "arrived",
+          "japanese": "着いた",
+          "reading": "ついた",
+          "romaji": "tsuita",
+          "partOfSpeech": "verb",
+          "role": "past action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "time/when",
+          "japanese": "時",
+          "reading": "とき",
+          "romaji": "toki",
+          "partOfSpeech": "noun",
+          "role": "temporal reference",
+          "particle": "には",
+          "particleMeaning": "time marker with emphasis"
+        },
+        {
+          "english": "train",
+          "japanese": "電車",
+          "reading": "でんしゃ",
+          "romaji": "densha",
+          "partOfSpeech": "noun",
+          "role": "topic",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "already",
+          "japanese": "もう",
+          "reading": "もう",
+          "romaji": "mou",
+          "partOfSpeech": "adverb",
+          "role": "temporal modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "had departed",
+          "japanese": "出発していました",
+          "reading": "しゅっぱつしていました",
+          "romaji": "shuppatsu shite imashita",
+          "partOfSpeech": "verb phrase",
+          "role": "main predicate",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Past Perfect with ていた",
+          "titleJapanese": "過去完了（ていた）",
+          "explanation": "Shows an action that was completed before another past action",
+          "atomicBreakdown": [
+            {
+              "component": "出発",
+              "type": "verbal noun",
+              "meaning": "departure"
+            },
+            {
+              "component": "し",
+              "type": "verb stem (する)",
+              "meaning": "to do"
+            },
+            {
+              "component": "て",
+              "type": "te-form",
+              "meaning": "conjunctive"
+            },
+            {
+              "component": "い",
+              "type": "auxiliary verb stem",
+              "meaning": "to be/exist"
+            },
+            {
+              "component": "まし",
+              "type": "polite stem",
+              "meaning": "polite marker"
+            },
+            {
+              "component": "た",
+              "type": "past tense",
+              "meaning": "past"
+            }
+          ]
+        },
+        {
+          "title": "Time Clause with 時",
+          "titleJapanese": "時間節（とき）",
+          "explanation": "Creates a time clause expressing 'when' or 'by the time'",
+          "atomicBreakdown": [
+            {
+              "component": "着く",
+              "type": "verb (dictionary)",
+              "meaning": "to arrive"
+            },
+            {
+              "component": "た",
+              "type": "past tense marker",
+              "meaning": "completed action"
+            },
+            {
+              "component": "時",
+              "type": "temporal noun",
+              "meaning": "time/when"
+            },
+            {
+              "component": "に",
+              "type": "particle",
+              "meaning": "at/in (time)"
+            },
+            {
+              "component": "は",
+              "type": "particle",
+              "meaning": "topic/emphasis"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 11,
+      "goodBreakdowns": 11,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "WARN",
+    "testCase": {
+      "english": "I heard that the new restaurant that opened downtown is really good.",
+      "category": "Everyday",
+      "description": "Hearsay with relative clause"
+    },
+    "result": {
+      "fullTranslation": "ダウンタウンにオープンした新しいレストランはとてもいいと聞いた。",
+      "wordOrderDisplay": "ダウンタウンに → オープンした → 新しいレストラン → は → とてもいい → と → 聞いた",
+      "words": [
+        {
+          "english": "downtown",
+          "japanese": "ダウンタウン",
+          "reading": "ダウンタウン",
+          "romaji": "dauntaun",
+          "partOfSpeech": "noun",
+          "role": "location",
+          "particle": "に",
+          "particleMeaning": "location/target"
+        },
+        {
+          "english": "open",
+          "japanese": "オープン",
+          "reading": "オープン",
+          "romaji": "oopun",
+          "partOfSpeech": "verbal noun",
+          "role": "verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "to do",
+          "japanese": "し",
+          "reading": "し",
+          "romaji": "shi",
+          "partOfSpeech": "verb stem",
+          "role": "past tense base",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past tense",
+          "japanese": "た",
+          "reading": "た",
+          "romaji": "ta",
+          "partOfSpeech": "inflection",
+          "role": "past tense marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "new",
+          "japanese": "新しい",
+          "reading": "あたらしい",
+          "romaji": "atarashii",
+          "partOfSpeech": "i-adjective",
+          "role": "modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "restaurant",
+          "japanese": "レストラン",
+          "reading": "レストラン",
+          "romaji": "resutoran",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "very",
+          "japanese": "とても",
+          "reading": "とても",
+          "romaji": "totemo",
+          "partOfSpeech": "adverb",
+          "role": "intensifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "good",
+          "japanese": "いい",
+          "reading": "いい",
+          "romaji": "ii",
+          "partOfSpeech": "i-adjective",
+          "role": "predicate of quotation",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "quotation",
+          "japanese": "と",
+          "reading": "と",
+          "romaji": "to",
+          "partOfSpeech": "particle",
+          "role": "quotation marker",
+          "particle": "と",
+          "particleMeaning": "quotation/that"
+        },
+        {
+          "english": "hear",
+          "japanese": "聞い",
+          "reading": "きい",
+          "romaji": "kii",
+          "partOfSpeech": "verb stem",
+          "role": "main verb base",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past tense",
+          "japanese": "た",
+          "reading": "た",
+          "romaji": "ta",
+          "partOfSpeech": "inflection",
+          "role": "past tense marker",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Past Tense of Suru-verbs",
+          "titleJapanese": "する動詞の過去形",
+          "explanation": "For suru-verbs, the past form is made by changing する to した",
+          "atomicBreakdown": [
+            {
+              "component": "オープン",
+              "type": "verbal noun",
+              "meaning": "to open"
+            },
+            {
+              "component": "し",
+              "type": "verb stem (past)",
+              "meaning": "did"
+            },
+            {
+              "component": "た",
+              "type": "past marker",
+              "meaning": "past tense"
+            }
+          ]
+        },
+        {
+          "title": "Relative Clause Modification",
+          "titleJapanese": "連体修飾",
+          "explanation": "The past tense verb オープンした modifies the noun レストラン directly",
+          "atomicBreakdown": [
+            {
+              "component": "オープンした",
+              "type": "past verb",
+              "meaning": "opened"
+            },
+            {
+              "component": "レストラン",
+              "type": "noun",
+              "meaning": "restaurant"
+            }
+          ]
+        },
+        {
+          "title": "Quotation with と",
+          "titleJapanese": "と引用",
+          "explanation": "The particle と marks indirect quotation - what was heard",
+          "atomicBreakdown": [
+            {
+              "component": "とてもいい",
+              "type": "quoted content",
+              "meaning": "really good"
+            },
+            {
+              "component": "と",
+              "type": "quotation particle",
+              "meaning": "that"
+            },
+            {
+              "component": "聞いた",
+              "type": "reporting verb",
+              "meaning": "heard"
+            }
+          ]
+        },
+        {
+          "title": "Past Tense Formation",
+          "titleJapanese": "過去形",
+          "explanation": "Regular u-verbs form past tense by changing u-sound to corresponding i-sound + た",
+          "atomicBreakdown": [
+            {
+              "component": "聞く",
+              "type": "dictionary form",
+              "meaning": "to hear"
+            },
+            {
+              "component": "聞い",
+              "type": "past stem",
+              "meaning": "hear-"
+            },
+            {
+              "component": "た",
+              "type": "past marker",
+              "meaning": "past tense"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 11,
+      "goodBreakdowns": 7,
+      "atomicRatio": 0.6363636363636364,
+      "issues": [
+        "\"オープンした\" - past suru-verb should be split"
+      ]
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "Even though it was raining, we decided to go hiking anyway.",
+      "category": "Everyday",
+      "description": "Concession with decision"
+    },
+    "result": {
+      "fullTranslation": "雨が降っていたのに、私たちはハイキングに行くことに決めた。",
+      "wordOrderDisplay": "雨が降っていたのに → 私たちは → ハイキングに → 行くことに → 決めた",
+      "words": [
+        {
+          "english": "rain",
+          "japanese": "雨",
+          "reading": "あめ",
+          "romaji": "ame",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "subject marker",
+          "japanese": "が",
+          "reading": "が",
+          "romaji": "ga",
+          "partOfSpeech": "particle",
+          "role": "subject particle",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "fall/descend",
+          "japanese": "降る",
+          "reading": "ふる",
+          "romaji": "furu",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "って",
+          "reading": "って",
+          "romaji": "tte",
+          "partOfSpeech": "verb ending",
+          "role": "te-form",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "continuous state",
+          "japanese": "いた",
+          "reading": "いた",
+          "romaji": "ita",
+          "partOfSpeech": "auxiliary verb",
+          "role": "past continuous",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "nominalizer",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "nominalizer",
+          "particle": "の",
+          "particleMeaning": "nominalizer"
+        },
+        {
+          "english": "despite/although",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "contrast particle",
+          "particle": "に",
+          "particleMeaning": "despite/although (in のに pattern)"
+        },
+        {
+          "english": "we",
+          "japanese": "私たち",
+          "reading": "わたしたち",
+          "romaji": "watashitachi",
+          "partOfSpeech": "pronoun",
+          "role": "topic",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "topic marker",
+          "japanese": "は",
+          "reading": "は",
+          "romaji": "wa",
+          "partOfSpeech": "particle",
+          "role": "topic particle",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "hiking",
+          "japanese": "ハイキング",
+          "reading": "ハイキング",
+          "romaji": "haikingu",
+          "partOfSpeech": "noun",
+          "role": "destination",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "direction/goal",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "direction particle",
+          "particle": "に",
+          "particleMeaning": "direction/goal"
+        },
+        {
+          "english": "go",
+          "japanese": "行く",
+          "reading": "いく",
+          "romaji": "iku",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "nominalizer",
+          "japanese": "こと",
+          "reading": "こと",
+          "romaji": "koto",
+          "partOfSpeech": "formal noun",
+          "role": "nominalizer",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "target/goal",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "target particle",
+          "particle": "に",
+          "particleMeaning": "target/goal"
+        },
+        {
+          "english": "decide",
+          "japanese": "決める",
+          "reading": "きめる",
+          "romaji": "kimeru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main verb stem",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past tense",
+          "japanese": "た",
+          "reading": "た",
+          "romaji": "ta",
+          "partOfSpeech": "verb ending",
+          "role": "past tense marker",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "のに - Despite/Although",
+          "titleJapanese": "のに",
+          "explanation": "Used to express contrast or contradiction - 'despite' or 'even though'",
+          "atomicBreakdown": [
+            {
+              "component": "の",
+              "type": "nominalizing particle",
+              "meaning": "turns the preceding clause into a noun phrase"
+            },
+            {
+              "component": "に",
+              "type": "contrast particle",
+              "meaning": "despite/although (creates contrast with following clause)"
+            }
+          ]
+        },
+        {
+          "title": "ていた - Past Continuous",
+          "titleJapanese": "ていた",
+          "explanation": "Past continuous tense indicating an ongoing action or state in the past",
+          "atomicBreakdown": [
+            {
+              "component": "て",
+              "type": "te-form",
+              "meaning": "conjunctive form"
+            },
+            {
+              "component": "いた",
+              "type": "auxiliary verb (past)",
+              "meaning": "was (indicating continuous state in past)"
+            }
+          ]
+        },
+        {
+          "title": "ことに決める - Decide to",
+          "titleJapanese": "ことに決める",
+          "explanation": "Pattern meaning 'decide to do something'",
+          "atomicBreakdown": [
+            {
+              "component": "こと",
+              "type": "formal noun",
+              "meaning": "nominalizes the verb (the act of doing)"
+            },
+            {
+              "component": "に",
+              "type": "target particle",
+              "meaning": "marks the decision target"
+            },
+            {
+              "component": "決める",
+              "type": "verb",
+              "meaning": "to decide"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 7,
+      "goodBreakdowns": 7,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "The more I study Japanese, the more I realize how difficult it is.",
+      "category": "Everyday",
+      "description": "Comparative correlation"
+    },
+    "result": {
+      "fullTranslation": "日本語を勉強すればするほど、難しいということが分かる。",
+      "wordOrderDisplay": "日本語を勉強すればするほど → 難しいということが → 分かる",
+      "words": [
+        {
+          "english": "Japanese",
+          "japanese": "日本語",
+          "reading": "にほんご",
+          "romaji": "nihongo",
+          "partOfSpeech": "noun",
+          "role": "object",
+          "particle": "を",
+          "particleMeaning": "direct object marker"
+        },
+        {
+          "english": "study",
+          "japanese": "勉強",
+          "reading": "べんきょう",
+          "romaji": "benkyou",
+          "partOfSpeech": "verbal noun",
+          "role": "action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "to do",
+          "japanese": "する",
+          "reading": "する",
+          "romaji": "suru",
+          "partOfSpeech": "verb",
+          "role": "main verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "if/when",
+          "japanese": "ば",
+          "reading": "ば",
+          "romaji": "ba",
+          "partOfSpeech": "conditional suffix",
+          "role": "conditional marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "to do",
+          "japanese": "する",
+          "reading": "する",
+          "romaji": "suru",
+          "partOfSpeech": "verb",
+          "role": "repeated action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "the more...the more",
+          "japanese": "ほど",
+          "reading": "ほど",
+          "romaji": "hodo",
+          "partOfSpeech": "particle",
+          "role": "proportion marker",
+          "particle": "",
+          "particleMeaning": "degree/extent marker"
+        },
+        {
+          "english": "difficult",
+          "japanese": "難しい",
+          "reading": "むずかしい",
+          "romaji": "muzukashii",
+          "partOfSpeech": "i-adjective",
+          "role": "description",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "that/the fact that",
+          "japanese": "ということ",
+          "reading": "ということ",
+          "romaji": "to iu koto",
+          "partOfSpeech": "nominalizer",
+          "role": "noun clause marker",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "understand",
+          "japanese": "分かる",
+          "reading": "わかる",
+          "romaji": "wakaru",
+          "partOfSpeech": "verb",
+          "role": "main predicate",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "The more...the more pattern",
+          "titleJapanese": "ば〜ほど構文",
+          "explanation": "Uses conditional ば + repeated verb + ほど to express proportional increase",
+          "atomicBreakdown": [
+            {
+              "component": "勉強する",
+              "type": "verb (dictionary)",
+              "meaning": "to study"
+            },
+            {
+              "component": "ば",
+              "type": "conditional suffix",
+              "meaning": "if/when"
+            },
+            {
+              "component": "する",
+              "type": "verb (dictionary)",
+              "meaning": "to do (repeated)"
+            },
+            {
+              "component": "ほど",
+              "type": "particle",
+              "meaning": "to the extent that"
+            }
+          ]
+        },
+        {
+          "title": "Nominalization with ということ",
+          "titleJapanese": "ということ",
+          "explanation": "Converts a statement or fact into a noun phrase",
+          "atomicBreakdown": [
+            {
+              "component": "と",
+              "type": "quotative particle",
+              "meaning": "that (quotation)"
+            },
+            {
+              "component": "いう",
+              "type": "verb",
+              "meaning": "to say/call"
+            },
+            {
+              "component": "こと",
+              "type": "nominalizer",
+              "meaning": "thing/fact"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 7,
+      "goodBreakdowns": 7,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "I should have brought an umbrella because it looks like it's going to rain.",
+      "category": "Everyday",
+      "description": "Regret with prediction"
+    },
+    "result": {
+      "fullTranslation": "雨が降りそうだから、傘を持ってくるべきだった。",
+      "wordOrderDisplay": "雨が降りそうだから → 傘を持ってくるべきだった",
+      "words": [
+        {
+          "english": "rain",
+          "japanese": "雨",
+          "reading": "あめ",
+          "romaji": "ame",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "fall/come down",
+          "japanese": "降る",
+          "reading": "ふる",
+          "romaji": "furu",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "looks like/seems",
+          "japanese": "そう",
+          "reading": "そう",
+          "romaji": "sou",
+          "partOfSpeech": "auxiliary suffix",
+          "role": "appearance/conjecture",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "copula",
+          "japanese": "だ",
+          "reading": "だ",
+          "romaji": "da",
+          "partOfSpeech": "copula",
+          "role": "assertion",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "because/from",
+          "japanese": "から",
+          "reading": "から",
+          "romaji": "kara",
+          "partOfSpeech": "particle",
+          "role": "reason marker",
+          "particle": "",
+          "particleMeaning": "indicates reason or cause"
+        },
+        {
+          "english": "umbrella",
+          "japanese": "傘",
+          "reading": "かさ",
+          "romaji": "kasa",
+          "partOfSpeech": "noun",
+          "role": "direct object",
+          "particle": "を",
+          "particleMeaning": "object marker"
+        },
+        {
+          "english": "hold/have/bring",
+          "japanese": "持つ",
+          "reading": "もつ",
+          "romaji": "motsu",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "main verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "conjunctive",
+          "japanese": "て",
+          "reading": "て",
+          "romaji": "te",
+          "partOfSpeech": "te-form",
+          "role": "conjunctive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "come",
+          "japanese": "くる",
+          "reading": "くる",
+          "romaji": "kuru",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "directional auxiliary",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "should/ought to",
+          "japanese": "べき",
+          "reading": "べき",
+          "romaji": "beki",
+          "partOfSpeech": "auxiliary",
+          "role": "obligation/duty",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "copula",
+          "japanese": "だ",
+          "reading": "だ",
+          "romaji": "da",
+          "partOfSpeech": "copula",
+          "role": "assertion",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "past",
+          "japanese": "った",
+          "reading": "った",
+          "romaji": "tta",
+          "partOfSpeech": "past suffix",
+          "role": "past tense",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "そうだ (appearance/conjecture)",
+          "titleJapanese": "そうだ（様態）",
+          "explanation": "Attached to verb stems to express that something appears likely to happen based on visual observation",
+          "atomicBreakdown": [
+            {
+              "component": "降り",
+              "type": "verb stem",
+              "meaning": "fall/rain (stem form)"
+            },
+            {
+              "component": "そう",
+              "type": "auxiliary suffix",
+              "meaning": "appears/looks like"
+            },
+            {
+              "component": "だ",
+              "type": "copula",
+              "meaning": "is/assertion"
+            }
+          ]
+        },
+        {
+          "title": "てくる (directional compound)",
+          "titleJapanese": "てくる（方向性複合動詞）",
+          "explanation": "Compound verb expressing action toward the speaker or bringing something closer",
+          "atomicBreakdown": [
+            {
+              "component": "持っ",
+              "type": "verb te-stem",
+              "meaning": "hold/bring (te-stem)"
+            },
+            {
+              "component": "て",
+              "type": "te-form connector",
+              "meaning": "conjunctive particle"
+            },
+            {
+              "component": "くる",
+              "type": "auxiliary verb",
+              "meaning": "come (toward speaker)"
+            }
+          ]
+        },
+        {
+          "title": "べきだった (past obligation)",
+          "titleJapanese": "べきだった（過去の義務）",
+          "explanation": "Expresses that something should have been done in the past (regret about unfulfilled obligation)",
+          "atomicBreakdown": [
+            {
+              "component": "べき",
+              "type": "auxiliary",
+              "meaning": "should/ought to"
+            },
+            {
+              "component": "だ",
+              "type": "copula",
+              "meaning": "is/assertion"
+            },
+            {
+              "component": "った",
+              "type": "past suffix",
+              "meaning": "past tense marker"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 9,
+      "goodBreakdowns": 9,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "Sometimes I wonder what my life would have been like if I had made different choices.",
+      "category": "Abstract",
+      "description": "Hypothetical past reflection"
+    },
+    "result": {
+      "fullTranslation": "時々、もし違う選択をしていたら、自分の人生はどうなっていただろうかと思う。",
+      "wordOrderDisplay": "時々 → もし違う選択をしていたら → 自分の人生は → どうなっていただろうか → と → 思う",
+      "words": [
+        {
+          "english": "sometimes",
+          "japanese": "時々",
+          "reading": "ときどき",
+          "romaji": "tokidoki",
+          "partOfSpeech": "adverb",
+          "role": "time adverb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "if",
+          "japanese": "もし",
+          "reading": "もし",
+          "romaji": "moshi",
+          "partOfSpeech": "adverb",
+          "role": "conditional marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "different",
+          "japanese": "違う",
+          "reading": "ちがう",
+          "romaji": "chigau",
+          "partOfSpeech": "i-adjective",
+          "role": "modifier",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "choice",
+          "japanese": "選択",
+          "reading": "せんたく",
+          "romaji": "sentaku",
+          "partOfSpeech": "noun",
+          "role": "object",
+          "particle": "を",
+          "particleMeaning": "object marker"
+        },
+        {
+          "english": "make/do",
+          "japanese": "する",
+          "reading": "する",
+          "romaji": "suru",
+          "partOfSpeech": "verb stem",
+          "role": "main action",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "して",
+          "reading": "して",
+          "romaji": "shite",
+          "partOfSpeech": "te-form",
+          "role": "conjunctive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "was doing",
+          "japanese": "いた",
+          "reading": "いた",
+          "romaji": "ita",
+          "partOfSpeech": "auxiliary verb",
+          "role": "past progressive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "if/conditional",
+          "japanese": "ら",
+          "reading": "ら",
+          "romaji": "ra",
+          "partOfSpeech": "conditional suffix",
+          "role": "conditional marker",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "self",
+          "japanese": "自分",
+          "reading": "じぶん",
+          "romaji": "jibun",
+          "partOfSpeech": "pronoun",
+          "role": "possessor",
+          "particle": "の",
+          "particleMeaning": "possessive"
+        },
+        {
+          "english": "life",
+          "japanese": "人生",
+          "reading": "じんせい",
+          "romaji": "jinsei",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "how",
+          "japanese": "どう",
+          "reading": "どう",
+          "romaji": "dou",
+          "partOfSpeech": "adverb",
+          "role": "question word",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "become",
+          "japanese": "なる",
+          "reading": "なる",
+          "romaji": "naru",
+          "partOfSpeech": "verb stem",
+          "role": "main verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "te-form",
+          "japanese": "なって",
+          "reading": "なって",
+          "romaji": "natte",
+          "partOfSpeech": "te-form",
+          "role": "conjunctive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "was (progressive)",
+          "japanese": "いた",
+          "reading": "いた",
+          "romaji": "ita",
+          "partOfSpeech": "auxiliary verb",
+          "role": "past progressive",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "would have",
+          "japanese": "だろう",
+          "reading": "だろう",
+          "romaji": "darou",
+          "partOfSpeech": "auxiliary",
+          "role": "conjecture",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "question particle",
+          "japanese": "か",
+          "reading": "か",
+          "romaji": "ka",
+          "partOfSpeech": "particle",
+          "role": "question marker",
+          "particle": "",
+          "particleMeaning": "question/doubt"
+        },
+        {
+          "english": "quotation",
+          "japanese": "と",
+          "reading": "と",
+          "romaji": "to",
+          "partOfSpeech": "particle",
+          "role": "quotation marker",
+          "particle": "",
+          "particleMeaning": "quotation/thought"
+        },
+        {
+          "english": "think",
+          "japanese": "思う",
+          "reading": "おもう",
+          "romaji": "omou",
+          "partOfSpeech": "verb",
+          "role": "main predicate",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Past Progressive Conditional",
+          "titleJapanese": "過去進行形の条件文",
+          "explanation": "していたら expresses a hypothetical past action in continuous form",
+          "atomicBreakdown": [
+            {
+              "component": "して",
+              "type": "te-form",
+              "meaning": "conjunctive form"
+            },
+            {
+              "component": "いた",
+              "type": "past progressive auxiliary",
+              "meaning": "was doing"
+            },
+            {
+              "component": "ら",
+              "type": "conditional suffix",
+              "meaning": "if (attached to past form)"
+            }
+          ]
+        },
+        {
+          "title": "Hypothetical Past Conjecture",
+          "titleJapanese": "過去の推量",
+          "explanation": "ていただろう expresses conjecture about what would have been happening",
+          "atomicBreakdown": [
+            {
+              "component": "て",
+              "type": "te-form",
+              "meaning": "conjunctive"
+            },
+            {
+              "component": "いた",
+              "type": "past progressive",
+              "meaning": "was in state"
+            },
+            {
+              "component": "だろう",
+              "type": "conjectural auxiliary",
+              "meaning": "probably/would have"
+            }
+          ]
+        },
+        {
+          "title": "Indirect Question with と思う",
+          "titleJapanese": "間接疑問文",
+          "explanation": "Embedded question clause marked by と before 思う",
+          "atomicBreakdown": [
+            {
+              "component": "か",
+              "type": "question particle",
+              "meaning": "question marker"
+            },
+            {
+              "component": "と",
+              "type": "quotation particle",
+              "meaning": "marks embedded thought"
+            },
+            {
+              "component": "思う",
+              "type": "thinking verb",
+              "meaning": "to think/wonder"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 9,
+      "goodBreakdowns": 9,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  },
+  {
+    "success": true,
+    "status": "PASS",
+    "testCase": {
+      "english": "It's not that I don't want to help, it's just that I don't have time right now.",
+      "category": "Abstract",
+      "description": "Complex negation with explanation"
+    },
+    "result": {
+      "fullTranslation": "手伝いたくないわけではないのですが、今は時間がないんです。",
+      "wordOrderDisplay": "手伝いたくないわけではない → のですが → 今は時間がない → んです",
+      "words": [
+        {
+          "english": "help",
+          "japanese": "手伝う",
+          "reading": "てつだう",
+          "romaji": "tetsudau",
+          "partOfSpeech": "verb (dictionary)",
+          "role": "base verb",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "want to",
+          "japanese": "たい",
+          "reading": "たい",
+          "romaji": "tai",
+          "partOfSpeech": "auxiliary",
+          "role": "desire suffix",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "not",
+          "japanese": "ない",
+          "reading": "ない",
+          "romaji": "nai",
+          "partOfSpeech": "auxiliary",
+          "role": "negative",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "it's not that",
+          "japanese": "わけではない",
+          "reading": "わけではない",
+          "romaji": "wake dewa nai",
+          "partOfSpeech": "expression",
+          "role": "negative reasoning",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "but",
+          "japanese": "のですが",
+          "reading": "のですが",
+          "romaji": "no desu ga",
+          "partOfSpeech": "conjunction",
+          "role": "contrasting explanation",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "now",
+          "japanese": "今",
+          "reading": "いま",
+          "romaji": "ima",
+          "partOfSpeech": "noun",
+          "role": "time reference",
+          "particle": "は",
+          "particleMeaning": "topic marker"
+        },
+        {
+          "english": "time",
+          "japanese": "時間",
+          "reading": "じかん",
+          "romaji": "jikan",
+          "partOfSpeech": "noun",
+          "role": "subject",
+          "particle": "が",
+          "particleMeaning": "subject marker"
+        },
+        {
+          "english": "not exist",
+          "japanese": "ない",
+          "reading": "ない",
+          "romaji": "nai",
+          "partOfSpeech": "auxiliary",
+          "role": "negative existence",
+          "particle": "",
+          "particleMeaning": ""
+        },
+        {
+          "english": "explanatory ending",
+          "japanese": "んです",
+          "reading": "んです",
+          "romaji": "n desu",
+          "partOfSpeech": "auxiliary",
+          "role": "explanatory polite ending",
+          "particle": "",
+          "particleMeaning": ""
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "わけではない",
+          "titleJapanese": "わけではない",
+          "explanation": "Pattern meaning 'it's not that...' or 'it doesn't mean that...', used to deny a reason or explanation",
+          "atomicBreakdown": [
+            {
+              "component": "わけ",
+              "type": "noun",
+              "meaning": "reason/meaning"
+            },
+            {
+              "component": "で",
+              "type": "particle",
+              "meaning": "context/means"
+            },
+            {
+              "component": "は",
+              "type": "particle",
+              "meaning": "topic marker"
+            },
+            {
+              "component": "ない",
+              "type": "auxiliary",
+              "meaning": "not/negation"
+            }
+          ]
+        },
+        {
+          "title": "のですが",
+          "titleJapanese": "のですが",
+          "explanation": "Explanatory conjunction meaning 'but' with nuance of providing background explanation",
+          "atomicBreakdown": [
+            {
+              "component": "の",
+              "type": "nominalizer",
+              "meaning": "turns clause into noun phrase"
+            },
+            {
+              "component": "です",
+              "type": "copula",
+              "meaning": "polite 'is'"
+            },
+            {
+              "component": "が",
+              "type": "conjunction",
+              "meaning": "but/however"
+            }
+          ]
+        },
+        {
+          "title": "んです",
+          "titleJapanese": "んです",
+          "explanation": "Explanatory ending that provides explanation or emphasis, contracted form of のです",
+          "atomicBreakdown": [
+            {
+              "component": "ん",
+              "type": "nominalizer (contracted)",
+              "meaning": "explanatory marker"
+            },
+            {
+              "component": "です",
+              "type": "copula",
+              "meaning": "polite ending"
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": {
+      "totalComponents": 9,
+      "goodBreakdowns": 9,
+      "atomicRatio": 1,
+      "issues": []
+    }
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "wa",
+    "pattern": "は",
+    "name": "Topic Marker",
+    "category": "particle",
+    "description": "Marks the topic of the sentence"
+  },
+  {
+    "id": "ga",
+    "pattern": "が",
+    "name": "Subject Marker",
+    "category": "particle",
+    "description": "Identifies the subject, emphasizes new information"
+  },
+  {
+    "id": "wo",
+    "pattern": "を",
+    "name": "Object Marker",
+    "category": "particle",
+    "description": "Marks the direct object of a verb"
+  },
+  {
+    "id": "ni",
+    "pattern": "に",
+    "name": "Target/Location",
+    "category": "particle",
+    "description": "Indicates direction, time, or indirect object"
+  },
+  {
+    "id": "de",
+    "pattern": "で",
+    "name": "Context",
+    "category": "particle",
+    "description": "Indicates location of action, means, or reason"
+  },
+  {
+    "id": "e",
+    "pattern": "へ",
+    "name": "Direction",
+    "category": "particle",
+    "description": "Indicates direction of movement"
+  },
+  {
+    "id": "to",
+    "pattern": "と",
+    "name": "And/With",
+    "category": "particle",
+    "description": "Exhaustive listing or accompaniment"
+  },
+  {
+    "id": "ya",
+    "pattern": "や",
+    "name": "And (partial)",
+    "category": "particle",
+    "description": "Non-exhaustive listing"
+  },
+  {
+    "id": "no",
+    "pattern": "の",
+    "name": "Possessive/Nominalizer",
+    "category": "particle",
+    "description": "Shows possession or turns verbs into nouns"
+  },
+  {
+    "id": "mo",
+    "pattern": "も",
+    "name": "Also/Too",
+    "category": "particle",
+    "description": "Inclusive particle meaning \"also\" or \"too\""
+  },
+  {
+    "id": "ka",
+    "pattern": "か",
+    "name": "Question",
+    "category": "particle",
+    "description": "Question marker"
+  },
+  {
+    "id": "ne",
+    "pattern": "ね",
+    "name": "Confirmation",
+    "category": "particle",
+    "description": "Seeks agreement or confirmation"
+  },
+  {
+    "id": "yo",
+    "pattern": "よ",
+    "name": "Emphasis",
+    "category": "particle",
+    "description": "Emphasizes information the listener may not know"
+  },
+  {
+    "id": "masu",
+    "pattern": "〜ます",
+    "name": "Polite Form",
+    "category": "conjugation",
+    "description": "Polite present/future tense"
+  },
+  {
+    "id": "mashita",
+    "pattern": "〜ました",
+    "name": "Polite Past",
+    "category": "conjugation",
+    "description": "Polite past tense"
+  },
+  {
+    "id": "masen",
+    "pattern": "〜ません",
+    "name": "Polite Negative",
+    "category": "conjugation",
+    "description": "Polite negative form"
+  },
+  {
+    "id": "te",
+    "pattern": "〜て",
+    "name": "Te-form",
+    "category": "conjugation",
+    "description": "Connecting form for requests, progressive, etc."
+  },
+  {
+    "id": "ta",
+    "pattern": "〜た",
+    "name": "Plain Past",
+    "category": "conjugation",
+    "description": "Plain past tense"
+  },
+  {
+    "id": "nai",
+    "pattern": "〜ない",
+    "name": "Plain Negative",
+    "category": "conjugation",
+    "description": "Plain negative form"
+  },
+  {
+    "id": "nakatta",
+    "pattern": "〜なかった",
+    "name": "Past Negative",
+    "category": "conjugation",
+    "description": "Past negative form"
+  },
+  {
+    "id": "teiru",
+    "pattern": "〜ている",
+    "name": "Progressive/State",
+    "category": "grammar",
+    "description": "Ongoing action or resulting state"
+  },
+  {
+    "id": "tai",
+    "pattern": "〜たい",
+    "name": "Want to",
+    "category": "grammar",
+    "description": "Expresses desire to do something"
+  },
+  {
+    "id": "koto",
+    "pattern": "〜こと",
+    "name": "Nominalizer",
+    "category": "grammar",
+    "description": "Turns verbs into noun phrases"
+  },
+  {
+    "id": "tara",
+    "pattern": "〜たら",
+    "name": "Conditional",
+    "category": "grammar",
+    "description": "If/when conditional"
+  },
+  {
+    "id": "ba",
+    "pattern": "〜ば",
+    "name": "Conditional",
+    "category": "grammar",
+    "description": "If conditional (hypothetical)"
+  },
+  {
+    "id": "nara",
+    "pattern": "〜なら",
+    "name": "Conditional",
+    "category": "grammar",
+    "description": "If (contextual/topical)"
+  },
+  {
+    "id": "to",
+    "pattern": "〜と",
+    "name": "Conditional",
+    "category": "grammar",
+    "description": "Natural/automatic consequence"
+  },
+  {
+    "id": "kara",
+    "pattern": "〜から",
+    "name": "Because",
+    "category": "grammar",
+    "description": "Expresses reason or cause"
+  },
+  {
+    "id": "node",
+    "pattern": "〜ので",
+    "name": "Because (polite)",
+    "category": "grammar",
+    "description": "Softer way to express reason"
+  },
+  {
+    "id": "noni",
+    "pattern": "〜のに",
+    "name": "Despite",
+    "category": "grammar",
+    "description": "Despite, although, even though"
+  },
+  {
+    "id": "nakereba",
+    "pattern": "〜なければ",
+    "name": "Must",
+    "category": "grammar",
+    "description": "Must do, have to"
+  },
+  {
+    "id": "nakutemo",
+    "pattern": "〜なくてもいい",
+    "name": "Don't have to",
+    "category": "grammar",
+    "description": "Not necessary to do"
+  },
+  {
+    "id": "sou",
+    "pattern": "〜そう",
+    "name": "Appearance/Hearsay",
+    "category": "grammar",
+    "description": "Looks like / I heard that"
+  },
+  {
+    "id": "you",
+    "pattern": "〜よう",
+    "name": "Volitional",
+    "category": "grammar",
+    "description": "Let's / intend to"
+  },
+  {
+    "id": "rareru",
+    "pattern": "〜られる",
+    "name": "Potential/Passive",
+    "category": "grammar",
+    "description": "Can do / is done"
+  },
+  {
+    "id": "saseru",
+    "pattern": "〜させる",
+    "name": "Causative",
+    "category": "grammar",
+    "description": "Make/let someone do"
+  }
+]

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { KanaChart } from './KanaChart';
 import { FavoritesViewer } from './FavoritesViewer';
+import { GrammarGuide } from './GrammarGuide';
 
 export function ToolboxButton() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isKanaChartOpen, setIsKanaChartOpen] = useState(false);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
+  const [isGrammarGuideOpen, setIsGrammarGuideOpen] = useState(false);
 
   const handleKanaChartClick = () => {
     setIsKanaChartOpen(true);
@@ -17,6 +19,11 @@ export function ToolboxButton() {
     setIsMenuOpen(false);
   };
 
+  const handleGrammarGuideClick = () => {
+    setIsGrammarGuideOpen(true);
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       {/* Floating Action Button */}
@@ -24,6 +31,13 @@ export function ToolboxButton() {
         {/* Menu Options */}
         {isMenuOpen && (
           <div className="absolute bottom-14 right-0 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden mb-2">
+            <button
+              onClick={handleGrammarGuideClick}
+              className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left border-b border-gray-200"
+            >
+              <span className="text-xl">📖</span>
+              <span className="text-sm font-medium text-gray-700">Grammar Guide</span>
+            </button>
             <button
               onClick={handleKanaChartClick}
               className="flex items-center gap-2 px-3 py-2 active:bg-gray-100 w-full text-left border-b border-gray-200"
@@ -78,6 +92,11 @@ export function ToolboxButton() {
         isOpen={isFavoritesOpen}
         onClose={() => setIsFavoritesOpen(false)}
       />
+
+      {/* Grammar Guide */}
+      {isGrammarGuideOpen && (
+        <GrammarGuide onClose={() => setIsGrammarGuideOpen(false)} />
+      )}
     </>
   );
 }

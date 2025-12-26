@@ -1,0 +1,454 @@
+[
+  {
+    "testCase": {
+      "english": "I am eating",
+      "expectedPatterns": [
+        "食べ",
+        "て",
+        "いる",
+        "います"
+      ],
+      "description": "Progressive form - should split ている"
+    },
+    "success": true,
+    "result": {
+      "fullTranslation": "私は食べています",
+      "wordOrderDisplay": "私 は 食べて います",
+      "words": [
+        {
+          "english": "I",
+          "japanese": "私",
+          "reading": "わたし",
+          "romaji": "watashi",
+          "partOfSpeech": "pronoun",
+          "role": "subject"
+        },
+        {
+          "english": "topic marker",
+          "japanese": "は",
+          "reading": "は",
+          "romaji": "wa",
+          "partOfSpeech": "particle",
+          "role": "topic marker"
+        },
+        {
+          "english": "to eat",
+          "japanese": "食べる",
+          "reading": "たべる",
+          "romaji": "taberu",
+          "partOfSpeech": "verb (dictionary form)",
+          "role": "main verb"
+        },
+        {
+          "english": "te-form connector",
+          "japanese": "て",
+          "reading": "て",
+          "romaji": "te",
+          "partOfSpeech": "conjunctive particle",
+          "role": "verb connector"
+        },
+        {
+          "english": "progressive/state auxiliary",
+          "japanese": "います",
+          "reading": "います",
+          "romaji": "imasu",
+          "partOfSpeech": "auxiliary verb (polite)",
+          "role": "progressive marker"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Progressive Form",
+          "titleJapanese": "進行形",
+          "explanation": "て-form + いる expresses ongoing actions or states",
+          "atomicBreakdown": [
+            {
+              "component": "食べる",
+              "type": "verb (dictionary form)",
+              "meaning": "to eat"
+            },
+            {
+              "component": "て",
+              "type": "conjunctive particle",
+              "meaning": "te-form connector"
+            },
+            {
+              "component": "いる",
+              "type": "auxiliary verb",
+              "meaning": "progressive/state"
+            }
+          ]
+        },
+        {
+          "title": "Topic Marker",
+          "titleJapanese": "主題助詞",
+          "explanation": "は marks the topic of the sentence",
+          "atomicBreakdown": [
+            {
+              "component": "は",
+              "type": "particle",
+              "meaning": "topic marker"
+            }
+          ]
+        }
+      ]
+    },
+    "issues": []
+  },
+  {
+    "testCase": {
+      "english": "I want to go",
+      "expectedPatterns": [
+        "行き",
+        "たい"
+      ],
+      "description": "Desire form - should split たい"
+    },
+    "success": true,
+    "result": {
+      "fullTranslation": "行きたいです",
+      "wordOrderDisplay": "行く → たい → です",
+      "words": [
+        {
+          "english": "to go",
+          "japanese": "行く",
+          "reading": "いく",
+          "romaji": "iku",
+          "partOfSpeech": "verb (dictionary form)",
+          "role": "main verb"
+        },
+        {
+          "english": "want to",
+          "japanese": "たい",
+          "reading": "たい",
+          "romaji": "tai",
+          "partOfSpeech": "auxiliary adjective",
+          "role": "desire suffix"
+        },
+        {
+          "english": "polite copula",
+          "japanese": "です",
+          "reading": "です",
+          "romaji": "desu",
+          "partOfSpeech": "copula",
+          "role": "polite ending"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Desire Expression",
+          "titleJapanese": "願望表現",
+          "explanation": "たい form expresses personal desire or want",
+          "atomicBreakdown": [
+            {
+              "component": "行く",
+              "type": "verb (dictionary form)",
+              "meaning": "to go"
+            },
+            {
+              "component": "たい",
+              "type": "auxiliary adjective",
+              "meaning": "want to (desire)"
+            }
+          ]
+        },
+        {
+          "title": "Polite Form",
+          "titleJapanese": "丁寧語",
+          "explanation": "です adds politeness to the sentence",
+          "atomicBreakdown": [
+            {
+              "component": "です",
+              "type": "polite copula",
+              "meaning": "polite sentence ending"
+            }
+          ]
+        }
+      ]
+    },
+    "issues": []
+  },
+  {
+    "testCase": {
+      "english": "I ate too much",
+      "expectedPatterns": [
+        "食べ",
+        "すぎ",
+        "た"
+      ],
+      "description": "Too much + past - should split すぎた"
+    },
+    "success": true,
+    "result": {
+      "fullTranslation": "食べすぎました",
+      "wordOrderDisplay": "食べる → すぎる → ました",
+      "words": [
+        {
+          "english": "to eat",
+          "japanese": "食べ",
+          "reading": "たべ",
+          "romaji": "tabe",
+          "partOfSpeech": "verb stem",
+          "role": "action"
+        },
+        {
+          "english": "too much",
+          "japanese": "すぎ",
+          "reading": "すぎ",
+          "romaji": "sugi",
+          "partOfSpeech": "suffix",
+          "role": "degree modifier"
+        },
+        {
+          "english": "polite past",
+          "japanese": "ました",
+          "reading": "ました",
+          "romaji": "mashita",
+          "partOfSpeech": "auxiliary verb",
+          "role": "polite past tense"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Excessive Action Pattern",
+          "titleJapanese": "過度表現",
+          "explanation": "すぎる attached to verb stem expresses 'too much' or 'excessively'",
+          "atomicBreakdown": [
+            {
+              "component": "食べる",
+              "type": "verb (dictionary form)",
+              "meaning": "to eat"
+            },
+            {
+              "component": "すぎる",
+              "type": "auxiliary verb",
+              "meaning": "too much/excessively"
+            }
+          ]
+        },
+        {
+          "title": "Polite Past Tense",
+          "titleJapanese": "丁寧語過去形",
+          "explanation": "ました form expresses completed action in polite speech",
+          "atomicBreakdown": [
+            {
+              "component": "まし",
+              "type": "polite auxiliary stem",
+              "meaning": "polite marker"
+            },
+            {
+              "component": "た",
+              "type": "past tense suffix",
+              "meaning": "past/completed"
+            }
+          ]
+        }
+      ]
+    },
+    "issues": []
+  },
+  {
+    "testCase": {
+      "english": "I have to study",
+      "expectedPatterns": [
+        "勉強",
+        "し",
+        "なければ",
+        "ならない"
+      ],
+      "description": "Must/have to - should break down obligation"
+    },
+    "success": true,
+    "result": {
+      "fullTranslation": "勉強しなければならない",
+      "wordOrderDisplay": "勉強 → しなければならない",
+      "words": [
+        {
+          "english": "study",
+          "japanese": "勉強",
+          "reading": "べんきょう",
+          "romaji": "benkyou",
+          "partOfSpeech": "noun",
+          "role": "object"
+        },
+        {
+          "english": "to do",
+          "japanese": "する",
+          "reading": "する",
+          "romaji": "suru",
+          "partOfSpeech": "verb",
+          "role": "main verb"
+        },
+        {
+          "english": "negative conditional",
+          "japanese": "なければ",
+          "reading": "なければ",
+          "romaji": "nakereba",
+          "partOfSpeech": "conditional form",
+          "role": "conditional"
+        },
+        {
+          "english": "must not",
+          "japanese": "ならない",
+          "reading": "ならない",
+          "romaji": "naranai",
+          "partOfSpeech": "verb negative",
+          "role": "obligation"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Must/Have to Pattern",
+          "titleJapanese": "義務の表現",
+          "explanation": "なければならない expresses obligation or necessity",
+          "atomicBreakdown": [
+            {
+              "component": "する",
+              "type": "verb (dictionary form)",
+              "meaning": "to do"
+            },
+            {
+              "component": "なければ",
+              "type": "conditional form",
+              "meaning": "if not"
+            },
+            {
+              "component": "なる",
+              "type": "verb (dictionary form)",
+              "meaning": "to become"
+            },
+            {
+              "component": "ない",
+              "type": "negative suffix",
+              "meaning": "not"
+            }
+          ]
+        }
+      ]
+    },
+    "issues": []
+  },
+  {
+    "testCase": {
+      "english": "The book is on the table",
+      "expectedPatterns": [
+        "本",
+        "は",
+        "テーブル",
+        "の",
+        "上",
+        "に",
+        "ある"
+      ],
+      "description": "Location - should separate particles"
+    },
+    "success": true,
+    "result": {
+      "fullTranslation": "本はテーブルの上にあります",
+      "wordOrderDisplay": "Book は Table の上に exists",
+      "words": [
+        {
+          "english": "book",
+          "japanese": "本",
+          "reading": "ほん",
+          "romaji": "hon",
+          "partOfSpeech": "noun",
+          "role": "topic"
+        },
+        {
+          "english": "topic marker",
+          "japanese": "は",
+          "reading": "は",
+          "romaji": "wa",
+          "partOfSpeech": "particle",
+          "role": "topic marker"
+        },
+        {
+          "english": "table",
+          "japanese": "テーブル",
+          "reading": "テーブル",
+          "romaji": "teeburu",
+          "partOfSpeech": "noun",
+          "role": "location reference"
+        },
+        {
+          "english": "possessive/connection",
+          "japanese": "の",
+          "reading": "の",
+          "romaji": "no",
+          "partOfSpeech": "particle",
+          "role": "possessive"
+        },
+        {
+          "english": "top/above",
+          "japanese": "上",
+          "reading": "うえ",
+          "romaji": "ue",
+          "partOfSpeech": "noun",
+          "role": "location"
+        },
+        {
+          "english": "location marker",
+          "japanese": "に",
+          "reading": "に",
+          "romaji": "ni",
+          "partOfSpeech": "particle",
+          "role": "location marker"
+        },
+        {
+          "english": "to exist (inanimate)",
+          "japanese": "ある",
+          "reading": "ある",
+          "romaji": "aru",
+          "partOfSpeech": "verb",
+          "role": "predicate"
+        },
+        {
+          "english": "polite form suffix",
+          "japanese": "ます",
+          "reading": "ます",
+          "romaji": "masu",
+          "partOfSpeech": "auxiliary",
+          "role": "politeness marker"
+        }
+      ],
+      "grammarNotes": [
+        {
+          "title": "Location Expression",
+          "titleJapanese": "場所の表現",
+          "explanation": "Uses の to connect object with location word, then に to mark location",
+          "atomicBreakdown": [
+            {
+              "component": "の",
+              "type": "particle",
+              "meaning": "possessive/connection"
+            },
+            {
+              "component": "に",
+              "type": "particle",
+              "meaning": "location marker"
+            }
+          ]
+        },
+        {
+          "title": "Existence Verb",
+          "titleJapanese": "存在動詞",
+          "explanation": "あります is polite form of ある (to exist) for inanimate objects",
+          "atomicBreakdown": [
+            {
+              "component": "ある",
+              "type": "verb (dictionary form)",
+              "meaning": "to exist (inanimate)"
+            },
+            {
+              "component": "ます",
+              "type": "auxiliary verb",
+              "meaning": "polite form ending"
+            }
+          ]
+        }
+      ]
+    },
+    "issues": []
+  }
+]
