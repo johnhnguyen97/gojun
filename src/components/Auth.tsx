@@ -71,20 +71,27 @@ export function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 relative overflow-hidden">
-      {/* Background decoration */}
+    <div className="min-h-screen bg-gradient-to-b from-orange-400 via-orange-300 to-amber-200 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Sunset background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-200/30 to-indigo-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-orange-500/40 to-transparent"></div>
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-yellow-300/50 to-orange-400/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-gradient-to-br from-amber-300/40 to-orange-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-amber-100/50 to-transparent"></div>
       </div>
 
       <div className="max-w-md w-full relative z-10">
         {/* Auth Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-gray-200/50 p-8 border border-white/50">
-          {/* Logo */}
+          {/* Logo - Two Cards */}
           <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25 rotate-3 hover:rotate-0 transition-transform duration-300">
-              <span className="text-white text-2xl font-bold">語</span>
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30 -rotate-6 hover:rotate-0 transition-transform duration-300">
+                <span className="text-white text-xl font-bold">語</span>
+              </div>
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-600/30 rotate-6 hover:rotate-0 transition-transform duration-300">
+                <span className="text-white text-xl font-bold">順</span>
+              </div>
             </div>
           </div>
 
@@ -170,7 +177,7 @@ export function Auth() {
             <button
               type="submit"
               disabled={loading || googleLoading}
-              className="w-full py-3.5 px-4 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-gray-900/20"
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-500/30"
             >
               {loading ? 'Please wait...' : isLogin ? 'Get Started' : 'Create Account'}
             </button>
