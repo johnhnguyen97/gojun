@@ -411,13 +411,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }
 
-    const { sentence, parsedWords } = req.body || {};
+    const { sentence, parsedWords, provider } = req.body || {};
 
     if (!sentence || typeof sentence !== 'string') {
       return res.status(400).json({ error: 'Sentence is required' });
     }
 
-    // Get user's encrypted API key (optional - will fall back to Groq if not set)
+    // Get user's encrypted API key (optional)
     const { data: keyData } = await supabaseAdmin
       .from('user_api_keys')
       .select('encrypted_key, iv, auth_tag, salt')
@@ -429,8 +429,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let content: string;
 
-    // Try user's Anthropic key first, fall back to Groq
-    if (keyData?.encrypted_key) {
+    // Use specified provider, or default based on key availability
+    const useProvider = provider || (keyData?.encrypted_key ? 'claude' : 'groq');
+
+    // Use Claude if requested AND user has a key
+    if (useProvider === 'claude' && keyData?.encrypted_key) {
       // User has their own Anthropic key - use Claude
       let apiKey: string;
       try {

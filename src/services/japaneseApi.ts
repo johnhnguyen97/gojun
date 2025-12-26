@@ -17,13 +17,16 @@ export async function translateSentence(
   parsedWords: ParsedWord[],
   accessToken: string
 ): Promise<SentenceTranslation> {
+  // Get user's AI provider preference
+  const provider = localStorage.getItem('gojun-ai-provider') || 'groq';
+
   const response = await fetch('/api/translate-sentence', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ sentence, parsedWords }),
+    body: JSON.stringify({ sentence, parsedWords, provider }),
   });
 
   if (!response.ok) {
