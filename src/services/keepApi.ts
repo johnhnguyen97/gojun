@@ -10,6 +10,8 @@ export interface KeepTokens {
   refresh_token?: string;
   expires_in: number;
   email: string;
+  master_token?: string | null;
+  keep_auth?: string | null;
   stored_at?: number;
 }
 
@@ -129,6 +131,14 @@ export function isKeepConnected(): boolean {
 }
 
 /**
+ * Check if Keep has full API access (has keep_auth token)
+ */
+export function hasKeepApiAccess(): boolean {
+  const tokens = getKeepTokens();
+  return tokens?.keep_auth != null;
+}
+
+/**
  * Get connected Keep email
  */
 export function getKeepEmail(): string | null {
@@ -153,12 +163,15 @@ export async function fetchKeepNotes(): Promise<KeepNote[]> {
     throw new Error('Not connected to Google Keep');
   }
 
-  // The unofficial Keep API endpoint
-  // This may need adjustment based on how gkeepapi-node works
+  if (!tokens.keep_auth) {
+    throw new Error('No Keep API access - master token exchange may have failed');
+  }
+
+  // The unofficial Keep API endpoint using the Keep-specific auth token
   const response = await fetch('https://www.googleapis.com/notes/v1/changes', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${tokens.access_token}`,
+      'Authorization': `OAuth ${tokens.keep_auth}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -220,12 +233,16 @@ export async function createKeepNote(title: string, content: string): Promise<Ke
     throw new Error('Not connected to Google Keep');
   }
 
+  if (!tokens.keep_auth) {
+    throw new Error('No Keep API access - master token exchange may have failed');
+  }
+
   const noteId = `gojun-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
   const response = await fetch('https://www.googleapis.com/notes/v1/changes', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${tokens.access_token}`,
+      'Authorization': `OAuth ${tokens.keep_auth}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
