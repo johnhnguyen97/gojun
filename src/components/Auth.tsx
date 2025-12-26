@@ -71,13 +71,13 @@ export function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-400 via-orange-300 to-amber-200 flex items-center justify-center py-12 px-4 relative overflow-hidden">
-      {/* Sunset background decoration */}
+    <div className="min-h-screen bg-gradient-to-b from-orange-200 via-amber-100 to-orange-50 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Soft sunset sky background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-orange-500/40 to-transparent"></div>
-        <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-yellow-300/50 to-orange-400/30 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-gradient-to-br from-amber-300/40 to-orange-300/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-amber-100/50 to-transparent"></div>
+        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-orange-300/30 to-transparent"></div>
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-yellow-200/40 to-orange-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-gradient-to-br from-amber-200/30 to-orange-200/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white/40 to-transparent"></div>
       </div>
 
       <div className="max-w-md w-full relative z-10">
@@ -189,7 +189,7 @@ export function Auth() {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="px-3 bg-white/80 text-gray-400">Or sign in with</span>
+              <span className="px-3 bg-white text-gray-400 rounded">Or sign in with</span>
             </div>
           </div>
 
