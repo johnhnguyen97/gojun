@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import type { WordOfTheDay, KanjiOfTheDay, JapaneseHoliday } from '../../types/calendar';
 
 interface CalendarDetailPopoverProps {
@@ -295,10 +296,10 @@ export function CalendarDetailPopover({ type, data, position, onClose }: Calenda
     }
   };
 
-  return (
+  const popoverContent = (
     <div
       ref={popoverRef}
-      className="fixed z-[100] bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-80 max-h-[80vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+      className="fixed z-[9999] bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-80 max-h-[80vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
       style={{
         left: adjustedPosition.x,
         top: adjustedPosition.y,
@@ -370,4 +371,7 @@ export function CalendarDetailPopover({ type, data, position, onClose }: Calenda
       `}</style>
     </div>
   );
+
+  // Use portal to render at document body level
+  return createPortal(popoverContent, document.body);
 }
