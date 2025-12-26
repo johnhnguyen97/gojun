@@ -9,9 +9,12 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signInWithGoogle: () => Promise<{ error: Error | null }>;
+  linkGoogleAccount: () => Promise<{ error: Error | null }>;
+  unlinkGoogleAccount: () => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   hasApiKey: boolean;
   checkApiKey: () => Promise<boolean>;
+  hasGoogleLinked: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -96,6 +99,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error as Error | null };
   };
 
+  const linkGoogleAccount = async () => {
+    const { error } = await supabase.auth.linkIdentity({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+    return { error: error as Error | null };
+  };
+
+  const unlinkGoogleAccount = async () => {
+    // Find the Google identity
+    const googleIdentity = user?.identities?.find(id => id.provider === 'google');
+    if (!googleIdentity) {
+      return { error: new Error('No Google account linked') };
+    }
+
+    const { error } = await supabase.auth.unlinkIdentity(googleIdentity);
+    return { error: error as Error | null };
+  };
+
+  // Check if Google is linked
+  const hasGoogleLinked = user?.identities?.some(id => id.provider === 'google') ?? false;
+
   const signOut = async () => {
     await supabase.auth.signOut();
     setHasApiKey(false);
@@ -109,9 +136,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signUp,
       signIn,
       signInWithGoogle,
+      linkGoogleAccount,
+      unlinkGoogleAccount,
       signOut,
       hasApiKey,
       checkApiKey,
+      hasGoogleLinked,
     }}>
       {children}
     </AuthContext.Provider>
