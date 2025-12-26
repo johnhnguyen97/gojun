@@ -71,6 +71,9 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
   // Google Keep state (read-only, managed in Settings)
   const [keepConnected, setKeepConnected] = useState(false);
 
+  // Export state
+  const [exportCopied, setExportCopied] = useState(false);
+
   useEffect(() => {
     if (isOpen) {
       requestAnimationFrame(() => setIsVisible(true));
@@ -181,6 +184,75 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
     saveDictionary(dictionary.filter(d => d.id !== id));
   };
 
+  // Export functionality
+  const generateExportText = () => {
+    let text = '📚 Gojun Japanese Study Notes\n';
+    text += '━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+
+    // Export Favorites
+    if (favorites.length > 0) {
+      text += '⭐ FAVORITES (' + favorites.length + ' words)\n';
+      text += '─────────────────────\n';
+      favorites.forEach(fav => {
+        const cat = getCategoryStyle(fav.category);
+        text += `• ${fav.word} (${fav.reading})\n`;
+        text += `  ${fav.english} [${cat.label}]\n`;
+      });
+      text += '\n';
+    }
+
+    // Export Dictionary
+    if (dictionary.length > 0) {
+      text += '📖 DICTIONARY (' + dictionary.length + ' entries)\n';
+      text += '─────────────────────\n';
+      dictionary.forEach(entry => {
+        const cat = getCategoryStyle(entry.category);
+        text += `• ${entry.word}`;
+        if (entry.reading) text += ` (${entry.reading})`;
+        text += '\n';
+        text += `  ${entry.meaning} [${cat.label}]\n`;
+        if (entry.notes) text += `  📝 ${entry.notes}\n`;
+      });
+      text += '\n';
+    }
+
+    // Export Notes
+    if (pages.length > 0) {
+      text += '📝 NOTES (' + pages.length + ' pages)\n';
+      text += '─────────────────────\n';
+      pages.forEach(page => {
+        text += `\n${page.icon} ${page.title || 'Untitled'}\n`;
+        page.blocks.forEach(block => {
+          if (block.type === 'heading') {
+            text += `\n## ${block.content}\n`;
+          } else if (block.type === 'bullet') {
+            text += `  • ${block.content}\n`;
+          } else if (block.type === 'divider') {
+            text += '───\n';
+          } else if (block.content) {
+            text += `${block.content}\n`;
+          }
+        });
+      });
+    }
+
+    text += '\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+    text += 'Exported from Gojun (gojun.vercel.app)\n';
+
+    return text;
+  };
+
+  const handleExport = async () => {
+    const text = generateExportText();
+    try {
+      await navigator.clipboard.writeText(text);
+      setExportCopied(true);
+      setTimeout(() => setExportCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
   const selectedPage = pages.find(p => p.id === selectedPageId);
 
   const filteredDictionary = dictionary.filter(d =>
@@ -237,6 +309,28 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {/* Export button */}
+              <button
+                onClick={handleExport}
+                className="px-3 py-1.5 text-xs font-medium bg-white/20 hover:bg-white/30 rounded-lg flex items-center gap-1.5 transition-all"
+                title="Export notes to clipboard"
+              >
+                {exportCopied ? (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="hidden sm:inline">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <span className="hidden sm:inline">Export</span>
+                  </>
+                )}
+              </button>
               {/* Keep connected indicator */}
               {keepConnected && (
                 <div className="px-2 py-1 text-xs font-medium bg-white/20 rounded-lg flex items-center gap-1.5" title="Google Keep connected">
