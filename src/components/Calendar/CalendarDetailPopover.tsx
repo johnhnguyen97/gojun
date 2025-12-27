@@ -107,16 +107,16 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     }
   }, [type, data]);
 
-  // wkanki-style animation: gray background + colored animated overlay using native SVG animate
+  // Two-layer animation: gray background + colored strokes animating via requestAnimationFrame
   const playAnimation = useCallback(() => {
     if (!svgContainerRef.current || isAnimating) return;
 
     const svg = svgContainerRef.current.querySelector('svg');
     if (!svg) return;
 
-    const pathGroup = svg.querySelector('.kgPaths');
+    const kgPaths = svg.querySelector('.kgPaths');
     const paths = Array.from(
-      pathGroup ? pathGroup.querySelectorAll('path') : svg.querySelectorAll('path')
+      kgPaths ? kgPaths.querySelectorAll('path') : svg.querySelectorAll('path')
     ) as SVGPathElement[];
 
     if (paths.length === 0) return;
@@ -124,76 +124,101 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     setIsAnimating(true);
     animationRef.current.cancel = false;
 
-    // Store original colors
+    // Store original colors and set paths to gray (background)
     const originalColors = paths.map(p => p.getAttribute('stroke') || '#000');
-
-    // Set all paths to gray (background layer)
-    paths.forEach((path) => {
-      path.setAttribute('stroke', '#d0d0d0');
-      path.style.strokeDasharray = '';
-      path.style.strokeDashoffset = '';
+    paths.forEach(path => {
+      path.setAttribute('stroke', '#e0e0e0');
     });
 
-    // Create animation group with cloned paths
+    // Create overlay group for colored animated strokes
     const animGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    animGroup.setAttribute('class', 'stroke-animation');
-
-    // Calculate timing
-    const baseWait = 0.2; // seconds before animation starts
-    const drawTime = 0.3; // base draw time per stroke
-    const lengthFactor = 0.003; // additional time based on path length
-    const pauseBetween = 0.15; // pause between strokes
-
-    let currentTime = baseWait;
-    const animPaths: SVGPathElement[] = [];
-
-    paths.forEach((path, index) => {
-      const clone = path.cloneNode(true) as SVGPathElement;
-      const color = originalColors[index];
-      const length = path.getTotalLength();
-
-      // Calculate stroke-specific timing
-      const strokeDuration = drawTime + (length * lengthFactor);
-
-      clone.setAttribute('stroke', color);
-      clone.setAttribute('stroke-width', '4');
-      clone.style.strokeDasharray = String(length);
-      clone.style.strokeDashoffset = String(length);
-
-      // Create native SVG animate element for smooth animation
-      const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      animate.setAttribute('attributeName', 'stroke-dashoffset');
-      animate.setAttribute('from', String(length));
-      animate.setAttribute('to', '0');
-      animate.setAttribute('begin', `${currentTime}s`);
-      animate.setAttribute('dur', `${strokeDuration}s`);
-      animate.setAttribute('fill', 'freeze');
-
-      clone.appendChild(animate);
-      animGroup.appendChild(clone);
-      animPaths.push(clone);
-
-      currentTime += strokeDuration + pauseBetween;
-    });
-
+    animGroup.setAttribute('class', 'animation-overlay');
     svg.appendChild(animGroup);
 
-    // Set timeout to clean up after animation completes
-    const totalDuration = (currentTime + 0.5) * 1000; // Add buffer
-    const cleanupTimeout = setTimeout(() => {
-      if (!animationRef.current.cancel) {
-        // Remove animation layer and restore colors
+    // Prepare animated paths - all start hidden
+    const animData = paths.map((path, index) => {
+      const clone = path.cloneNode(true) as SVGPathElement;
+      const length = path.getTotalLength();
+
+      clone.setAttribute('stroke', originalColors[index]);
+      clone.setAttribute('stroke-width', '4');
+      clone.setAttribute('fill', 'none');
+      clone.setAttribute('stroke-linecap', 'round');
+      clone.setAttribute('stroke-linejoin', 'round');
+      clone.style.strokeDasharray = String(length);
+      clone.style.strokeDashoffset = String(length); // Fully hidden
+
+      animGroup.appendChild(clone);
+
+      return { element: clone, length };
+    });
+
+    // Animation state
+    const strokeDuration = 400; // ms per stroke
+    const pauseBetween = 80; // ms pause between strokes
+    let currentStroke = 0;
+    let strokeProgress = 0;
+    let lastTimestamp: number | null = null;
+    let isPausing = false;
+    let pauseEndTime = 0;
+    let rafId: number;
+
+    function animate(timestamp: number) {
+      if (animationRef.current.cancel) {
+        return;
+      }
+
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const deltaTime = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      // Handle pause between strokes
+      if (isPausing) {
+        if (timestamp >= pauseEndTime) {
+          isPausing = false;
+          currentStroke++;
+          strokeProgress = 0;
+        } else {
+          rafId = requestAnimationFrame(animate);
+          return;
+        }
+      }
+
+      // Check if animation complete
+      if (currentStroke >= animData.length) {
+        // Clean up - remove overlay, restore colors
         animGroup.remove();
         paths.forEach((path, index) => {
           path.setAttribute('stroke', originalColors[index]);
         });
         setIsAnimating(false);
+        return;
       }
-    }, totalDuration);
+
+      // Animate current stroke
+      const { element, length } = animData[currentStroke];
+      strokeProgress += deltaTime / strokeDuration;
+
+      if (strokeProgress >= 1) {
+        // Stroke complete
+        element.style.strokeDashoffset = '0';
+        isPausing = true;
+        pauseEndTime = timestamp + pauseBetween;
+      } else {
+        // Draw stroke progressively
+        const offset = length * (1 - strokeProgress);
+        element.style.strokeDashoffset = String(offset);
+      }
+
+      rafId = requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    rafId = requestAnimationFrame(animate);
 
     // Store cleanup function
     animationRef.current.cleanup = () => {
-      clearTimeout(cleanupTimeout);
+      cancelAnimationFrame(rafId);
       animGroup.remove();
       paths.forEach((path, index) => {
         path.setAttribute('stroke', originalColors[index]);
