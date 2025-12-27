@@ -107,14 +107,10 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     }
   }, [type, data]);
 
-  // Two-layer animation: gray background + colored strokes animating via setInterval (like test)
-  // CRITICAL: Do NOT call setIsAnimating(true) before setting up the animation
-  // React re-render from state change will destroy the SVG DOM via dangerouslySetInnerHTML
+  // Two-layer animation using requestAnimationFrame (exact copy from working test-stroke-animation.html)
   const playAnimation = useCallback(() => {
     if (!svgContainerRef.current) return;
-
-    // Check if already animating using ref (not state!)
-    if (animationRef.current.cancel === false) return;
+    if (animationRef.current.cancel === false) return; // Already animating
 
     const svg = svgContainerRef.current.querySelector('svg');
     if (!svg) return;
@@ -126,8 +122,9 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
 
     if (paths.length === 0) return;
 
-    // Mark animation as running BEFORE any DOM manipulation
+    // Mark as animating
     animationRef.current.cancel = false;
+    setIsAnimating(true);
 
     // Store original colors and set paths to gray (background)
     const originalColors = paths.map(p => p.getAttribute('stroke') || '#000');
@@ -138,7 +135,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     // Create overlay group for colored animated strokes
     const animGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     animGroup.setAttribute('class', 'animation-overlay');
-    svg.appendChild(animGroup);
+    (kgPaths || svg).appendChild(animGroup);
 
     // Prepare animated paths - all start hidden
     const animData = paths.map((path, index) => {
@@ -158,41 +155,39 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       return { element: clone, length };
     });
 
-    // NOW update state - the DOM setup is complete
-    // We've captured all DOM references, so re-render won't affect our animation
-    setIsAnimating(true);
-
-    // Animation using setInterval (proven to work in test)
-    const frameRate = 30; // ~30fps
-    const frameTime = 1000 / frameRate;
-    const strokeDuration = 500; // ms per stroke
-    const pauseBetween = 100; // ms pause between strokes
-
+    // Animation state (exact copy from test file)
+    const strokeDuration = 400; // ms per stroke
+    const pauseBetween = 80; // ms pause between strokes
     let currentStroke = 0;
     let strokeProgress = 0;
+    let lastTimestamp: number | null = null;
     let isPausing = false;
-    let pauseRemaining = 0;
+    let pauseEndTime = 0;
+    let animationId: number | null = null;
 
-    const intervalId = setInterval(() => {
+    function animate(timestamp: number) {
       if (animationRef.current.cancel) {
-        clearInterval(intervalId);
-        return;
+        return; // Stop if cancelled
       }
+
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const deltaTime = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
 
       // Handle pause between strokes
       if (isPausing) {
-        pauseRemaining -= frameTime;
-        if (pauseRemaining <= 0) {
+        if (timestamp >= pauseEndTime) {
           isPausing = false;
           currentStroke++;
           strokeProgress = 0;
+        } else {
+          animationId = requestAnimationFrame(animate);
+          return;
         }
-        return;
       }
 
       // Check if animation complete
       if (currentStroke >= animData.length) {
-        clearInterval(intervalId);
         // Clean up - remove overlay, restore colors
         if (animGroup.parentNode) {
           animGroup.remove();
@@ -207,23 +202,30 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
 
       // Animate current stroke
       const { element, length } = animData[currentStroke];
-      strokeProgress += frameTime / strokeDuration;
+      strokeProgress += deltaTime / strokeDuration;
 
       if (strokeProgress >= 1) {
         // Stroke complete
         element.style.strokeDashoffset = '0';
         isPausing = true;
-        pauseRemaining = pauseBetween;
+        pauseEndTime = timestamp + pauseBetween;
       } else {
         // Draw stroke progressively
         const offset = length * (1 - strokeProgress);
         element.style.strokeDashoffset = String(offset);
       }
-    }, frameTime);
 
-    // Store cleanup function with intervalId captured
+      animationId = requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    animationId = requestAnimationFrame(animate);
+
+    // Store cleanup function
     animationRef.current.cleanup = () => {
-      clearInterval(intervalId);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
       if (animGroup.parentNode) {
         animGroup.remove();
       }
