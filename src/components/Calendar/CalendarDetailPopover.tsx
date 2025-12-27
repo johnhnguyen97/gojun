@@ -63,7 +63,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
   const [loadingSvg, setLoadingSvg] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const animationRef = useRef<{ cancel: boolean; cleanup?: () => void }>({ cancel: false });
+  const animationRef = useRef<{ cancel: boolean; cleanup?: () => void }>({ cancel: true });
 
   // Animate in on mount
   useEffect(() => {
