@@ -65,7 +65,9 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
         .then(svg => {
           // Remove the kgNumbers group entirely from the SVG
           // This removes stroke numbers like <g class="kgNumbers">...</g>
-          const cleanedSvg = svg.replace(/<g[^>]*class="kgNumbers"[^>]*>[\s\S]*?<\/g>/gi, '');
+          let cleanedSvg = svg.replace(/<g[^>]*class="kgNumbers"[^>]*>[\s\S]*?<\/g>/gi, '');
+          // Remove stroke="currentColor" from kgPaths group so we can set colors on individual paths
+          cleanedSvg = cleanedSvg.replace(/(<g[^>]*class="kgPaths"[^>]*)\s+stroke="currentColor"/gi, '$1');
           setSvgContent(cleanedSvg);
         })
         .catch(() => {
@@ -90,14 +92,15 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
           ? pathGroup.querySelectorAll('path')
           : svgContainerRef.current.querySelectorAll('path');
 
-        // Style stroke paths with colors
+        // Style stroke paths with colors - use setAttribute for SVG compatibility
         allPaths.forEach((path, index) => {
           const color = STROKE_COLORS[index % STROKE_COLORS.length];
-          (path as SVGPathElement).style.stroke = color;
-          (path as SVGPathElement).style.strokeWidth = '3';
-          (path as SVGPathElement).style.fill = 'none';
-          (path as SVGPathElement).style.strokeLinecap = 'round';
-          (path as SVGPathElement).style.strokeLinejoin = 'round';
+          const svgPath = path as SVGPathElement;
+          svgPath.setAttribute('stroke', color);
+          svgPath.setAttribute('stroke-width', '3');
+          svgPath.setAttribute('fill', 'none');
+          svgPath.setAttribute('stroke-linecap', 'round');
+          svgPath.setAttribute('stroke-linejoin', 'round');
         });
       });
     }
@@ -121,7 +124,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     // Hide all paths initially but preserve their colors
     paths.forEach((path, index) => {
       const color = STROKE_COLORS[index % STROKE_COLORS.length];
-      path.style.stroke = color;
+      path.setAttribute('stroke', color);
       path.style.opacity = '0';
       path.style.strokeDasharray = '';
       path.style.strokeDashoffset = '';
@@ -138,8 +141,8 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       const length = path.getTotalLength();
       const color = STROKE_COLORS[i % STROKE_COLORS.length];
 
-      // Ensure color is set
-      path.style.stroke = color;
+      // Ensure color is set using setAttribute for SVG
+      path.setAttribute('stroke', color);
 
       // Show the path
       path.style.opacity = '1';
@@ -175,7 +178,9 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       const pathGroup = svgContainerRef.current.querySelector('.kgPaths');
       const paths = (pathGroup ? pathGroup.querySelectorAll('path') : svgContainerRef.current.querySelectorAll('path')) as NodeListOf<SVGPathElement>;
 
-      paths.forEach(path => {
+      paths.forEach((path, index) => {
+        const color = STROKE_COLORS[index % STROKE_COLORS.length];
+        path.setAttribute('stroke', color);
         path.style.opacity = '1';
         path.style.strokeDasharray = '';
         path.style.strokeDashoffset = '';
