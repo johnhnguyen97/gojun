@@ -9,7 +9,7 @@ interface NotesPanelProps {
   onClose: () => void;
 }
 
-type Tab = 'favorites' | 'notes' | 'dictionary';
+type Tab = 'favorites' | 'notes' | 'dictionary' | 'wordnotes';
 
 // Notion-style note page
 interface NotePage {
@@ -36,6 +36,13 @@ interface DictionaryEntry {
   category: string;
   notes: string;
   created_at: string;
+}
+
+// Word note (from game)
+interface WordNote {
+  word: string;
+  note: string;
+  updated_at: string;
 }
 
 const PAGE_ICONS = ['📝', '📚', '🎯', '💡', '⭐', '🔥', '📖', '✨', '🌸', '🗾', '🎌', '📌', '💮', '🏯', '🎎', '🍣', '🍜', '🍵'];
@@ -68,6 +75,10 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
   const [showAddWord, setShowAddWord] = useState(false);
   const [dictSearch, setDictSearch] = useState('');
 
+  // Word notes state (from game)
+  const [wordNotes, setWordNotes] = useState<WordNote[]>([]);
+  const [wordNotesSearch, setWordNotesSearch] = useState('');
+
   // Google Keep state (read-only, managed in Settings)
   const [keepConnected, setKeepConnected] = useState(false);
 
@@ -83,6 +94,7 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
       }
       loadPages();
       loadDictionary();
+      loadWordNotes();
       checkKeepConnection();
     } else {
       setIsVisible(false);
@@ -183,6 +195,35 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
 
   const deleteDictionaryEntry = (id: string) => {
     saveDictionary(dictionary.filter(d => d.id !== id));
+  };
+
+  // Word Notes (from game)
+  const loadWordNotes = () => {
+    const stored = localStorage.getItem('gojun-word-notes');
+    if (stored) {
+      const notes: WordNote[] = JSON.parse(stored);
+      // Sort by most recently updated
+      notes.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+      setWordNotes(notes);
+    } else {
+      setWordNotes([]);
+    }
+  };
+
+  const deleteWordNote = (word: string) => {
+    const updated = wordNotes.filter(n => n.word !== word);
+    localStorage.setItem('gojun-word-notes', JSON.stringify(updated));
+    setWordNotes(updated);
+  };
+
+  const updateWordNote = (word: string, newNote: string) => {
+    const updated = wordNotes.map(n =>
+      n.word === word
+        ? { ...n, note: newNote, updated_at: new Date().toISOString() }
+        : n
+    );
+    localStorage.setItem('gojun-word-notes', JSON.stringify(updated));
+    setWordNotes(updated);
   };
 
   // Export functionality
@@ -315,6 +356,12 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
     d.meaning.toLowerCase().includes(dictSearch.toLowerCase())
   );
 
+  const filteredWordNotes = wordNotes.filter(n =>
+    !wordNotesSearch ||
+    n.word.includes(wordNotesSearch) ||
+    n.note.toLowerCase().includes(wordNotesSearch.toLowerCase())
+  );
+
   if (!isOpen) return null;
 
   const categories = Object.keys(grouped).sort((a, b) => {
@@ -357,6 +404,7 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
                 <p className="text-white/80 text-xs">
                   {activeTab === 'favorites' ? `${favorites.length} words` :
                    activeTab === 'notes' ? `${pages.length} pages` :
+                   activeTab === 'wordnotes' ? `${wordNotes.length} notes` :
                    `${dictionary.length} entries`}
                 </p>
               </div>
@@ -448,6 +496,7 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
           <div className="mt-4 flex gap-1 bg-white/10 rounded-xl p-1">
             {[
               { id: 'favorites' as Tab, label: 'Favorites', icon: '★' },
+              { id: 'wordnotes' as Tab, label: 'Word Notes', icon: '✏️' },
               { id: 'notes' as Tab, label: 'My Notes', icon: '📄' },
               { id: 'dictionary' as Tab, label: 'Dictionary', icon: '📖' },
             ].map(tab => (
@@ -527,6 +576,16 @@ export function NotesPanel({ isOpen, onClose }: NotesPanelProps) {
               onShowAddWord={setShowAddWord}
               onAdd={addDictionaryEntry}
               onDelete={deleteDictionaryEntry}
+            />
+          )}
+
+          {activeTab === 'wordnotes' && (
+            <WordNotesTab
+              wordNotes={filteredWordNotes}
+              search={wordNotesSearch}
+              onSearchChange={setWordNotesSearch}
+              onDelete={deleteWordNote}
+              onUpdate={updateWordNote}
             />
           )}
         </div>
@@ -1069,6 +1128,155 @@ function DictionaryTab({ dictionary, search, onSearchChange, showAddWord, onShow
                 </div>
               );
             })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============ Word Notes Tab ============
+function WordNotesTab({ wordNotes, search, onSearchChange, onDelete, onUpdate }: {
+  wordNotes: WordNote[];
+  search: string;
+  onSearchChange: (s: string) => void;
+  onDelete: (word: string) => void;
+  onUpdate: (word: string, newNote: string) => void;
+}) {
+  const [editingWord, setEditingWord] = useState<string | null>(null);
+  const [editText, setEditText] = useState('');
+
+  const startEdit = (note: WordNote) => {
+    setEditingWord(note.word);
+    setEditText(note.note);
+  };
+
+  const saveEdit = () => {
+    if (editingWord && editText.trim()) {
+      onUpdate(editingWord, editText.trim());
+    }
+    setEditingWord(null);
+    setEditText('');
+  };
+
+  const cancelEdit = () => {
+    setEditingWord(null);
+    setEditText('');
+  };
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Yesterday';
+    if (days < 7) return `${days} days ago`;
+    return date.toLocaleDateString();
+  };
+
+  return (
+    <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Search */}
+      <div className="p-3 border-b border-gray-200 bg-white">
+        <div className="relative">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Search word notes..."
+            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-violet-400"
+          />
+        </div>
+        <p className="text-xs text-gray-400 mt-2">
+          Notes added from the word bank during practice
+        </p>
+      </div>
+
+      {/* Word Notes List */}
+      <div className="flex-1 overflow-y-auto p-3">
+        {wordNotes.length === 0 ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-3 bg-violet-100 rounded-2xl flex items-center justify-center animate-[float_3s_ease-in-out_infinite]">
+                <span className="text-2xl">✏️</span>
+              </div>
+              <p className="text-gray-500 text-sm">No word notes yet</p>
+              <p className="text-gray-400 text-xs mt-1">Click the note icon on words during practice</p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-2 stagger-children">
+            {wordNotes.map((note) => (
+              <div
+                key={note.word}
+                className="p-3 bg-white rounded-xl border border-gray-100 hover:shadow-md hover:border-violet-200 transition-all group"
+              >
+                {editingWord === note.word ? (
+                  // Edit mode
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold text-gray-900">{note.word}</span>
+                    </div>
+                    <textarea
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      className="w-full h-20 p-2 text-sm border border-violet-200 rounded-lg resize-none focus:outline-none focus:border-violet-400 focus:ring-1 focus:ring-violet-200"
+                      autoFocus
+                    />
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={cancelEdit}
+                        className="px-3 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={saveEdit}
+                        className="px-3 py-1 text-xs bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded font-medium hover:shadow-md transition-all"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  // View mode
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-lg font-bold text-gray-900">{note.word}</span>
+                        <span className="text-xs text-gray-400">{formatDate(note.updated_at)}</span>
+                      </div>
+                      <div className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">{note.note}</div>
+                    </div>
+                    <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => startEdit(note)}
+                        className="p-1.5 text-gray-400 hover:text-violet-500 hover:bg-violet-50 rounded-lg transition-all"
+                        title="Edit note"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => onDelete(note.word)}
+                        className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                        title="Delete note"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

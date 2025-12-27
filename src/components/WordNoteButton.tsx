@@ -10,9 +10,10 @@ interface WordNoteButtonProps {
   word: string;
   reading: string;
   english: string;
+  onPopupChange?: (isOpen: boolean) => void;
 }
 
-export function WordNoteButton({ word, reading, english }: WordNoteButtonProps) {
+export function WordNoteButton({ word, reading, english, onPopupChange }: WordNoteButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [note, setNote] = useState('');
   const [hasNote, setHasNote] = useState(false);
@@ -42,17 +43,20 @@ export function WordNoteButton({ word, reading, english }: WordNoteButtonProps) 
         !buttonRef.current.contains(e.target as Node)
       ) {
         setIsOpen(false);
+        onPopupChange?.(false);
       }
     };
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+  }, [isOpen, onPopupChange]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsOpen(!isOpen);
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onPopupChange?.(newState);
   };
 
   const saveNote = () => {
@@ -81,6 +85,7 @@ export function WordNoteButton({ word, reading, english }: WordNoteButtonProps) 
 
     localStorage.setItem('gojun-word-notes', JSON.stringify(notes));
     setIsOpen(false);
+    onPopupChange?.(false);
   };
 
   return (

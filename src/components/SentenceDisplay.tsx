@@ -71,6 +71,7 @@ export function SentenceDisplay({
   const [draggedSlotId, setDraggedSlotId] = useState<string | null>(null);
   const [dragSource, setDragSource] = useState<string | null>(null); // 'bank-{slotId}' or slot id
   const [hoveredSlotId, setHoveredSlotId] = useState<string | null>(null); // For tooltip
+  const [notePopupOpenForSlot, setNotePopupOpenForSlot] = useState<string | null>(null); // Track which slot has note popup open
 
   useEffect(() => {
     const shuffled = [...wordSlots].sort(() => Math.random() - 0.5);
@@ -251,7 +252,8 @@ export function SentenceDisplay({
             const isUsed = isSlotUsed(slot.id);
             const isParticle = slot.englishWord.role === 'particle';
             const isAuxiliary = slot.englishWord.role === 'auxiliary' || slot.englishWord.role === 'verb-stem';
-            const showTooltip = hoveredSlotId === slot.id;
+            // Only show tooltip if hovering AND note popup is not open for this slot
+            const showTooltip = hoveredSlotId === slot.id && notePopupOpenForSlot !== slot.id;
 
             return (
               <div
@@ -308,6 +310,7 @@ export function SentenceDisplay({
                         word={slot.japaneseWord.japanese}
                         reading={slot.japaneseWord.reading}
                         english={slot.japaneseWord.english}
+                        onPopupChange={(isOpen) => setNotePopupOpenForSlot(isOpen ? slot.id : null)}
                       />
                     </div>
                   )}

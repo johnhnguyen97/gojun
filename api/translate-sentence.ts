@@ -49,7 +49,9 @@ const COMPOUND_PATTERNS = [
   'たい', 'たくない', 'たかった',
   'すぎる', 'すぎた', 'すぎない',
   'やすい', 'にくい',
-  'られる', 'られた', 'させる'
+  'られる', 'られた', 'させる',
+  // Conjecture/volitional auxiliaries
+  'でしょう', 'だろう', 'ましょう', 'ないでしょう', 'たでしょう', 'ているでしょう'
 ];
 
 function validateAtomicBreakdown(result: TranslationResult): string[] {
@@ -307,6 +309,61 @@ function forceAtomicSplit(result: TranslationResult): void {
         newBreakdown.push({ component: base, type: 'na-adjective/noun', meaning: atom.meaning || 'base word' });
         newBreakdown.push({ component: 'じゃ', type: 'copula (casual)', meaning: 'contraction of では' });
         newBreakdown.push({ component: 'ない', type: 'negative', meaning: 'not' });
+        wasSplit = true;
+      }
+
+      // Split: なるでしょう → なる + でしょう (verb + conjecture auxiliary)
+      if (!wasSplit && /でしょう$/.test(comp) && comp !== 'でしょう' && comp.length > 4) {
+        const base = comp.replace(/でしょう$/, '');
+        newBreakdown.push({ component: base, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'でしょう', type: 'auxiliary (conjecture)', meaning: 'probably/will likely' });
+        wasSplit = true;
+      }
+
+      // Split: なるだろう → なる + だろう (verb + casual conjecture)
+      if (!wasSplit && /だろう$/.test(comp) && comp !== 'だろう' && comp.length > 3) {
+        const base = comp.replace(/だろう$/, '');
+        newBreakdown.push({ component: base, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'だろう', type: 'auxiliary (conjecture)', meaning: 'probably/will likely (casual)' });
+        wasSplit = true;
+      }
+
+      // Split: 行きましょう → 行く + ましょう (verb + volitional)
+      if (!wasSplit && /ましょう$/.test(comp) && comp !== 'ましょう' && comp.length > 4) {
+        const base = comp.replace(/ましょう$/, '');
+        const dictForm = guessDictionaryForm(base, 'i');
+        newBreakdown.push({ component: dictForm, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'ましょう', type: 'auxiliary (volitional)', meaning: "let's / shall (polite)" });
+        wasSplit = true;
+      }
+
+      // Split: 行かないでしょう → 行く + ない + でしょう (negative + conjecture)
+      if (!wasSplit && /ないでしょう$/.test(comp) && comp !== 'ないでしょう') {
+        const base = comp.replace(/ないでしょう$/, '');
+        const dictForm = guessDictionaryForm(base, 'a');
+        newBreakdown.push({ component: dictForm, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'ない', type: 'negative auxiliary', meaning: 'not' });
+        newBreakdown.push({ component: 'でしょう', type: 'auxiliary (conjecture)', meaning: 'probably' });
+        wasSplit = true;
+      }
+
+      // Split: 行ったでしょう → 行く + た + でしょう (past + conjecture)
+      if (!wasSplit && /たでしょう$/.test(comp) && comp !== 'たでしょう') {
+        const base = comp.replace(/たでしょう$/, '');
+        const dictForm = guessDictionaryForm(base, 'i');
+        newBreakdown.push({ component: dictForm, type: 'verb (dictionary form)', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'た', type: 'past auxiliary', meaning: 'past tense' });
+        newBreakdown.push({ component: 'でしょう', type: 'auxiliary (conjecture)', meaning: 'probably' });
+        wasSplit = true;
+      }
+
+      // Split: 食べているでしょう → 食べる + て + いる + でしょう (progressive + conjecture)
+      if (!wasSplit && /ているでしょう$/.test(comp) && comp !== 'ているでしょう') {
+        const base = comp.replace(/ているでしょう$/, '');
+        newBreakdown.push({ component: base, type: 'verb stem', meaning: atom.meaning || 'verb' });
+        newBreakdown.push({ component: 'て', type: 'te-form', meaning: 'conjunctive' });
+        newBreakdown.push({ component: 'いる', type: 'auxiliary', meaning: 'progressive/state' });
+        newBreakdown.push({ component: 'でしょう', type: 'auxiliary (conjecture)', meaning: 'probably' });
         wasSplit = true;
       }
 
