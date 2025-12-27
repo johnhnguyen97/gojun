@@ -106,7 +106,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     }
   }, [svgContent]);
 
-  // KanjivgAnimate-style stroke animation
+  // KanjivgAnimate-style stroke animation using setInterval for smooth drawing
   const playAnimation = useCallback(async () => {
     if (!svgContainerRef.current || isAnimating) return;
 
@@ -121,7 +121,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     setIsAnimating(true);
     animationRef.current.cancel = false;
 
-    // Set up all paths with dash arrays to hide them initially (stroke not drawn yet)
+    // Hide all paths initially by setting dashoffset = length
     paths.forEach((path, index) => {
       const color = STROKE_COLORS[index % STROKE_COLORS.length];
       const length = path.getTotalLength();
@@ -129,16 +129,16 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       path.setAttribute('stroke', color);
       path.setAttribute('stroke-width', '3');
       path.setAttribute('fill', 'none');
-      // Use dasharray/dashoffset to hide the stroke (offset = length means nothing visible)
-      path.style.strokeDasharray = `${length}`;
-      path.style.strokeDashoffset = `${length}`;
-      path.style.transition = 'none';
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      path.style.strokeDasharray = String(length);
+      path.style.strokeDashoffset = String(length);
     });
 
     // Small delay before starting
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // Animate each stroke sequentially
+    // Animate each stroke sequentially using interval-based animation (like KanjivgAnimate)
     for (let i = 0; i < paths.length; i++) {
       if (animationRef.current.cancel) break;
 
@@ -146,18 +146,40 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       const length = path.getTotalLength();
       const color = STROKE_COLORS[i % STROKE_COLORS.length];
 
-      // Ensure color is set using setAttribute for SVG
       path.setAttribute('stroke', color);
 
-      // Calculate animation duration based on stroke length
-      const duration = Math.min(Math.max(200, length * 2), 800);
+      // Animation parameters - similar to KanjivgAnimate approach
+      const animationTime = Math.min(Math.max(300, length * 3), 600); // ms for this stroke
+      const intervalTime = 16; // ~60fps
+      const steps = Math.ceil(animationTime / intervalTime);
+      const decrementPerStep = length / steps;
 
-      // Animate the stroke by transitioning dashoffset from length to 0
-      path.style.transition = `stroke-dashoffset ${duration}ms ease-out`;
-      path.style.strokeDashoffset = '0';
+      // Animate by progressively decreasing strokeDashoffset
+      await new Promise<void>((resolve) => {
+        let currentOffset = length;
+        const interval = setInterval(() => {
+          if (animationRef.current.cancel) {
+            clearInterval(interval);
+            resolve();
+            return;
+          }
 
-      // Wait for animation to complete
-      await new Promise(resolve => setTimeout(resolve, duration + 100));
+          currentOffset -= decrementPerStep;
+          if (currentOffset <= 0) {
+            currentOffset = 0;
+            path.style.strokeDashoffset = '0';
+            clearInterval(interval);
+            resolve();
+          } else {
+            path.style.strokeDashoffset = String(currentOffset);
+          }
+        }, intervalTime);
+      });
+
+      // Small pause between strokes
+      if (!animationRef.current.cancel && i < paths.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
     }
 
     setIsAnimating(false);
