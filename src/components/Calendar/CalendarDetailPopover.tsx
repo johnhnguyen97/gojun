@@ -107,16 +107,11 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     }
   }, [type, data]);
 
-  // Two-layer animation: gray background + colored strokes animating via requestAnimationFrame
+  // Two-layer animation: gray background + colored strokes animating via setInterval (like test)
   const playAnimation = useCallback(() => {
-    console.log('playAnimation called', { ref: svgContainerRef.current, isAnimating });
-    if (!svgContainerRef.current || isAnimating) {
-      console.log('Early return', { hasRef: !!svgContainerRef.current, isAnimating });
-      return;
-    }
+    if (!svgContainerRef.current || isAnimating) return;
 
     const svg = svgContainerRef.current.querySelector('svg');
-    console.log('Found SVG:', svg);
     if (!svg) return;
 
     const kgPaths = svg.querySelector('.kgPaths');
@@ -158,39 +153,37 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       return { element: clone, length };
     });
 
-    // Animation state
-    const strokeDuration = 400; // ms per stroke
-    const pauseBetween = 80; // ms pause between strokes
+    // Animation using setInterval (proven to work in test)
+    const frameRate = 30; // ~30fps
+    const frameTime = 1000 / frameRate;
+    const strokeDuration = 500; // ms per stroke
+    const pauseBetween = 100; // ms pause between strokes
+
     let currentStroke = 0;
     let strokeProgress = 0;
-    let lastTimestamp: number | null = null;
     let isPausing = false;
-    let pauseEndTime = 0;
-    let rafId: number;
+    let pauseRemaining = 0;
 
-    function animate(timestamp: number) {
+    const intervalId = setInterval(() => {
       if (animationRef.current.cancel) {
+        clearInterval(intervalId);
         return;
       }
 
-      if (!lastTimestamp) lastTimestamp = timestamp;
-      const deltaTime = timestamp - lastTimestamp;
-      lastTimestamp = timestamp;
-
       // Handle pause between strokes
       if (isPausing) {
-        if (timestamp >= pauseEndTime) {
+        pauseRemaining -= frameTime;
+        if (pauseRemaining <= 0) {
           isPausing = false;
           currentStroke++;
           strokeProgress = 0;
-        } else {
-          rafId = requestAnimationFrame(animate);
-          return;
         }
+        return;
       }
 
       // Check if animation complete
       if (currentStroke >= animData.length) {
+        clearInterval(intervalId);
         // Clean up - remove overlay, restore colors
         animGroup.remove();
         paths.forEach((path, index) => {
@@ -202,28 +195,23 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
 
       // Animate current stroke
       const { element, length } = animData[currentStroke];
-      strokeProgress += deltaTime / strokeDuration;
+      strokeProgress += frameTime / strokeDuration;
 
       if (strokeProgress >= 1) {
         // Stroke complete
         element.style.strokeDashoffset = '0';
         isPausing = true;
-        pauseEndTime = timestamp + pauseBetween;
+        pauseRemaining = pauseBetween;
       } else {
         // Draw stroke progressively
         const offset = length * (1 - strokeProgress);
         element.style.strokeDashoffset = String(offset);
       }
-
-      rafId = requestAnimationFrame(animate);
-    }
-
-    // Start animation
-    rafId = requestAnimationFrame(animate);
+    }, frameTime);
 
     // Store cleanup function
     animationRef.current.cleanup = () => {
-      cancelAnimationFrame(rafId);
+      clearInterval(intervalId);
       animGroup.remove();
       paths.forEach((path, index) => {
         path.setAttribute('stroke', originalColors[index]);
