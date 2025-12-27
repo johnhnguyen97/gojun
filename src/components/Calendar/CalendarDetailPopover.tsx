@@ -66,8 +66,9 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
           // Remove the kgNumbers group entirely from the SVG
           // This removes stroke numbers like <g class="kgNumbers">...</g>
           let cleanedSvg = svg.replace(/<g[^>]*class="kgNumbers"[^>]*>[\s\S]*?<\/g>/gi, '');
-          // Remove stroke="currentColor" from kgPaths group so we can set colors on individual paths
-          cleanedSvg = cleanedSvg.replace(/(<g[^>]*class="kgPaths"[^>]*)\s+stroke="currentColor"/gi, '$1');
+          // Remove stroke="currentColor" entirely so we can set colors on individual paths
+          // This is simpler and more reliable than trying to target just the kgPaths group
+          cleanedSvg = cleanedSvg.replace(/\s*stroke="currentColor"/gi, '');
           setSvgContent(cleanedSvg);
         })
         .catch(() => {
