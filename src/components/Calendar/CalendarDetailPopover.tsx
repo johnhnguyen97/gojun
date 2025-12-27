@@ -79,7 +79,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  // Fetch KanjiVG SVG for kanji - preprocess with colors
+  // Fetch KanjiVG SVG for kanji - preprocess with colors and inject directly into DOM
   useEffect(() => {
     if (type === 'kotd') {
       const kanji = (data as KanjiOfTheDay).kanji;
@@ -97,6 +97,13 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
           // Preprocess SVG with colors applied directly
           const processedSvg = preprocessSvg(svg);
           setSvgContent(processedSvg);
+
+          // Inject SVG directly into DOM after state update
+          requestAnimationFrame(() => {
+            if (svgContainerRef.current) {
+              svgContainerRef.current.innerHTML = processedSvg;
+            }
+          });
         })
         .catch(() => {
           setSvgContent(null);
@@ -311,7 +318,6 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
               <div
                 ref={svgContainerRef}
                 className="w-48 h-48 mx-auto flex items-center justify-center [&_svg]:w-full [&_svg]:h-full [&_svg]:max-w-[180px] [&_svg]:max-h-[180px]"
-                dangerouslySetInnerHTML={{ __html: svgContent }}
               />
             ) : loadingSvg ? (
               <div className="w-48 h-48 mx-auto flex items-center justify-center">
