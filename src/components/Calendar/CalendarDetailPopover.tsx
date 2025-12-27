@@ -121,13 +121,18 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     setIsAnimating(true);
     animationRef.current.cancel = false;
 
-    // Hide all paths initially but preserve their colors
+    // Set up all paths with dash arrays to hide them initially (stroke not drawn yet)
     paths.forEach((path, index) => {
       const color = STROKE_COLORS[index % STROKE_COLORS.length];
+      const length = path.getTotalLength();
+
       path.setAttribute('stroke', color);
-      path.style.opacity = '0';
-      path.style.strokeDasharray = '';
-      path.style.strokeDashoffset = '';
+      path.setAttribute('stroke-width', '3');
+      path.setAttribute('fill', 'none');
+      // Use dasharray/dashoffset to hide the stroke (offset = length means nothing visible)
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.style.transition = 'none';
     });
 
     // Small delay before starting
@@ -144,21 +149,10 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       // Ensure color is set using setAttribute for SVG
       path.setAttribute('stroke', color);
 
-      // Show the path
-      path.style.opacity = '1';
-
-      // Set up the dash animation
-      path.style.strokeDasharray = `${length}`;
-      path.style.strokeDashoffset = `${length}`;
-      path.style.transition = 'none';
-
-      // Force reflow
-      path.getBoundingClientRect();
-
       // Calculate animation duration based on stroke length
       const duration = Math.min(Math.max(200, length * 2), 800);
 
-      // Animate the stroke
+      // Animate the stroke by transitioning dashoffset from length to 0
       path.style.transition = `stroke-dashoffset ${duration}ms ease-out`;
       path.style.strokeDashoffset = '0';
 
@@ -169,7 +163,7 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
     setIsAnimating(false);
   }, [isAnimating]);
 
-  // Reset animation (show all strokes)
+  // Reset animation (show all strokes fully drawn)
   const resetAnimation = useCallback(() => {
     animationRef.current.cancel = true;
     setIsAnimating(false);
@@ -181,9 +175,11 @@ export function CalendarDetailPopover({ type, data, onClose }: CalendarDetailPop
       paths.forEach((path, index) => {
         const color = STROKE_COLORS[index % STROKE_COLORS.length];
         path.setAttribute('stroke', color);
-        path.style.opacity = '1';
-        path.style.strokeDasharray = '';
-        path.style.strokeDashoffset = '';
+        path.setAttribute('stroke-width', '3');
+        path.setAttribute('fill', 'none');
+        // Clear dash styles to show full stroke
+        path.style.strokeDasharray = 'none';
+        path.style.strokeDashoffset = '0';
         path.style.transition = 'none';
       });
     }
